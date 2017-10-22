@@ -9,7 +9,7 @@ L'installation requiert Docker et Maven.
 ```
 git clone https://github.com/ECOM-MySpectacle/MySpectacle.git
 
-cd MesLocationsVacances
+cd MySpectacle
 
 mvn clean compile package 
 
