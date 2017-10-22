@@ -7,7 +7,7 @@ Projet eCommerce réalisé à Polytech Grenoble dont le but est de créer un sit
 L'installation requiert Docker et Maven.
 
 ```
-git clone https://github.com/ECOM2017-MySpectacle/MySpectacle.git
+git clone https://github.com/ECOM-MySpectacle/MySpectacle.git
 
 cd MesLocationsVacances
 
