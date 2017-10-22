@@ -1,0 +1,36 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+    xmlns:of="http://omnifaces.org/functions"
+>
+    <ui:define name="contentTitle">#{messages.label_error}</ui:define>
+
+    <ui:define name="content">
+        <ui:insert name="errorContent">
+            <h3>#{messages.label_error_occured}</h3>
+            <br/>
+            <b>Date/time:</b> #{of:formatDate(now, 'yyyy-MM-dd HH:mm:ss')}
+            <br/>
+            <b>User agent:</b> #{header['user-agent']}
+            <br/>
+            <b>User IP:</b> #{empty header['x-forwarded-for'] ? request.remoteAddr : fn:split(header['x-forwarded-for'], ',')[0]}
+            <br/>
+            <b>Request URI:</b> <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a>
+            <br/>
+            <b>Ajax request:</b> #{facesContext.partialViewContext.ajaxRequest ? 'Yes' : 'No'}
+            <br/>
+            <b>Status code:</b> #{requestScope['javax.servlet.error.status_code']}
+            <br/>
+            <b>Exception type:</b> <code>#{requestScope['javax.servlet.error.exception_type']}</code>
+            <br/>
+            <b>Exception message:</b> <code>#{requestScope['javax.servlet.error.message']}</code>
+            <br/>
+            <h:panelGroup rendered="#{facesContext.application.projectStage eq 'Development'}">
+                <b>Stack trace:</b> <pre><code>#{of:printStackTrace(requestScope['javax.servlet.error.exception'])}</code></pre>
+            </h:panelGroup>
+        </ui:insert>
+        <h:outputScript rendered="#{facesContext.partialViewContext.ajaxRequest}">scrollTo(0, 0);</h:outputScript>
+    </ui:define>
+</ui:composition>

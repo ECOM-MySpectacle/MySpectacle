@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:outputPanel styleClass="ui-fluid" rendered="#{not security.isPermitted('user:read')}">
+        <h:outputText value="#{messages.access_denied}" />
+    </p:outputPanel>
+
+    <h:panelGrid columns="2" styleClass="dialog" columnClasses="col1,col2" rendered="#{security.isPermitted('user:read')}">
+
+        <h:outputText value="#{messages.field_label_user_username}:" />
+        <h:outputText value="#{userBean.user.username}" />
+    
+        <h:outputText value="#{messages.field_label_user_email}:" />
+        <h:outputText value="#{userBean.user.email}" />
+        
+        <h:outputText value="#{messages.field_label_user_roles}:" />
+        <p:outputPanel>
+            <ui:repeat value="#{userBean.user.roles}" var="role">
+                <h:outputText value="#{role}" /><br/>
+            </ui:repeat>
+        </p:outputPanel>
+        
+        <h:outputText value="#{messages.field_label_user_status}:" />
+        <h:outputText value="#{userBean.user.status.toString()}" />
+    
+        <h:outputText value="#{messages.field_label_user_createdAt}:" />
+        <h:outputText value="#{userBean.user.createdAt}" ><f:convertDateTime type="both" /></h:outputText>
+        
+        <h:outputText value="#{messages.field_label_user_username}:" />
+        <h:outputText value="#{userBean.user.username}" />
+
+        <h:outputText value="#{messages.field_label_user_email}:" />
+        <h:outputText value="#{userBean.user.email}" />
+
+        <h:outputText value="#{messages.field_label_user_age}:" />
+        <h:outputText value="#{userBean.user.age}" />
+
+        <h:outputText value="#{messages.field_label_user_nom}:" />
+        <h:outputText value="#{userBean.user.nom}" />
+
+        <h:outputText value="#{messages.field_label_user_prenom}:" />
+        <h:outputText value="#{userBean.user.prenom}" />
+
+        <h:outputText value="#{messages.field_label_user_numero}:" />
+        <h:outputText value="#{userBean.user.numero}" />
+
+        <h:outputText value="#{messages.field_label_user_adresse}:" />
+        <h:outputText value="#{userBean.user.adresse}" />
+
+    </h:panelGrid>
+</html>

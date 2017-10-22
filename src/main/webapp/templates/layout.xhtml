@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{localeBean.locale}" contentType="text/html">
+<ui:debug hotkey="x" rendered="#{facesContext.application.projectStage eq 'Development'}"></ui:debug>
+<h:head>
+  <ui:insert name="header">
+    <ui:include src="header.xhtml" />
+  </ui:insert>
+</h:head>
+<h:body>
+    <h:form prependId="false" id="growlForm">
+      <p:growl id="growl" showDetail="false" />
+    </h:form>
+
+    <div style="padding: 4px 10px">
+        <ui:include src="toolbar.xhtml" />
+    </div>
+
+    <div class="ui-fluid">
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid">
+            <ui:insert name="menu">
+              <ui:include src="menu.xhtml" />
+            </ui:insert>
+
+            <h:panelGroup>
+                <ui:insert name="content" />
+            </h:panelGroup>
+        </p:panelGrid>
+    </div>
+</h:body>
+</f:view>
+</html>

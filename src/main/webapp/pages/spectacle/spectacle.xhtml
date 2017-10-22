@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<ui:composition template="/templates/layout.xhtml">
+  <ui:define name="content">
+
+    <h:form prependId="false" id="spectacleDataForm" onkeypress="if (event.keyCode == 13) {return false; }">
+
+        <p:dataTable id="spectacleTable" value="#{spectacleBean.spectacleList}" var="spectacle" resizableColumns="true" paginator="true"
+                paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,25,50" rows="10" draggableColumns="true"
+                paginatorPosition="bottom" widgetVar="spectacleTable" emptyMessage="#{messages.label_no_records_found}"
+                reflow="true">
+        
+          <f:facet name="header" >
+
+              <p:commandButton value="#{messages.create_new_spectacle}" icon="ui-icon-plusthick" action="#{spectacleBean.prepareNewSpectacle()}"
+                      resetValues="true" update=":editSpectacleDialog" oncomplete="PF('editSpectacleDialogWidget').show()"
+                      rendered="#{spectacleBean.isPermitted('spectacle:create')}" style="float:left" />
+              
+              <p:commandButton id="toggler" type="button" value="#{messages.table_select_columns}" icon="ui-icon-calculator" />
+              <p:columnToggler datasource="spectacleTable" trigger="toggler" />
+          </f:facet>
+          
+          <p:column  headerText="#{messages.field_label_spectacle_nom}" sortBy="#{spectacle.nom}" filterBy="#{spectacle.nom}">
+            <f:facet name="filter">
+                <p:inputText id="nomFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateNomFilter(); return false; }" >
+                    <p:remoteCommand name="updateNomFilter" update="spectacleTable:nomFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{spectacle.nom}" />
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_spectacle_type}"
+                    sortBy="#{spectacle.type}" filterBy="#{spectacle.type}">
+              <f:facet name="filter">
+                  <p:selectOneMenu id="typeFilter"
+                                  style="width:145px;"
+                                  onchange="PF('spectacleTable').filter(); return false;" >
+                      <f:selectItem noSelectionOption="true" itemLabel="" />
+                      <f:selectItems value="#{spectacleBean.typeSelectItems}" />
+                  </p:selectOneMenu>
+              </f:facet>
+              <h:outputText value="#{spectacleBean.getLabelForType(spectacle.type)}" />
+          </p:column>
+
+          <p:column  headerText="#{messages.field_label_spectacle_sujet}" sortBy="#{spectacle.sujet}" filterBy="#{spectacle.sujet}">
+            <f:facet name="filter">
+                <p:inputText id="sujetFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateSujetFilter(); return false; }" >
+                    <p:remoteCommand name="updateSujetFilter" update="spectacleTable:sujetFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{spectacle.sujet}" />
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_spectacle_creation}" sortBy="#{spectacle.creation}" filterBy="#{spectacle.creation}">
+            <f:facet name="filter">
+                <p:inputText id="creationFilter"
+                        onkeyup="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateCreationFilter(); return false;}" >
+                    <p:remoteCommand name="updateCreationFilter" update="spectacleTable:creationFilter" />
+                    <f:convertDateTime />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{spectacle.creation}"><f:convertDateTime /></h:outputText>
+          </p:column>
+
+          <p:column  headerText="#{messages.field_label_spectacle_description}" sortBy="#{spectacle.description}" filterBy="#{spectacle.description}">
+            <f:facet name="filter">
+                <p:inputText id="descriptionFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateDescriptionFilter(); return false; }" >
+                    <p:remoteCommand name="updateDescriptionFilter" update="spectacleTable:descriptionFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{spectacle.description}" />
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_spectacle_artiste}" sortBy="#{spectacle.artiste}" filterBy="#{spectacle.artiste}">
+            <f:facet name="filter">
+                <p:inputText id="artisteFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateArtisteFilter(); return false; }" >
+                    <p:remoteCommand name="updateArtisteFilter" update="spectacleTable:artisteFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{spectacle.artiste}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
+            
+            <p:commandButton icon="ui-icon-zoomin" update=":viewSpectacleDialog" oncomplete="PF('viewSpectacleDialogWidget').show()" title="#{messages.label_view}">
+              <f:setPropertyActionListener value="#{spectacle}" target="#{spectacleBean.spectacle}" />
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-pencil" update=":editSpectacleDialog"
+                resetValues="true" rendered="#{spectacleBean.isPermitted(spectacle, 'spectacle:update')}"
+                action="#{spectacleBean.onDialogOpen(spectacle)}"
+                oncomplete="PF('editSpectacleDialogWidget').show()"
+                title="#{messages.label_edit}" >
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-close" rendered="#{spectacleBean.isPermitted(spectacle, 'spectacle:delete')}"
+                oncomplete="PF('deleteSpectacleDialogWidget').show()"
+                title="#{messages.label_delete}" >
+                <f:setPropertyActionListener value="#{spectacle}"
+                    target="#{spectacleBean.spectacle}" />
+            </p:commandButton>
+    
+          </p:column>
+          
+        </p:dataTable>
+        
+    </h:form>
+
+    <p:confirmDialog id="deleteSpectacleDialog" widgetVar="deleteSpectacleDialogWidget"
+        rendered="#{spectacleBean.isPermitted(spectacleBean.spectacle, 'spectacle:delete')}" header="#{messages.label_confirm_deletion}"
+        severity="alarm">
+        <f:facet name="message"><h:outputText value="#{messages.label_delete_record}" escape="false"/></f:facet>
+        <p:outputPanel>
+          <h:form>
+            <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_yes}" action="#{spectacleBean.delete}" update=":spectacleDataForm :growlForm:growl" oncomplete="PF('deleteSpectacleDialogWidget').hide()" />
+              <p:commandButton value="#{messages.label_no}" onclick="PF('deleteSpectacleDialogWidget').hide()" type="button" />
+            </div>
+          </h:form>
+        </p:outputPanel>
+    </p:confirmDialog>
+    
+    <p:dialog dynamic="true" id="editSpectacleDialog" header="#{messages.label_spectacle_caption}"
+            modal="true" widgetVar="editSpectacleDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{spectacleBean.reset}"/>
+        <h:form id="editSpectacleForm" >
+            <p:outputPanel id="spectacleEditPanel">
+                <ui:include src="/pages/spectacle/spectacleEditInclude.xhtml"/>
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                            icon="ui-icon-disk" action="#{spectacleBean.persist}"
+                            update=":editSpectacleForm:spectacleEditPanel :spectacleDataForm :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('editSpectacleDialogWidget').hide()" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('editSpectacleDialogWidget').hide()" type="button" />
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="viewSpectacleDialog" header="#{messages.label_spectacle_caption}" modal="true" widgetVar="viewSpectacleDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{spectacleBean.reset}" />
+        <h:form id="viewSpectacleForm">
+          <ui:include src="/pages/spectacle/spectacleViewInclude.xhtml"/>
+          <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewSpectacleDialogWidget').hide()" type="button" />
+          </div>
+        </h:form>
+    </p:dialog>
+    
+  </ui:define>
+</ui:composition>
+</html>

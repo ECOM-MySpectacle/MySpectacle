@@ -1,0 +1,19 @@
+Instructions to run MySpectacle on Payara Micro without any Application Server installation.
+
+======================================================================================================
+1. Prerequisites
+
+  You need to have at least JDK 8 and Maven installed properly. If you do not have these already set up, please follow the official installation instructions for Oracle JDK and Apache Maven:
+  https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
+  https://maven.apache.org/install.html
+  https://maven.apache.org/configure.html
+
+2. Download "Payara Micro 162" or newer release from http://www.payara.fish/downloads
+
+3. Build the project by executing the command "mvn package" within the generated "MySpectacle" directory.
+
+4. Start the application with command "java -jar payara-micro-4.1.1.162.jar --deploy target/MySpectacle.war --noCluster"
+   Check if the "payara-micro-x.x.x.x.jar" matches the actual path and name of the Payara Micro jar and adapt the command if necessary.
+   Note: You must use the --noCluster option because of the PrimeFaces issue 1570 (https://github.com/primefaces/primefaces/issues/1570). Clustering will be available with PrimeFaces 6.1.
+
+5. After the application is deployed successfully, start it in your browser with http://localhost:8080/MySpectacle

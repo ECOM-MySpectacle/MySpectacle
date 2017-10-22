@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<ui:composition template="/templates/layout.xhtml">
+  <ui:define name="content">
+
+    <h:form prependId="false" id="representationDataForm" onkeypress="if (event.keyCode == 13) {return false; }">
+
+        <p:dataTable id="representationTable" value="#{representationBean.representationList}" var="representation" resizableColumns="true" paginator="true"
+                paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,25,50" rows="10" draggableColumns="true"
+                paginatorPosition="bottom" widgetVar="representationTable" emptyMessage="#{messages.label_no_records_found}"
+                reflow="true">
+        
+          <f:facet name="header" >
+
+              <p:commandButton value="#{messages.create_new_representation}" icon="ui-icon-plusthick" action="#{representationBean.prepareNewRepresentation()}"
+                      resetValues="true" update=":editRepresentationDialog" oncomplete="PF('editRepresentationDialogWidget').show()"
+                      rendered="#{representationBean.isPermitted('representation:create')}" style="float:left" />
+              
+              <p:commandButton id="toggler" type="button" value="#{messages.table_select_columns}" icon="ui-icon-calculator" />
+              <p:columnToggler datasource="representationTable" trigger="toggler" />
+          </f:facet>
+          
+          <p:column headerText="#{messages.field_label_representation_spectacle}" sortBy="#{representation.spectacle}" filterBy="#{representation.spectacle}">
+            <f:facet name="filter">
+                <p:inputText id="spectacleFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateSpectacleFilter(); return false; }" >
+                    <p:remoteCommand name="updateSpectacleFilter" update="representationTable:spectacleFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.spectacle}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_salle}" sortBy="#{representation.salle}" filterBy="#{representation.salle}">
+            <f:facet name="filter">
+                <p:inputText id="salleFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateSalleFilter(); return false; }" >
+                    <p:remoteCommand name="updateSalleFilter" update="representationTable:salleFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.salle}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_date}" sortBy="#{representation.date}" filterBy="#{representation.date}">
+            <f:facet name="filter">
+                <p:inputText id="dateFilter"
+                        onkeyup="if (event.keyCode == 13) {PF('representationTable').filter(); updateDateFilter(); return false;}" >
+                    <p:remoteCommand name="updateDateFilter" update="representationTable:dateFilter" />
+                    <f:convertDateTime />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.date}"><f:convertDateTime /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_nbPlaceFosseDisponible}" sortBy="#{representation.nbPlaceFosseDisponible}" filterBy="#{representation.nbPlaceFosseDisponible}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceFosseDisponibleFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceFosseDisponibleFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceFosseDisponibleFilter" update="representationTable:nbPlaceFosseDisponibleFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.nbPlaceFosseDisponible}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_nbPlaceBalconDisponible}" sortBy="#{representation.nbPlaceBalconDisponible}" filterBy="#{representation.nbPlaceBalconDisponible}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceBalconDisponibleFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceBalconDisponibleFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceBalconDisponibleFilter" update="representationTable:nbPlaceBalconDisponibleFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.nbPlaceBalconDisponible}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_nbPlaceOrchestreDisponible}" sortBy="#{representation.nbPlaceOrchestreDisponible}" filterBy="#{representation.nbPlaceOrchestreDisponible}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceOrchestreDisponibleFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceOrchestreDisponibleFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceOrchestreDisponibleFilter" update="representationTable:nbPlaceOrchestreDisponibleFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{representation.nbPlaceOrchestreDisponible}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
+            
+            <p:commandButton icon="ui-icon-zoomin" update=":viewRepresentationDialog" oncomplete="PF('viewRepresentationDialogWidget').show()" title="#{messages.label_view}">
+              <f:setPropertyActionListener value="#{representation}" target="#{representationBean.representation}" />
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-pencil" update=":editRepresentationDialog"
+                resetValues="true" rendered="#{representationBean.isPermitted(representation, 'representation:update')}"
+                action="#{representationBean.onDialogOpen(representation)}"
+                oncomplete="PF('editRepresentationDialogWidget').show()"
+                title="#{messages.label_edit}" >
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-close" rendered="#{representationBean.isPermitted(representation, 'representation:delete')}"
+                oncomplete="PF('deleteRepresentationDialogWidget').show()"
+                title="#{messages.label_delete}" >
+                <f:setPropertyActionListener value="#{representation}"
+                    target="#{representationBean.representation}" />
+            </p:commandButton>
+    
+          </p:column>
+          
+        </p:dataTable>
+        
+    </h:form>
+
+    <p:confirmDialog id="deleteRepresentationDialog" widgetVar="deleteRepresentationDialogWidget"
+        rendered="#{representationBean.isPermitted(representationBean.representation, 'representation:delete')}" header="#{messages.label_confirm_deletion}"
+        severity="alarm">
+        <f:facet name="message"><h:outputText value="#{messages.label_delete_record}" escape="false"/></f:facet>
+        <p:outputPanel>
+          <h:form>
+            <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_yes}" action="#{representationBean.delete}" update=":representationDataForm :growlForm:growl" oncomplete="PF('deleteRepresentationDialogWidget').hide()" />
+              <p:commandButton value="#{messages.label_no}" onclick="PF('deleteRepresentationDialogWidget').hide()" type="button" />
+            </div>
+          </h:form>
+        </p:outputPanel>
+    </p:confirmDialog>
+    
+    <p:dialog dynamic="true" id="editRepresentationDialog" header="#{messages.label_representation_caption}"
+            modal="true" widgetVar="editRepresentationDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{representationBean.reset}"/>
+        <h:form id="editRepresentationForm" >
+            <p:outputPanel id="representationEditPanel">
+                <ui:include src="/pages/representation/representationEditInclude.xhtml"/>
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                            icon="ui-icon-disk" action="#{representationBean.persist}"
+                            update=":editRepresentationForm:representationEditPanel :representationDataForm :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('editRepresentationDialogWidget').hide()" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('editRepresentationDialogWidget').hide()" type="button" />
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="viewRepresentationDialog" header="#{messages.label_representation_caption}" modal="true" widgetVar="viewRepresentationDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{representationBean.reset}" />
+        <h:form id="viewRepresentationForm">
+          <ui:include src="/pages/representation/representationViewInclude.xhtml"/>
+          <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewRepresentationDialogWidget').hide()" type="button" />
+          </div>
+        </h:form>
+    </p:dialog>
+    
+  </ui:define>
+</ui:composition>
+</html>

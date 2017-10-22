@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<ui:composition template="/templates/layout.xhtml">
+  <ui:define name="content">
+
+    <h:form prependId="false" id="artisteDataForm" onkeypress="if (event.keyCode == 13) {return false; }">
+
+        <p:dataTable id="artisteTable" value="#{artisteBean.artisteList}" var="artiste" resizableColumns="true" paginator="true"
+                paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,25,50" rows="10" draggableColumns="true"
+                paginatorPosition="bottom" widgetVar="artisteTable" emptyMessage="#{messages.label_no_records_found}"
+                reflow="true">
+        
+          <f:facet name="header" >
+
+              <p:commandButton value="#{messages.create_new_artiste}" icon="ui-icon-plusthick" action="#{artisteBean.prepareNewArtiste()}"
+                      resetValues="true" update=":editArtisteDialog" oncomplete="PF('editArtisteDialogWidget').show()"
+                      rendered="#{artisteBean.isPermitted('artiste:create')}" style="float:left" />
+              
+              <p:commandButton id="toggler" type="button" value="#{messages.table_select_columns}" icon="ui-icon-calculator" />
+              <p:columnToggler datasource="artisteTable" trigger="toggler" />
+          </f:facet>
+          
+          <p:column  headerText="#{messages.field_label_artiste_nom}" sortBy="#{artiste.nom}" filterBy="#{artiste.nom}">
+            <f:facet name="filter">
+                <p:inputText id="nomFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('artisteTable').filter(); updateNomFilter(); return false; }" >
+                    <p:remoteCommand name="updateNomFilter" update="artisteTable:nomFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{artiste.nom}" />
+          </p:column>
+
+          <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
+            
+            <p:commandButton icon="ui-icon-zoomin" update=":viewArtisteDialog" oncomplete="PF('viewArtisteDialogWidget').show()" title="#{messages.label_view}">
+              <f:setPropertyActionListener value="#{artiste}" target="#{artisteBean.artiste}" />
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-pencil" update=":editArtisteDialog"
+                resetValues="true" rendered="#{artisteBean.isPermitted(artiste, 'artiste:update')}"
+                action="#{artisteBean.onDialogOpen(artiste)}"
+                oncomplete="PF('editArtisteDialogWidget').show()"
+                title="#{messages.label_edit}" >
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-close" rendered="#{artisteBean.isPermitted(artiste, 'artiste:delete')}"
+                oncomplete="PF('deleteArtisteDialogWidget').show()"
+                title="#{messages.label_delete}" >
+                <f:setPropertyActionListener value="#{artiste}"
+                    target="#{artisteBean.artiste}" />
+            </p:commandButton>
+    
+          </p:column>
+          
+        </p:dataTable>
+        
+    </h:form>
+
+    <p:confirmDialog id="deleteArtisteDialog" widgetVar="deleteArtisteDialogWidget"
+        rendered="#{artisteBean.isPermitted(artisteBean.artiste, 'artiste:delete')}" header="#{messages.label_confirm_deletion}"
+        severity="alarm">
+        <f:facet name="message"><h:outputText value="#{messages.label_delete_record}" escape="false"/></f:facet>
+        <p:outputPanel>
+          <h:form>
+            <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_yes}" action="#{artisteBean.delete}" update=":artisteDataForm :growlForm:growl" oncomplete="PF('deleteArtisteDialogWidget').hide()" />
+              <p:commandButton value="#{messages.label_no}" onclick="PF('deleteArtisteDialogWidget').hide()" type="button" />
+            </div>
+          </h:form>
+        </p:outputPanel>
+    </p:confirmDialog>
+    
+    <p:dialog dynamic="true" id="editArtisteDialog" header="#{messages.label_artiste_caption}"
+            modal="true" widgetVar="editArtisteDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{artisteBean.reset}"/>
+        <h:form id="editArtisteForm" >
+            <p:outputPanel id="artisteEditPanel">
+                <ui:include src="/pages/artiste/artisteEditInclude.xhtml"/>
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                            icon="ui-icon-disk" action="#{artisteBean.persist}"
+                            update=":editArtisteForm:artisteEditPanel :artisteDataForm :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('editArtisteDialogWidget').hide()" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('editArtisteDialogWidget').hide()" type="button" />
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="viewArtisteDialog" header="#{messages.label_artiste_caption}" modal="true" widgetVar="viewArtisteDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{artisteBean.reset}" />
+        <h:form id="viewArtisteForm">
+          <ui:include src="/pages/artiste/artisteViewInclude.xhtml"/>
+          <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewArtisteDialogWidget').hide()" type="button" />
+          </div>
+        </h:form>
+    </p:dialog>
+    
+  </ui:define>
+</ui:composition>
+</html>

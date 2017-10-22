@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+        <p:outputPanel styleClass="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
+            
+                <h:outputLabel value="#{messages.field_label_representation_spectacle}:" for="spectacleEditInput" />
+                <p:inputText value="#{representationBean.representation.spectacle}"  id="spectacleEditInput" 
+                    label="#{messages.field_label_representation_spectacle}" />
+                <p:message for="spectacleEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_salle}:" for="salleEditInput" />
+                <p:inputText value="#{representationBean.representation.salle}"  id="salleEditInput" 
+                    label="#{messages.field_label_representation_salle}" />
+                <p:message for="salleEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_date}:" for="dateEditInput" />
+                <p:calendar id="dateEditInput" navigator="true" value="#{representationBean.representation.date}" label="#{messages.field_label_representation_date}" />
+                <p:message for="dateEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlaceFosseDisponible}:" for="nbPlaceFosseDisponibleEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlaceFosseDisponible}"  id="nbPlaceFosseDisponibleEditInput" 
+                    label="#{messages.field_label_representation_nbPlaceFosseDisponible}" />
+                <p:message for="nbPlaceFosseDisponibleEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlaceBalconDisponible}:" for="nbPlaceBalconDisponibleEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlaceBalconDisponible}"  id="nbPlaceBalconDisponibleEditInput" 
+                    label="#{messages.field_label_representation_nbPlaceBalconDisponible}" />
+                <p:message for="nbPlaceBalconDisponibleEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlaceOrchestreDisponible}:" for="nbPlaceOrchestreDisponibleEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlaceOrchestreDisponible}"  id="nbPlaceOrchestreDisponibleEditInput" 
+                    label="#{messages.field_label_representation_nbPlaceOrchestreDisponible}" />
+                <p:message for="nbPlaceOrchestreDisponibleEditInput" display="icon" />
+
+            </p:panelGrid>
+
+        </p:outputPanel>
+</html>

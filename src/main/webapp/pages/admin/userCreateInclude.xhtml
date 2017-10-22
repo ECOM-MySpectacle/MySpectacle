@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+    
+    <o:validateEqual components="emailEditInput emailRepeatEditInput"
+            showMessageFor="emailRepeatEditInput" message="#{messages.user_email_different_input}"/>
+
+    <h:panelGrid columns="3" styleClass="dialog" columnClasses="col1,col2,col3">
+        
+        <h:outputLabel value="#{messages.field_label_user_username}:" for="usernameEditInput" />
+        <p:inputText value="#{userBean.user.username}" id="usernameEditInput" />
+        <p:message for="usernameEditInput" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_password}:" for="passwordEditInput" />
+        <p:password value="#{userBean.user.password}" id="passwordEditInput" required="true" match="passwordRepeatEditInput"/>
+        <p:message for="passwordEditInput" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_password_repeat}:" for="passwordRepeatEditInput" />
+        <p:password value="#{userBean.user.password}" id="passwordRepeatEditInput" required="true"/>
+        <p:message for="passwordRepeatEditInput" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_email}:" for="emailEditInput" />
+        <p:inputText value="#{userBean.user.email}" id="emailEditInput" required="true"/>
+        <p:message for="passwordEditInput" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_email_repeat}:" for="emailRepeatEditInput" />
+        <p:inputText value="#{userBean.user.email}" id="emailRepeatEditInput" required="true"/>
+        <p:message for="emailRepeatEditInput" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_roles}:" for="userRoles" />
+        <h:selectManyCheckbox value="#{userBean.user.roles}" converter="omnifaces.GenericEnumConverter" id="userRolesSelection" collectionType="java.util.ArrayList">
+            <f:selectItems value="#{userBean.rolesSelectItems}" />
+        </h:selectManyCheckbox>
+        <p:message for="userRolesSelection" display="icon" />
+        
+        <h:outputLabel value="#{messages.field_label_user_status}:" for="selectUserStatusInput" />
+        <p:selectOneMenu value="#{userBean.user.status}" converter="omnifaces.GenericEnumConverter"  id="selectUserStatusInput" required="true">
+            <f:selectItems value="#{userBean.statusSelectItems}" />
+        </p:selectOneMenu>
+        <p:message for="selectUserStatusInput" display="icon" />
+        
+                <h:outputLabel value="#{messages.field_label_user_age}:" for="ageEditInput" />
+                <p:inputText value="#{userBean.user.age}"  id="ageEditInput" 
+                    label="#{messages.field_label_user_age}" />
+                <p:message for="ageEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_nom}:" for="nomEditInput" />
+                <p:inputText value="#{userBean.user.nom}" id="nomEditInput" 
+                    label="#{messages.field_label_user_nom}" />
+                <p:message for="nomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_prenom}:" for="prenomEditInput" />
+                <p:inputText value="#{userBean.user.prenom}" id="prenomEditInput" 
+                    label="#{messages.field_label_user_prenom}" />
+                <p:message for="prenomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_numero}:" for="numeroEditInput" />
+                <p:inputText value="#{userBean.user.numero}" id="numeroEditInput" 
+                    label="#{messages.field_label_user_numero}" />
+                <p:message for="numeroEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_adresse}:" for="adresseEditInput" />
+                <p:inputText value="#{userBean.user.adresse}" id="adresseEditInput" 
+                    label="#{messages.field_label_user_adresse}" />
+                <p:message for="adresseEditInput" display="icon" />
+
+    </h:panelGrid>
+
+</html>

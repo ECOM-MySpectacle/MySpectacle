@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+        <p:outputPanel styleClass="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
+            
+                <h:outputLabel value="#{messages.field_label_spectacle_nom}:" for="nomEditInput" />
+                <p:inputText value="#{spectacleBean.spectacle.nom}" id="nomEditInput" 
+                    label="#{messages.field_label_spectacle_nom}" />
+                <p:message for="nomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_type}:" for="typeSelect" />
+                <p:selectOneMenu value="#{spectacleBean.spectacle.type}" converter="omnifaces.GenericEnumConverter"  id="typeSelect">
+                    <f:selectItem noSelectionOption="true" itemLabel="" />
+                    <f:selectItems value="#{spectacleBean.typeSelectItems}" />
+                </p:selectOneMenu>
+                <p:message for="typeSelect" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_cible}:" for="cibleSelect"/>
+                <p:selectManyCheckbox value="#{spectacleBean.spectacle.cible}" converter="omnifaces.GenericEnumConverter"
+                        id="cibleSelect" layout="responsive" columns="1">
+                    <f:selectItems value="#{spectacleBean.cibleSelectItems}" />
+                    <f:attribute name="collectionType" value="java.util.HashSet" />
+                </p:selectManyCheckbox>
+                <p:message for="cibleSelect" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_sujet}:" for="sujetEditInput" />
+                <p:inputText value="#{spectacleBean.spectacle.sujet}" id="sujetEditInput" 
+                    label="#{messages.field_label_spectacle_sujet}" />
+                <p:message for="sujetEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_creation}:" for="creationEditInput" />
+                <p:calendar id="creationEditInput" navigator="true" value="#{spectacleBean.spectacle.creation}" label="#{messages.field_label_spectacle_creation}" />
+                <p:message for="creationEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_description}:" for="descriptionEditInput" />
+                <p:inputText value="#{spectacleBean.spectacle.description}" id="descriptionEditInput" 
+                    label="#{messages.field_label_spectacle_description}" />
+                <p:message for="descriptionEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_spectacle_artiste}:" for="artisteEditInput" />
+                <p:inputText value="#{spectacleBean.spectacle.artiste}"  id="artisteEditInput" 
+                    label="#{messages.field_label_spectacle_artiste}" />
+                <p:message for="artisteEditInput" display="icon" />
+
+            </p:panelGrid>
+
+        </p:outputPanel>
+</html>

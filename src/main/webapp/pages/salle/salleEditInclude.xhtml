@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+        <p:outputPanel styleClass="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
+            
+                <h:outputLabel value="#{messages.field_label_salle_nom}:" for="nomEditInput" />
+                <p:inputText value="#{salleBean.salle.nom}" id="nomEditInput" 
+                    label="#{messages.field_label_salle_nom}" />
+                <p:message for="nomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_salle_adresse}:" for="adresseEditInput" />
+                <p:inputText value="#{salleBean.salle.adresse}" id="adresseEditInput" 
+                    label="#{messages.field_label_salle_adresse}" />
+                <p:message for="adresseEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_salle_nbPlaceFosse}:" for="nbPlaceFosseEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlaceFosse}"  id="nbPlaceFosseEditInput" 
+                    label="#{messages.field_label_salle_nbPlaceFosse}" />
+                <p:message for="nbPlaceFosseEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_salle_nbPlaceBalcon}:" for="nbPlaceBalconEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlaceBalcon}"  id="nbPlaceBalconEditInput" 
+                    label="#{messages.field_label_salle_nbPlaceBalcon}" />
+                <p:message for="nbPlaceBalconEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_salle_nbPlaceOrchestre}:" for="nbPlaceOrchestreEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlaceOrchestre}"  id="nbPlaceOrchestreEditInput" 
+                    label="#{messages.field_label_salle_nbPlaceOrchestre}" />
+                <p:message for="nbPlaceOrchestreEditInput" display="icon" />
+
+            </p:panelGrid>
+
+        </p:outputPanel>
+</html>
