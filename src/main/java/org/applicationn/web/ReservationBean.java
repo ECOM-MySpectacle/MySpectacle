@@ -7,44 +7,46 @@ import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
-import org.applicationn.domain.PanierEntity;
-import org.applicationn.service.PanierService;
+import org.applicationn.domain.ReservationEntity;
+import org.applicationn.domain.ReservationModePaiement;
+import org.applicationn.service.ReservationService;
 import org.applicationn.service.security.SecurityWrapper;
 import org.applicationn.web.util.MessageFactory;
 
-@Named("panierBean")
+@Named("reservationBean")
 @ViewScoped
-public class PanierBean implements Serializable {
+public class ReservationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger logger = Logger.getLogger(PanierBean.class.getName());
+    private static final Logger logger = Logger.getLogger(ReservationBean.class.getName());
     
-    private List<PanierEntity> panierList;
+    private List<ReservationEntity> reservationList;
 
-    private PanierEntity panier;
+    private ReservationEntity reservation;
     
     @Inject
-    private PanierService panierService;
+    private ReservationService reservationService;
     
-    public void prepareNewPanier() {
+    public void prepareNewReservation() {
         reset();
-        this.panier = new PanierEntity();
+        this.reservation = new ReservationEntity();
         // set any default values now, if you need
-        // Example: this.panier.setAnything("test");
+        // Example: this.reservation.setAnything("test");
     }
 
     public String persist() {
 
-        if (panier.getId() == null && !isPermitted("panier:create")) {
+        if (reservation.getId() == null && !isPermitted("reservation:create")) {
             return "accessDenied";
-        } else if (panier.getId() != null && !isPermitted(panier, "panier:update")) {
+        } else if (reservation.getId() != null && !isPermitted(reservation, "reservation:update")) {
             return "accessDenied";
         }
         
@@ -52,11 +54,11 @@ public class PanierBean implements Serializable {
         
         try {
             
-            if (panier.getId() != null) {
-                panier = panierService.update(panier);
+            if (reservation.getId() != null) {
+                reservation = reservationService.update(reservation);
                 message = "message_successfully_updated";
             } else {
-                panier = panierService.save(panier);
+                reservation = reservationService.save(reservation);
                 message = "message_successfully_created";
             }
         } catch (OptimisticLockException e) {
@@ -71,7 +73,7 @@ public class PanierBean implements Serializable {
             FacesContext.getCurrentInstance().validationFailed();
         }
         
-        panierList = null;
+        reservationList = null;
 
         FacesMessage facesMessage = MessageFactory.getMessage(message);
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -81,14 +83,14 @@ public class PanierBean implements Serializable {
     
     public String delete() {
         
-        if (!isPermitted(panier, "panier:delete")) {
+        if (!isPermitted(reservation, "reservation:delete")) {
             return "accessDenied";
         }
         
         String message;
         
         try {
-            panierService.delete(panier);
+            reservationService.delete(reservation);
             message = "message_successfully_deleted";
             reset();
         } catch (Exception e) {
@@ -102,44 +104,63 @@ public class PanierBean implements Serializable {
         return null;
     }
     
-    public void onDialogOpen(PanierEntity panier) {
+    public void onDialogOpen(ReservationEntity reservation) {
         reset();
-        this.panier = panier;
+        this.reservation = reservation;
     }
     
     public void reset() {
-        panier = null;
-        panierList = null;
+        reservation = null;
+        reservationList = null;
         
     }
 
-    public PanierEntity getPanier() {
-        if (this.panier == null) {
-            prepareNewPanier();
+    public SelectItem[] getModePaiementSelectItems() {
+        SelectItem[] items = new SelectItem[ReservationModePaiement.values().length];
+
+        int i = 0;
+        for (ReservationModePaiement modePaiement : ReservationModePaiement.values()) {
+            items[i++] = new SelectItem(modePaiement, getLabelForModePaiement(modePaiement));
         }
-        return this.panier;
+        return items;
     }
     
-    public void setPanier(PanierEntity panier) {
-        this.panier = panier;
+    public String getLabelForModePaiement(ReservationModePaiement value) {
+        if (value == null) {
+            return "";
+        }
+        String label = MessageFactory.getMessageString(
+                "enum_label_reservation_modePaiement_" + value);
+        return label == null? value.toString() : label;
     }
     
-    public List<PanierEntity> getPanierList() {
-        if (panierList == null) {
-            panierList = panierService.findAllPanierEntities();
+    public ReservationEntity getReservation() {
+        if (this.reservation == null) {
+            prepareNewReservation();
         }
-        return panierList;
+        return this.reservation;
+    }
+    
+    public void setReservation(ReservationEntity reservation) {
+        this.reservation = reservation;
+    }
+    
+    public List<ReservationEntity> getReservationList() {
+        if (reservationList == null) {
+            reservationList = reservationService.findAllReservationEntities();
+        }
+        return reservationList;
     }
 
-    public void setPanierList(List<PanierEntity> panierList) {
-        this.panierList = panierList;
+    public void setReservationList(List<ReservationEntity> reservationList) {
+        this.reservationList = reservationList;
     }
     
     public boolean isPermitted(String permission) {
         return SecurityWrapper.isPermitted(permission);
     }
 
-    public boolean isPermitted(PanierEntity panier, String permission) {
+    public boolean isPermitted(ReservationEntity reservation, String permission) {
         
         return SecurityWrapper.isPermitted(permission);
         

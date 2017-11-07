@@ -72,15 +72,14 @@
                     <h:outputText value="#{user.createdAt}"><f:convertDateTime /></h:outputText>
                 </p:column>
 
-          <p:column headerText="#{messages.field_label_user_age}" sortBy="#{user.age}" filterBy="#{user.age}">
+          <p:column  headerText="#{messages.field_label_user_prenom}" sortBy="#{user.prenom}" filterBy="#{user.prenom}">
             <f:facet name="filter">
-                <p:inputText id="ageFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updateAgeFilter(); return false; }" >
-                    <p:remoteCommand name="updateAgeFilter" update="userTable:ageFilter" />
-                    <f:convertNumber integerOnly="true" />
+                <p:inputText id="prenomFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updatePrenomFilter(); return false; }" >
+                    <p:remoteCommand name="updatePrenomFilter" update="userTable:prenomFilter" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{user.age}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{user.prenom}" />
           </p:column>
 
           <p:column  headerText="#{messages.field_label_user_nom}" sortBy="#{user.nom}" filterBy="#{user.nom}">
@@ -93,24 +92,15 @@
             <h:outputText value="#{user.nom}" />
           </p:column>
 
-          <p:column  headerText="#{messages.field_label_user_prenom}" sortBy="#{user.prenom}" filterBy="#{user.prenom}">
+          <p:column headerText="#{messages.field_label_user_dateDeNaissance}" sortBy="#{user.dateDeNaissance}" filterBy="#{user.dateDeNaissance}">
             <f:facet name="filter">
-                <p:inputText id="prenomFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updatePrenomFilter(); return false; }" >
-                    <p:remoteCommand name="updatePrenomFilter" update="userTable:prenomFilter" />
+                <p:inputText id="dateDeNaissanceFilter"
+                        onkeyup="if (event.keyCode == 13) {PF('userTable').filter(); updateDateDeNaissanceFilter(); return false;}" >
+                    <p:remoteCommand name="updateDateDeNaissanceFilter" update="userTable:dateDeNaissanceFilter" />
+                    <f:convertDateTime />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{user.prenom}" />
-          </p:column>
-
-          <p:column  headerText="#{messages.field_label_user_numero}" sortBy="#{user.numero}" filterBy="#{user.numero}">
-            <f:facet name="filter">
-                <p:inputText id="numeroFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updateNumeroFilter(); return false; }" >
-                    <p:remoteCommand name="updateNumeroFilter" update="userTable:numeroFilter" />
-                </p:inputText>
-            </f:facet>
-            <h:outputText value="#{user.numero}" />
+            <h:outputText value="#{user.dateDeNaissance}"><f:convertDateTime /></h:outputText>
           </p:column>
 
           <p:column  headerText="#{messages.field_label_user_adresse}" sortBy="#{user.adresse}" filterBy="#{user.adresse}">
@@ -123,6 +113,32 @@
             <h:outputText value="#{user.adresse}" />
           </p:column>
 
+          <p:column  headerText="#{messages.field_label_user_ville}" sortBy="#{user.ville}" filterBy="#{user.ville}">
+            <f:facet name="filter">
+                <p:inputText id="villeFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updateVilleFilter(); return false; }" >
+                    <p:remoteCommand name="updateVilleFilter" update="userTable:villeFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{user.ville}" />
+          </p:column>
+
+          <p:column  headerText="#{messages.field_label_user_codePostal}" sortBy="#{user.codePostal}" filterBy="#{user.codePostal}">
+            <f:facet name="filter">
+                <p:inputText id="codePostalFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('userTable').filter(); updateCodePostalFilter(); return false; }" >
+                    <p:remoteCommand name="updateCodePostalFilter" update="userTable:codePostalFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{user.codePostal}" />
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_user_salle_plural}" styleClass="action-column" exportable="false">
+            
+            <p:commandButton icon="ui-icon-transfer-e-w"  title="#{messages.field_label_user_salle_plural}" action="#{userBean.onSallesDialog(user)}" oncomplete="PF('userSallesDialogWidget').show()" update=":userSallesDialog"/>
+            
+          </p:column>
+          
                 <p:column styleClass="action-column"
                     headerText="#{messages.table_actions_column}" width="115"
                     exportable="false">
@@ -233,6 +249,50 @@
             </p:outputPanel>
         </p:dialog>
 
+    <p:dialog dynamic="true" id="userSallesDialog" header="#{messages.dialog_header_user_salle_plural}" modal="true" widgetVar="userSallesDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{userBean.reset}" />
+        <p:outputPanel id="userSallesPanel">
+            <h:form id="userSallesForm">
+                <ui:include src="/pages/admin/userSalleInclude.xhtml" />
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                        icon="ui-icon-disk"
+                        action="#{userBean.onSallesSubmit}"
+                        update=":growlForm:growl"
+                        oncomplete="if(!args.validationFailed) PF('userSallesDialogWidget').hide()"
+                        partialSubmit="true" process="@this" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('userSallesDialogWidget').hide()" type="button" />
+                </div>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="createSalleDialog"
+        rendered="#{userBean.isPermitted('salle:create')}"
+        header="#{messages.dialog_user_create_salle}" modal="true"
+        widgetVar="createSalleDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{salleBean.reset}" />
+        <p:outputPanel id="createSallePanel">
+                <h:form id="createSalleForm">
+                    <ui:include src="/pages/salle/salleEditInclude.xhtml">
+                        <ui:param name="hideGestionnaireSelectInput" value="true" />
+                    </ui:include>
+                    <div style="text-align: center; margin: 10px">
+                        <p:commandButton
+                            action="#{userBean.updateSalle(salleBean.salle)}"
+                            value="#{messages.label_save}" icon="ui-icon-disk"
+                            actionListener="#{salleBean.persist}"
+                            update=":userSallesPanel :createSallePanel :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('createSalleDialogWidget').hide()" />
+                        <p:commandButton value="#{messages.label_close}"
+                            icon="ui-icon-close"
+                            onclick="PF('createSalleDialogWidget').hide()"
+                            type="button" />
+                    </div>
+                </h:form>
+            </p:outputPanel>
+    </p:dialog>
+    
     </ui:define>
 
 </ui:composition>

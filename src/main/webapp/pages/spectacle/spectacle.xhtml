@@ -28,6 +28,11 @@
               <p:columnToggler datasource="spectacleTable" trigger="toggler" />
           </f:facet>
           
+          <p:column headerText="#{messages.label_image}">
+              <o:graphicImage value="#{spectacle.image.content}" dataURI="true"
+                  rendered="#{not empty spectacle.image.content}" width="50px"/>
+          </p:column>
+          
           <p:column  headerText="#{messages.field_label_spectacle_nom}" sortBy="#{spectacle.nom}" filterBy="#{spectacle.nom}">
             <f:facet name="filter">
                 <p:inputText id="nomFilter"
@@ -38,38 +43,27 @@
             <h:outputText value="#{spectacle.nom}" />
           </p:column>
 
-          <p:column headerText="#{messages.field_label_spectacle_type}"
-                    sortBy="#{spectacle.type}" filterBy="#{spectacle.type}">
+          <p:column headerText="#{messages.field_label_spectacle_genre}"
+                    sortBy="#{spectacle.genre}" filterBy="#{spectacle.genre}">
               <f:facet name="filter">
-                  <p:selectOneMenu id="typeFilter"
+                  <p:selectOneMenu id="genreFilter"
                                   style="width:145px;"
                                   onchange="PF('spectacleTable').filter(); return false;" >
                       <f:selectItem noSelectionOption="true" itemLabel="" />
-                      <f:selectItems value="#{spectacleBean.typeSelectItems}" />
+                      <f:selectItems value="#{spectacleBean.genreSelectItems}" />
                   </p:selectOneMenu>
               </f:facet>
-              <h:outputText value="#{spectacleBean.getLabelForType(spectacle.type)}" />
+              <h:outputText value="#{spectacleBean.getLabelForGenre(spectacle.genre)}" />
           </p:column>
 
-          <p:column  headerText="#{messages.field_label_spectacle_sujet}" sortBy="#{spectacle.sujet}" filterBy="#{spectacle.sujet}">
+          <p:column  headerText="#{messages.field_label_spectacle_theme}" sortBy="#{spectacle.theme}" filterBy="#{spectacle.theme}">
             <f:facet name="filter">
-                <p:inputText id="sujetFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateSujetFilter(); return false; }" >
-                    <p:remoteCommand name="updateSujetFilter" update="spectacleTable:sujetFilter" />
+                <p:inputText id="themeFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateThemeFilter(); return false; }" >
+                    <p:remoteCommand name="updateThemeFilter" update="spectacleTable:themeFilter" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{spectacle.sujet}" />
-          </p:column>
-
-          <p:column headerText="#{messages.field_label_spectacle_creation}" sortBy="#{spectacle.creation}" filterBy="#{spectacle.creation}">
-            <f:facet name="filter">
-                <p:inputText id="creationFilter"
-                        onkeyup="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateCreationFilter(); return false;}" >
-                    <p:remoteCommand name="updateCreationFilter" update="spectacleTable:creationFilter" />
-                    <f:convertDateTime />
-                </p:inputText>
-            </f:facet>
-            <h:outputText value="#{spectacle.creation}"><f:convertDateTime /></h:outputText>
+            <h:outputText value="#{spectacle.theme}" />
           </p:column>
 
           <p:column  headerText="#{messages.field_label_spectacle_description}" sortBy="#{spectacle.description}" filterBy="#{spectacle.description}">
@@ -82,17 +76,12 @@
             <h:outputText value="#{spectacle.description}" />
           </p:column>
 
-          <p:column headerText="#{messages.field_label_spectacle_artiste}" sortBy="#{spectacle.artiste}" filterBy="#{spectacle.artiste}">
-            <f:facet name="filter">
-                <p:inputText id="artisteFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('spectacleTable').filter(); updateArtisteFilter(); return false; }" >
-                    <p:remoteCommand name="updateArtisteFilter" update="spectacleTable:artisteFilter" />
-                    <f:convertNumber integerOnly="true" />
-                </p:inputText>
-            </f:facet>
-            <h:outputText value="#{spectacle.artiste}" ><f:convertNumber /></h:outputText>
+          <p:column headerText="#{messages.field_label_spectacle_artistes_plural}" styleClass="action-column" exportable="false">
+            
+            <p:commandButton icon="ui-icon-transfer-e-w"  title="#{messages.field_label_spectacle_artistes_plural}" action="#{spectacleBean.onArtistessDialog(spectacle)}" oncomplete="PF('spectacleArtistessDialogWidget').show()" update=":spectacleArtistessDialog"/>
+            
           </p:column>
-
+          
           <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
             
             <p:commandButton icon="ui-icon-zoomin" update=":viewSpectacleDialog" oncomplete="PF('viewSpectacleDialogWidget').show()" title="#{messages.label_view}">
@@ -158,6 +147,51 @@
               <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewSpectacleDialogWidget').hide()" type="button" />
           </div>
         </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="spectacleArtistessDialog" header="#{messages.dialog_header_spectacle_artistes_plural}" modal="true" widgetVar="spectacleArtistessDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{spectacleBean.reset}" />
+        <p:outputPanel id="spectacleArtistessPanel">
+            <h:form id="spectacleArtistessForm">
+                <ui:include src="/pages/spectacle/spectacleArtistesInclude.xhtml" />
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                        icon="ui-icon-disk"
+                        action="#{spectacleBean.onArtistessSubmit}"
+                        update=":growlForm:growl"
+                        oncomplete="if(!args.validationFailed) PF('spectacleArtistessDialogWidget').hide()"
+                        rendered="#{spectacleBean.isPermitted(spectacleBean.spectacle, 'spectacle:update')}"
+                        partialSubmit="true" process="@this" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('spectacleArtistessDialogWidget').hide()" type="button" />
+                </div>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="createArtistesDialog"
+        rendered="#{spectacleBean.isPermitted('artiste:create')}"
+        header="#{messages.dialog_spectacle_create_artistes}" modal="true"
+        widgetVar="createArtistesDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{artisteBean.reset}" />
+        <p:outputPanel id="createArtistesPanel">
+                <h:form id="createArtistesForm">
+                    <ui:include src="/pages/artiste/artisteEditInclude.xhtml">
+                        <ui:param name="hideSpectaclesSelectInput" value="true" />
+                    </ui:include>
+                    <div style="text-align: center; margin: 10px">
+                        <p:commandButton
+                            action="#{spectacleBean.updateArtistes(artisteBean.artiste)}"
+                            value="#{messages.label_save}" icon="ui-icon-disk"
+                            actionListener="#{artisteBean.persist}"
+                            update=":spectacleArtistessPanel :createArtistesPanel :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('createArtistesDialogWidget').hide()" />
+                        <p:commandButton value="#{messages.label_close}"
+                            icon="ui-icon-close"
+                            onclick="PF('createArtistesDialogWidget').hide()"
+                            type="button" />
+                    </div>
+                </h:form>
+            </p:outputPanel>
     </p:dialog>
     
   </ui:define>

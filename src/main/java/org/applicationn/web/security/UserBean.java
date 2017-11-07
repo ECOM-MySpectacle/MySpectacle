@@ -1,6 +1,8 @@
 package org.applicationn.web.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,13 +15,17 @@ import javax.inject.Named;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
+import org.applicationn.domain.SalleEntity;
 import org.applicationn.domain.security.UserEntity;
 import org.applicationn.domain.security.UserRole;
 import org.applicationn.domain.security.UserStatus;
+import org.applicationn.service.SalleService;
 import org.applicationn.service.security.SecurityWrapper;
 import org.applicationn.service.security.UserService;
 import org.applicationn.web.generic.GenericLazyDataModel;
 import org.applicationn.web.util.MessageFactory;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.LazyDataModel;
 
 @Named("userBean")
@@ -36,6 +42,13 @@ public class UserBean implements Serializable {
 
     @Inject
     private UserService userService;
+    
+    @Inject
+    private SalleService salleService;
+    
+    private DualListModel<SalleEntity> salles;
+    private List<String> transferedSalleIDs;
+    private List<String> removedSalleIDs;
     
     public UserEntity getUser() {
         if (user == null) {
@@ -123,6 +136,10 @@ public class UserBean implements Serializable {
     public void reset() {
         user = null;
         
+        salles = null;
+        transferedSalleIDs = null;
+        removedSalleIDs = null;
+        
     }
     
     public SelectItem[] getRolesSelectItems() {
@@ -145,6 +162,102 @@ public class UserBean implements Serializable {
             items[i++] = new SelectItem(status, status.toString());
         }
         return items;
+    }
+    
+    public DualListModel<SalleEntity> getSalles() {
+        return salles;
+    }
+
+    public void setSalles(DualListModel<SalleEntity> salles) {
+        this.salles = salles;
+    }
+    
+    public List<SalleEntity> getFullSallesList() {
+        List<SalleEntity> allList = new ArrayList<>();
+        allList.addAll(salles.getSource());
+        allList.addAll(salles.getTarget());
+        return allList;
+    }
+    
+    public void onSallesDialog(UserEntity user) {
+        // Prepare the salle PickList
+        this.user = user;
+        List<SalleEntity> selectedSallesFromDB = salleService
+                .findSallesByGestionnaire(this.user);
+        List<SalleEntity> availableSallesFromDB = salleService
+                .findAvailableSalles(this.user);
+        this.salles = new DualListModel<>(availableSallesFromDB, selectedSallesFromDB);
+        
+        transferedSalleIDs = new ArrayList<>();
+        removedSalleIDs = new ArrayList<>();
+    }
+    
+    public void onSallesPickListTransfer(TransferEvent event) {
+        // If a salle is transferred within the PickList, we just transfer it in this
+        // bean scope. We do not change anything it the database, yet.
+        for (Object item : event.getItems()) {
+            String id = ((SalleEntity) item).getId().toString();
+            if (event.isAdd()) {
+                transferedSalleIDs.add(id);
+                removedSalleIDs.remove(id);
+            } else if (event.isRemove()) {
+                removedSalleIDs.add(id);
+                transferedSalleIDs.remove(id);
+            }
+        }
+        
+    }
+    
+    public void updateSalle(SalleEntity salle) {
+        // If a new salle is created, we persist it to the database,
+        // but we do not assign it to this user in the database, yet.
+        salles.getTarget().add(salle);
+        transferedSalleIDs.add(salle.getId().toString());
+    }
+    
+    public void onSallesSubmit() {
+        // Now we save the changed of the PickList to the database.
+        try {
+            List<SalleEntity> selectedSallesFromDB = salleService
+                    .findSallesByGestionnaire(this.user);
+            List<SalleEntity> availableSallesFromDB = salleService
+                    .findAvailableSalles(this.user);
+            
+            for (SalleEntity salle : selectedSallesFromDB) {
+                if (removedSalleIDs.contains(salle.getId().toString())) {
+                    salle.setGestionnaire(null);
+                    salleService.update(salle);
+                }
+            }
+    
+            for (SalleEntity salle : availableSallesFromDB) {
+                if (transferedSalleIDs.contains(salle.getId().toString())) {
+                    salle.setGestionnaire(user);
+                    salleService.update(salle);
+                }
+            }
+            
+            FacesMessage facesMessage = MessageFactory.getMessage(
+                    "message_changes_saved");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            
+            reset();
+
+        } catch (OptimisticLockException e) {
+            logger.log(Level.SEVERE, "Error occured", e);
+            FacesMessage facesMessage = MessageFactory.getMessage(
+                    "message_optimistic_locking_exception");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            // Set validationFailed to keep the dialog open
+            FacesContext.getCurrentInstance().validationFailed();
+        } catch (PersistenceException e) {
+            logger.log(Level.SEVERE, "Error occured", e);
+            FacesMessage facesMessage = MessageFactory.getMessage(
+                    "message_picklist_save_exception");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            // Set validationFailed to keep the dialog open
+            FacesContext.getCurrentInstance().validationFailed();
+        }
     }
     
     public void loadCurrentUser() {

@@ -14,7 +14,9 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
 import org.applicationn.domain.RepresentationEntity;
+import org.applicationn.domain.SalleEntity;
 import org.applicationn.service.RepresentationService;
+import org.applicationn.service.SalleService;
 import org.applicationn.service.security.SecurityWrapper;
 import org.applicationn.web.util.MessageFactory;
 
@@ -32,6 +34,11 @@ public class RepresentationBean implements Serializable {
     
     @Inject
     private RepresentationService representationService;
+    
+    @Inject
+    private SalleService salleService;
+    
+    private List<SalleEntity> allSallesList;
     
     public void prepareNewRepresentation() {
         reset();
@@ -111,8 +118,25 @@ public class RepresentationBean implements Serializable {
         representation = null;
         representationList = null;
         
+        allSallesList = null;
+        
     }
 
+    // Get a List of all salle
+    public List<SalleEntity> getSalles() {
+        if (this.allSallesList == null) {
+            this.allSallesList = salleService.findAllSalleEntities();
+        }
+        return this.allSallesList;
+    }
+    
+    // Update salle of the current representation
+    public void updateSalle(SalleEntity salle) {
+        this.representation.setSalle(salle);
+        // Maybe we just created and assigned a new salle. So reset the allSalleList.
+        allSallesList = null;
+    }
+    
     public RepresentationEntity getRepresentation() {
         if (this.representation == null) {
             prepareNewRepresentation();

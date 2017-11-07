@@ -13,23 +13,20 @@
     
     <h:panelGrid columns="2" styleClass="dialog" columnClasses="col1,col2" rendered="#{representationBean.isPermitted(representationBean.representation, 'representation:read')}">
         
-        <h:outputText value="#{messages.field_label_representation_spectacle}:" />
-        <h:outputText value="#{representationBean.representation.spectacle}" />
-
-        <h:outputText value="#{messages.field_label_representation_salle}:" />
-        <h:outputText value="#{representationBean.representation.salle}" />
-
         <h:outputText value="#{messages.field_label_representation_date}:" />
         <h:outputText value="#{representationBean.representation.date}" ><f:convertDateTime /></h:outputText>
 
-        <h:outputText value="#{messages.field_label_representation_nbPlaceFosseDisponible}:" />
-        <h:outputText value="#{representationBean.representation.nbPlaceFosseDisponible}" />
+        <h:outputText value="#{messages.field_label_representation_nbPlacesFosseLibres}:" />
+        <h:outputText value="#{representationBean.representation.nbPlacesFosseLibres}" />
 
-        <h:outputText value="#{messages.field_label_representation_nbPlaceBalconDisponible}:" />
-        <h:outputText value="#{representationBean.representation.nbPlaceBalconDisponible}" />
+        <h:outputText value="#{messages.field_label_representation_nbPlacesBalconLibres}:" />
+        <h:outputText value="#{representationBean.representation.nbPlacesBalconLibres}" />
 
-        <h:outputText value="#{messages.field_label_representation_nbPlaceOrchestreDisponible}:" />
-        <h:outputText value="#{representationBean.representation.nbPlaceOrchestreDisponible}" />
+        <h:outputText value="#{messages.field_label_representation_nbPlacesOrchestreLibres}:" />
+        <h:outputText value="#{representationBean.representation.nbPlacesOrchestreLibres}" />
+
+        <h:outputText value="#{messages.field_label_representation_salle}:" />
+        <h:outputText value="#{representationBean.representation.salle.id}" />
 
     </h:panelGrid>
 </html>

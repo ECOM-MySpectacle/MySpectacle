@@ -11,35 +11,51 @@
 
             <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
             
-                <h:outputLabel value="#{messages.field_label_representation_spectacle}:" for="spectacleEditInput" />
-                <p:inputText value="#{representationBean.representation.spectacle}"  id="spectacleEditInput" 
-                    label="#{messages.field_label_representation_spectacle}" />
-                <p:message for="spectacleEditInput" display="icon" />
-
-                <h:outputLabel value="#{messages.field_label_representation_salle}:" for="salleEditInput" />
-                <p:inputText value="#{representationBean.representation.salle}"  id="salleEditInput" 
-                    label="#{messages.field_label_representation_salle}" />
-                <p:message for="salleEditInput" display="icon" />
-
                 <h:outputLabel value="#{messages.field_label_representation_date}:" for="dateEditInput" />
                 <p:calendar id="dateEditInput" navigator="true" value="#{representationBean.representation.date}" label="#{messages.field_label_representation_date}" />
                 <p:message for="dateEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_representation_nbPlaceFosseDisponible}:" for="nbPlaceFosseDisponibleEditInput" />
-                <p:inputText value="#{representationBean.representation.nbPlaceFosseDisponible}"  id="nbPlaceFosseDisponibleEditInput" 
-                    label="#{messages.field_label_representation_nbPlaceFosseDisponible}" />
-                <p:message for="nbPlaceFosseDisponibleEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesFosseLibres}:" for="nbPlacesFosseLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesFosseLibres}"  id="nbPlacesFosseLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesFosseLibres}" />
+                <p:message for="nbPlacesFosseLibresEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_representation_nbPlaceBalconDisponible}:" for="nbPlaceBalconDisponibleEditInput" />
-                <p:inputText value="#{representationBean.representation.nbPlaceBalconDisponible}"  id="nbPlaceBalconDisponibleEditInput" 
-                    label="#{messages.field_label_representation_nbPlaceBalconDisponible}" />
-                <p:message for="nbPlaceBalconDisponibleEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesBalconLibres}:" for="nbPlacesBalconLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesBalconLibres}"  id="nbPlacesBalconLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesBalconLibres}" />
+                <p:message for="nbPlacesBalconLibresEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_representation_nbPlaceOrchestreDisponible}:" for="nbPlaceOrchestreDisponibleEditInput" />
-                <p:inputText value="#{representationBean.representation.nbPlaceOrchestreDisponible}"  id="nbPlaceOrchestreDisponibleEditInput" 
-                    label="#{messages.field_label_representation_nbPlaceOrchestreDisponible}" />
-                <p:message for="nbPlaceOrchestreDisponibleEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesOrchestreLibres}:" for="nbPlacesOrchestreLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesOrchestreLibres}"  id="nbPlacesOrchestreLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesOrchestreLibres}" />
+                <p:message for="nbPlacesOrchestreLibresEditInput" display="icon" />
 
+                <h:outputLabel value="#{messages.field_label_representation_salle}:" for="salleSelectInput" rendered="#{not hideSalleSelectInput}"/>
+                <h:panelGroup rendered="#{not hideSalleSelectInput}">
+                    <p:selectOneMenu value="#{representationBean.representation.salle}"
+                                    id="salleSelectInput">
+                        <f:selectItem noSelectionOption="true" itemLabel="" />
+                        <f:selectItems value="#{representationBean.salles}" 
+                                    var="salle" 
+                                    itemLabel="#{salle.id}"
+                                    itemValue="#{salle}" />
+                        <o:converter converterId="omnifaces.SelectItemsConverter" list="#{representationBean.salles}" />
+                    </p:selectOneMenu>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not hideSalleSelectInput}">
+                
+                    <p:commandButton icon="ui-icon-plusthick" title="#{messages.label_create}"
+                              action="#{salleBean.prepareNewSalle()}"
+                              update=":createSalleFromEditDialog"
+                              resetValues="true"
+                              oncomplete="PF('createSalleFromEditDialogWidget').show()"
+                              rendered="#{applicationBean.componentExists('createSalleFromEditDialog') and representationBean.isPermitted('salle:create')}"
+                              style="vertical-align:top;" partialSubmit="true" process="@this">
+                    </p:commandButton>
+                    
+                    <p:message for="salleSelectInput" display="icon" rendered="#{not hideSalleSelectInput}"/>
+                </h:panelGroup>
+                
             </p:panelGrid>
 
         </p:outputPanel>

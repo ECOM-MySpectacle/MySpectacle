@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+        <p:outputPanel styleClass="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
+            
+                <h:outputLabel value="#{messages.field_label_reservation_nbPlaceFosse}:" for="nbPlaceFosseEditInput" />
+                <p:inputText value="#{reservationBean.reservation.nbPlaceFosse}"  id="nbPlaceFosseEditInput" 
+                    label="#{messages.field_label_reservation_nbPlaceFosse}" />
+                <p:message for="nbPlaceFosseEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_reservation_nbPlaceBalcon}:" for="nbPlaceBalconEditInput" />
+                <p:inputText value="#{reservationBean.reservation.nbPlaceBalcon}"  id="nbPlaceBalconEditInput" 
+                    label="#{messages.field_label_reservation_nbPlaceBalcon}" />
+                <p:message for="nbPlaceBalconEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_reservation_nbPlaceOrchestre}:" for="nbPlaceOrchestreEditInput" />
+                <p:inputText value="#{reservationBean.reservation.nbPlaceOrchestre}"  id="nbPlaceOrchestreEditInput" 
+                    label="#{messages.field_label_reservation_nbPlaceOrchestre}" />
+                <p:message for="nbPlaceOrchestreEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_reservation_modePaiement}:" for="modePaiementSelect" />
+                <p:selectOneMenu value="#{reservationBean.reservation.modePaiement}" converter="omnifaces.GenericEnumConverter"  id="modePaiementSelect">
+                    <f:selectItem noSelectionOption="true" itemLabel="" />
+                    <f:selectItems value="#{reservationBean.modePaiementSelectItems}" />
+                </p:selectOneMenu>
+                <p:message for="modePaiementSelect" display="icon" />
+
+            </p:panelGrid>
+
+        </p:outputPanel>
+</html>

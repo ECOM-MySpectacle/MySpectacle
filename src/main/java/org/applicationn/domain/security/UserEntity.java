@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -70,25 +69,35 @@ public class UserEntity extends BaseEntity implements Serializable {
     @NotNull
     private UserStatus status;
     
-    @Column(name="\"age\"")
-    @Digits(integer = 4, fraction = 0)
-    private Integer age;
-
-    @Size(max = 50)
-    @Column(length = 50, name="\"nom\"")
-    private String nom;
-
     @Size(max = 50)
     @Column(length = 50, name="\"prenom\"")
+    @NotNull
     private String prenom;
 
     @Size(max = 50)
-    @Column(length = 50, name="\"numero\"")
-    private String numero;
+    @Column(length = 50, name="\"nom\"")
+    @NotNull
+    private String nom;
 
-    @Size(max = 200)
-    @Column(length = 200, name="\"adresse\"")
+    @Column(name="\"dateDeNaissance\"")
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    private Date dateDeNaissance;
+
+    @Size(max = 150)
+    @Column(length = 150, name="\"adresse\"")
+    @NotNull
     private String adresse;
+
+    @Size(max = 100)
+    @Column(length = 100, name="\"ville\"")
+    @NotNull
+    private String ville;
+
+    @Size(max = 10)
+    @Column(length = 10, name="\"codePostal\"")
+    @NotNull
+    private String codePostal;
 
     public String getUsername() {
         return this.username;
@@ -170,12 +179,12 @@ public class UserEntity extends BaseEntity implements Serializable {
         this.roles = roles;
     }
 
-    public Integer getAge() {
-        return this.age;
+    public String getPrenom() {
+        return this.prenom;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getNom() {
@@ -186,20 +195,12 @@ public class UserEntity extends BaseEntity implements Serializable {
         this.nom = nom;
     }
 
-    public String getPrenom() {
-        return this.prenom;
+    public Date getDateDeNaissance() {
+        return this.dateDeNaissance;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getNumero() {
-        return this.numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setDateDeNaissance(Date dateDeNaissance) {
+        this.dateDeNaissance = dateDeNaissance;
     }
 
     public String getAdresse() {
@@ -208,6 +209,22 @@ public class UserEntity extends BaseEntity implements Serializable {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public String getVille() {
+        return this.ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getCodePostal() {
+        return this.codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
     }
 
 }

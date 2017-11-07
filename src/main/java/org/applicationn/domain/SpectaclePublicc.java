@@ -1,6 +1,6 @@
 package org.applicationn.domain;
 
-public enum SpectacleCible {
+public enum SpectaclePublicc {
     
     FAMILLE, COUPLE, AMIS, ENFANT, ADOLESCENT, ADULTE;
 }

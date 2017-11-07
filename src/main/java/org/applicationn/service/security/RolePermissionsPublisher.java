@@ -24,41 +24,17 @@ public class RolePermissionsPublisher {
 
         if (rolePermissionService.countAllEntries() == 0) {
 
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:create"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:update"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:delete"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "spectacle:create"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "spectacle:update"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "spectacle:delete"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:create"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:update"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:delete"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "salle:create"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "salle:update"));
-            
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "salle:delete"));
-            
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "artiste:create"));
             
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "artiste:update"));
             
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "artiste:delete"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "artiste:create"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:create"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "artiste:update"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:update"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "artiste:delete"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "spectacle:delete"));
             
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "representation:create"));
             
@@ -66,19 +42,29 @@ public class RolePermissionsPublisher {
             
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "representation:delete"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "representation:create"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:create"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "representation:update"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:update"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Organisateur, "representation:delete"));
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "salle:delete"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "panier:create"));
+            rolePermissionService.save(new RolePermission(UserRole.Superviseur, "salle:create"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "panier:read"));
+            rolePermissionService.save(new RolePermission(UserRole.Superviseur, "salle:update"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "panier:update"));
+            rolePermissionService.save(new RolePermission(UserRole.Superviseur, "salle:delete"));
             
-            rolePermissionService.save(new RolePermission(UserRole.Administrator, "panier:delete"));
+            rolePermissionService.save(new RolePermission(UserRole.Gerant, "salle:create"));
+            
+            rolePermissionService.save(new RolePermission(UserRole.Gerant, "salle:update"));
+            
+            rolePermissionService.save(new RolePermission(UserRole.Gerant, "salle:delete"));
+            
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "reservation:create"));
+            
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "reservation:update"));
+            
+            rolePermissionService.save(new RolePermission(UserRole.Administrator, "reservation:delete"));
             
             rolePermissionService.save(new RolePermission(UserRole.Administrator, "user:*"));
             

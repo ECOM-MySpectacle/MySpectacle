@@ -28,6 +28,11 @@
               <p:columnToggler datasource="artisteTable" trigger="toggler" />
           </f:facet>
           
+          <p:column headerText="#{messages.label_image}">
+              <o:graphicImage value="#{artiste.image.content}" dataURI="true"
+                  rendered="#{not empty artiste.image.content}" width="50px"/>
+          </p:column>
+          
           <p:column  headerText="#{messages.field_label_artiste_nom}" sortBy="#{artiste.nom}" filterBy="#{artiste.nom}">
             <f:facet name="filter">
                 <p:inputText id="nomFilter"
@@ -38,6 +43,22 @@
             <h:outputText value="#{artiste.nom}" />
           </p:column>
 
+          <p:column  headerText="#{messages.field_label_artiste_bio}" sortBy="#{artiste.bio}" filterBy="#{artiste.bio}">
+            <f:facet name="filter">
+                <p:inputText id="bioFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('artisteTable').filter(); updateBioFilter(); return false; }" >
+                    <p:remoteCommand name="updateBioFilter" update="artisteTable:bioFilter" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{artiste.bio}" />
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_artiste_spectacles_plural}" styleClass="action-column" exportable="false">
+            
+            <p:commandButton icon="ui-icon-transfer-e-w"  title="#{messages.field_label_artiste_spectacles_plural}" action="#{artisteBean.onSpectaclessDialog(artiste)}" oncomplete="PF('artisteSpectaclessDialogWidget').show()" update=":artisteSpectaclessDialog"/>
+            
+          </p:column>
+          
           <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
             
             <p:commandButton icon="ui-icon-zoomin" update=":viewArtisteDialog" oncomplete="PF('viewArtisteDialogWidget').show()" title="#{messages.label_view}">
@@ -103,6 +124,51 @@
               <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewArtisteDialogWidget').hide()" type="button" />
           </div>
         </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="artisteSpectaclessDialog" header="#{messages.dialog_header_artiste_spectacles_plural}" modal="true" widgetVar="artisteSpectaclessDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{artisteBean.reset}" />
+        <p:outputPanel id="artisteSpectaclessPanel">
+            <h:form id="artisteSpectaclessForm">
+                <ui:include src="/pages/artiste/artisteSpectaclesInclude.xhtml" />
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                        icon="ui-icon-disk"
+                        action="#{artisteBean.onSpectaclessSubmit}"
+                        update=":growlForm:growl"
+                        oncomplete="if(!args.validationFailed) PF('artisteSpectaclessDialogWidget').hide()"
+                        rendered="#{artisteBean.isPermitted(artisteBean.artiste, 'artiste:update')}"
+                        partialSubmit="true" process="@this" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('artisteSpectaclessDialogWidget').hide()" type="button" />
+                </div>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="createSpectaclesDialog"
+        rendered="#{artisteBean.isPermitted('spectacle:create')}"
+        header="#{messages.dialog_artiste_create_spectacles}" modal="true"
+        widgetVar="createSpectaclesDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{spectacleBean.reset}" />
+        <p:outputPanel id="createSpectaclesPanel">
+                <h:form id="createSpectaclesForm">
+                    <ui:include src="/pages/spectacle/spectacleEditInclude.xhtml">
+                        <ui:param name="hideArtistesSelectInput" value="true" />
+                    </ui:include>
+                    <div style="text-align: center; margin: 10px">
+                        <p:commandButton
+                            action="#{artisteBean.updateSpectacles(spectacleBean.spectacle)}"
+                            value="#{messages.label_save}" icon="ui-icon-disk"
+                            actionListener="#{spectacleBean.persist}"
+                            update=":artisteSpectaclessPanel :createSpectaclesPanel :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('createSpectaclesDialogWidget').hide()" />
+                        <p:commandButton value="#{messages.label_close}"
+                            icon="ui-icon-close"
+                            onclick="PF('createSpectaclesDialogWidget').hide()"
+                            type="button" />
+                    </div>
+                </h:form>
+            </p:outputPanel>
     </p:dialog>
     
   </ui:define>

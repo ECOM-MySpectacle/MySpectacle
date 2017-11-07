@@ -19,14 +19,20 @@
         <h:outputText value="#{messages.field_label_salle_adresse}:" />
         <h:outputText value="#{salleBean.salle.adresse}" />
 
-        <h:outputText value="#{messages.field_label_salle_nbPlaceFosse}:" />
-        <h:outputText value="#{salleBean.salle.nbPlaceFosse}" />
+        <h:outputText value="#{messages.field_label_salle_ville}:" />
+        <h:outputText value="#{salleBean.salle.ville}" />
 
-        <h:outputText value="#{messages.field_label_salle_nbPlaceBalcon}:" />
-        <h:outputText value="#{salleBean.salle.nbPlaceBalcon}" />
+        <h:outputText value="#{messages.field_label_salle_nbPlacesFosse}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesFosse}" />
 
-        <h:outputText value="#{messages.field_label_salle_nbPlaceOrchestre}:" />
-        <h:outputText value="#{salleBean.salle.nbPlaceOrchestre}" />
+        <h:outputText value="#{messages.field_label_salle_nbPlacesBalcon}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesBalcon}" />
+
+        <h:outputText value="#{messages.field_label_salle_nbPlacesOrchestre}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesOrchestre}" />
+
+        <h:outputText value="#{messages.field_label_salle_gestionnaire}:" />
+        <h:outputText value="#{salleBean.salle.gestionnaire.username}" />
 
     </h:panelGrid>
 </html>

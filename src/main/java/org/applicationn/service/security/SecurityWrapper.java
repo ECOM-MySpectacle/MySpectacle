@@ -29,7 +29,7 @@ public class SecurityWrapper implements Serializable {
     
     // Because Shiro does not support public permissions, we need to workaround them:
     private static final Set<String> publicPermissions = 
-            new HashSet<>(Arrays.asList(new String[]{"spectacle:read" ,"spectacle:read" ,"spectacle:read" ,"spectacle:read" ,"salle:read" ,"salle:read" ,"salle:read" ,"salle:read" ,"artiste:read" ,"artiste:read" ,"artiste:read" ,"artiste:read" ,"representation:read" ,"representation:read" ,"representation:read" ,"representation:read"}));
+            new HashSet<>(Arrays.asList(new String[]{"artiste:read" ,"artiste:read" ,"artiste:read" ,"artiste:read" ,"artiste:read" ,"spectacle:read" ,"spectacle:read" ,"spectacle:read" ,"spectacle:read" ,"spectacle:read" ,"representation:read" ,"representation:read" ,"representation:read" ,"representation:read" ,"representation:read" ,"salle:read" ,"salle:read" ,"salle:read" ,"salle:read" ,"salle:read" ,"reservation:read" ,"reservation:read" ,"reservation:read" ,"reservation:read" ,"reservation:read"}));
     
     public static boolean login(String username, String password, boolean rememberMe) {
         try {

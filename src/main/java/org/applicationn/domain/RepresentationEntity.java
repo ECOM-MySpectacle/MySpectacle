@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,51 +21,29 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name="\"spectacle\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer spectacle;
-
-    @Column(name="\"salle\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer salle;
-
     @Column(name="\"date\"")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date date;
 
-    @Column(name="\"nbPlaceFosseDisponible\"")
+    @Column(name="\"nbPlacesFosseLibres\"")
     @Digits(integer = 4, fraction = 0)
     @NotNull
-    private Integer nbPlaceFosseDisponible;
+    private Integer nbPlacesFosseLibres;
 
-    @Column(name="\"nbPlaceBalconDisponible\"")
+    @Column(name="\"nbPlacesBalconLibres\"")
     @Digits(integer = 4, fraction = 0)
     @NotNull
-    private Integer nbPlaceBalconDisponible;
+    private Integer nbPlacesBalconLibres;
 
-    @Column(name="\"nbPlaceOrchestreDisponible\"")
+    @Column(name="\"nbPlacesOrchestreLibres\"")
     @Digits(integer = 4, fraction = 0)
     @NotNull
-    private Integer nbPlaceOrchestreDisponible;
+    private Integer nbPlacesOrchestreLibres;
 
-    public Integer getSpectacle() {
-        return this.spectacle;
-    }
-
-    public void setSpectacle(Integer spectacle) {
-        this.spectacle = spectacle;
-    }
-
-    public Integer getSalle() {
-        return this.salle;
-    }
-
-    public void setSalle(Integer salle) {
-        this.salle = salle;
-    }
+    @ManyToOne(optional=true)
+    @JoinColumn(name = "SALLE_ID", referencedColumnName = "ID")
+    private SalleEntity salle;
 
     public Date getDate() {
         return this.date;
@@ -73,28 +53,36 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
         this.date = date;
     }
 
-    public Integer getNbPlaceFosseDisponible() {
-        return this.nbPlaceFosseDisponible;
+    public Integer getNbPlacesFosseLibres() {
+        return this.nbPlacesFosseLibres;
     }
 
-    public void setNbPlaceFosseDisponible(Integer nbPlaceFosseDisponible) {
-        this.nbPlaceFosseDisponible = nbPlaceFosseDisponible;
+    public void setNbPlacesFosseLibres(Integer nbPlacesFosseLibres) {
+        this.nbPlacesFosseLibres = nbPlacesFosseLibres;
     }
 
-    public Integer getNbPlaceBalconDisponible() {
-        return this.nbPlaceBalconDisponible;
+    public Integer getNbPlacesBalconLibres() {
+        return this.nbPlacesBalconLibres;
     }
 
-    public void setNbPlaceBalconDisponible(Integer nbPlaceBalconDisponible) {
-        this.nbPlaceBalconDisponible = nbPlaceBalconDisponible;
+    public void setNbPlacesBalconLibres(Integer nbPlacesBalconLibres) {
+        this.nbPlacesBalconLibres = nbPlacesBalconLibres;
     }
 
-    public Integer getNbPlaceOrchestreDisponible() {
-        return this.nbPlaceOrchestreDisponible;
+    public Integer getNbPlacesOrchestreLibres() {
+        return this.nbPlacesOrchestreLibres;
     }
 
-    public void setNbPlaceOrchestreDisponible(Integer nbPlaceOrchestreDisponible) {
-        this.nbPlaceOrchestreDisponible = nbPlaceOrchestreDisponible;
+    public void setNbPlacesOrchestreLibres(Integer nbPlacesOrchestreLibres) {
+        this.nbPlacesOrchestreLibres = nbPlacesOrchestreLibres;
+    }
+
+    public SalleEntity getSalle() {
+        return this.salle;
+    }
+
+    public void setSalle(SalleEntity salle) {
+        this.salle = salle;
     }
 
 }

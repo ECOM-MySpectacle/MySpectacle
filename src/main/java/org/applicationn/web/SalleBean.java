@@ -14,8 +14,10 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
 import org.applicationn.domain.SalleEntity;
+import org.applicationn.domain.security.UserEntity;
 import org.applicationn.service.SalleService;
 import org.applicationn.service.security.SecurityWrapper;
+import org.applicationn.service.security.UserService;
 import org.applicationn.web.util.MessageFactory;
 
 @Named("salleBean")
@@ -32,6 +34,11 @@ public class SalleBean implements Serializable {
     
     @Inject
     private SalleService salleService;
+    
+    @Inject
+    private UserService userService;
+    
+    private List<UserEntity> allGestionnairesList;
     
     public void prepareNewSalle() {
         reset();
@@ -111,8 +118,25 @@ public class SalleBean implements Serializable {
         salle = null;
         salleList = null;
         
+        allGestionnairesList = null;
+        
     }
 
+    // Get a List of all gestionnaire
+    public List<UserEntity> getGestionnaires() {
+        if (this.allGestionnairesList == null) {
+            this.allGestionnairesList = userService.findAllUserEntities();
+        }
+        return this.allGestionnairesList;
+    }
+    
+    // Update gestionnaire of the current salle
+    public void updateGestionnaire(UserEntity user) {
+        this.salle.setGestionnaire(user);
+        // Maybe we just created and assigned a new user. So reset the allGestionnaireList.
+        allGestionnairesList = null;
+    }
+    
     public SalleEntity getSalle() {
         if (this.salle == null) {
             prepareNewSalle();

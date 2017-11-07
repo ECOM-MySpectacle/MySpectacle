@@ -9,14 +9,23 @@
 
         <p:outputPanel styleClass="ui-fluid">
 
+            <p:panel id="artisteImage" header="#{messages.label_image}" style="max-width:400px">
+                <o:graphicImage value="#{artisteBean.uploadedImageContents}" dataURI="true"
+                    rendered="#{not empty artisteBean.uploadedImageContents}" width="200px" />
+                <p:fileUpload mode="advanced" fileLimit="1"
+                    fileUploadListener="#{artisteBean.handleImageUpload}" update="artisteImage :growlForm:growl"
+                    cancelLabel="#{messages.upload_cancel}" uploadLabel="#{messages.upload_upload}" label="#{messages.upload_choose}"
+                    multiple="false" style="overflow:auto;width:380px"/>
+            </p:panel>
             <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
-            
                 <h:outputLabel value="#{messages.field_label_artiste_nom}:" for="nomEditInput" />
                 <p:inputText value="#{artisteBean.artiste.nom}" id="nomEditInput" 
                     label="#{messages.field_label_artiste_nom}" />
                 <p:message for="nomEditInput" display="icon" />
-
+                <h:outputLabel value="#{messages.field_label_artiste_bio}:" for="bioEditInput" />
+                <p:inputText value="#{artisteBean.artiste.bio}" id="bioEditInput" 
+                    label="#{messages.field_label_artiste_bio}" />
+                <p:message for="bioEditInput" display="icon" />
             </p:panelGrid>
-
         </p:outputPanel>
 </html>

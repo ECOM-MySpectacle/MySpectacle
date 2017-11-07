@@ -48,37 +48,63 @@
             <h:outputText value="#{salle.adresse}" />
           </p:column>
 
-          <p:column headerText="#{messages.field_label_salle_nbPlaceFosse}" sortBy="#{salle.nbPlaceFosse}" filterBy="#{salle.nbPlaceFosse}">
+          <p:column  headerText="#{messages.field_label_salle_ville}" sortBy="#{salle.ville}" filterBy="#{salle.ville}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceFosseFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlaceFosseFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceFosseFilter" update="salleTable:nbPlaceFosseFilter" />
-                    <f:convertNumber integerOnly="true" />
+                <p:inputText id="villeFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateVilleFilter(); return false; }" >
+                    <p:remoteCommand name="updateVilleFilter" update="salleTable:villeFilter" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{salle.nbPlaceFosse}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{salle.ville}" />
           </p:column>
 
-          <p:column headerText="#{messages.field_label_salle_nbPlaceBalcon}" sortBy="#{salle.nbPlaceBalcon}" filterBy="#{salle.nbPlaceBalcon}">
+          <p:column headerText="#{messages.field_label_salle_nbPlacesFosse}" sortBy="#{salle.nbPlacesFosse}" filterBy="#{salle.nbPlacesFosse}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceBalconFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlaceBalconFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceBalconFilter" update="salleTable:nbPlaceBalconFilter" />
+                <p:inputText id="nbPlacesFosseFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlacesFosseFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesFosseFilter" update="salleTable:nbPlacesFosseFilter" />
                     <f:convertNumber integerOnly="true" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{salle.nbPlaceBalcon}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{salle.nbPlacesFosse}" ><f:convertNumber /></h:outputText>
           </p:column>
 
-          <p:column headerText="#{messages.field_label_salle_nbPlaceOrchestre}" sortBy="#{salle.nbPlaceOrchestre}" filterBy="#{salle.nbPlaceOrchestre}">
+          <p:column headerText="#{messages.field_label_salle_nbPlacesBalcon}" sortBy="#{salle.nbPlacesBalcon}" filterBy="#{salle.nbPlacesBalcon}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceOrchestreFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlaceOrchestreFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceOrchestreFilter" update="salleTable:nbPlaceOrchestreFilter" />
+                <p:inputText id="nbPlacesBalconFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlacesBalconFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesBalconFilter" update="salleTable:nbPlacesBalconFilter" />
                     <f:convertNumber integerOnly="true" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{salle.nbPlaceOrchestre}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{salle.nbPlacesBalcon}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_salle_nbPlacesOrchestre}" sortBy="#{salle.nbPlacesOrchestre}" filterBy="#{salle.nbPlacesOrchestre}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlacesOrchestreFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('salleTable').filter(); updateNbPlacesOrchestreFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesOrchestreFilter" update="salleTable:nbPlacesOrchestreFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{salle.nbPlacesOrchestre}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_salle_gestionnaire}" sortBy="#{salle.gestionnaire}" filterBy="#{salle.gestionnaire}">
+            <f:facet name="filter">
+            <p:selectOneMenu  id="gestionnaireFilter"
+                            style="width:145px;"
+                            onchange="PF('salleTable').filter(); return false;">
+                <f:selectItem noSelectionOption="true" itemLabel="" />
+                <f:selectItems itemLabel="#{user.username}"
+                            value="#{salleBean.gestionnaires}" 
+                            var="user" 
+                            itemValue="#{user}" />
+                <o:converter converterId="omnifaces.SelectItemsConverter" list="#{salleBean.gestionnaires}" />
+            </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{salle.gestionnaire.username}" />
           </p:column>
 
           <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">

@@ -21,21 +21,43 @@
                     label="#{messages.field_label_salle_adresse}" />
                 <p:message for="adresseEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_salle_nbPlaceFosse}:" for="nbPlaceFosseEditInput" />
-                <p:inputText value="#{salleBean.salle.nbPlaceFosse}"  id="nbPlaceFosseEditInput" 
-                    label="#{messages.field_label_salle_nbPlaceFosse}" />
-                <p:message for="nbPlaceFosseEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_salle_ville}:" for="villeEditInput" />
+                <p:inputText value="#{salleBean.salle.ville}" id="villeEditInput" 
+                    label="#{messages.field_label_salle_ville}" />
+                <p:message for="villeEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_salle_nbPlaceBalcon}:" for="nbPlaceBalconEditInput" />
-                <p:inputText value="#{salleBean.salle.nbPlaceBalcon}"  id="nbPlaceBalconEditInput" 
-                    label="#{messages.field_label_salle_nbPlaceBalcon}" />
-                <p:message for="nbPlaceBalconEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_salle_nbPlacesFosse}:" for="nbPlacesFosseEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlacesFosse}"  id="nbPlacesFosseEditInput" 
+                    label="#{messages.field_label_salle_nbPlacesFosse}" />
+                <p:message for="nbPlacesFosseEditInput" display="icon" />
 
-                <h:outputLabel value="#{messages.field_label_salle_nbPlaceOrchestre}:" for="nbPlaceOrchestreEditInput" />
-                <p:inputText value="#{salleBean.salle.nbPlaceOrchestre}"  id="nbPlaceOrchestreEditInput" 
-                    label="#{messages.field_label_salle_nbPlaceOrchestre}" />
-                <p:message for="nbPlaceOrchestreEditInput" display="icon" />
+                <h:outputLabel value="#{messages.field_label_salle_nbPlacesBalcon}:" for="nbPlacesBalconEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlacesBalcon}"  id="nbPlacesBalconEditInput" 
+                    label="#{messages.field_label_salle_nbPlacesBalcon}" />
+                <p:message for="nbPlacesBalconEditInput" display="icon" />
 
+                <h:outputLabel value="#{messages.field_label_salle_nbPlacesOrchestre}:" for="nbPlacesOrchestreEditInput" />
+                <p:inputText value="#{salleBean.salle.nbPlacesOrchestre}"  id="nbPlacesOrchestreEditInput" 
+                    label="#{messages.field_label_salle_nbPlacesOrchestre}" />
+                <p:message for="nbPlacesOrchestreEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_salle_gestionnaire}:" for="gestionnaireSelectInput" rendered="#{not hideGestionnaireSelectInput}"/>
+                <h:panelGroup rendered="#{not hideGestionnaireSelectInput}">
+                    <p:selectOneMenu value="#{salleBean.salle.gestionnaire}"
+                                    id="gestionnaireSelectInput">
+                        <f:selectItem noSelectionOption="true" itemLabel="" />
+                        <f:selectItems value="#{salleBean.gestionnaires}" 
+                                    var="user" 
+                                    itemLabel="#{user.username}"
+                                    itemValue="#{user}" />
+                        <o:converter converterId="omnifaces.SelectItemsConverter" list="#{salleBean.gestionnaires}" />
+                    </p:selectOneMenu>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not hideGestionnaireSelectInput}">
+                
+                    <p:message for="gestionnaireSelectInput" display="icon" rendered="#{not hideGestionnaireSelectInput}"/>
+                </h:panelGroup>
+                
             </p:panelGrid>
 
         </p:outputPanel>

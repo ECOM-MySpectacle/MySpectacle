@@ -38,20 +38,23 @@
         <h:outputText value="#{messages.field_label_user_email}:" />
         <h:outputText value="#{userBean.user.email}" />
 
-        <h:outputText value="#{messages.field_label_user_age}:" />
-        <h:outputText value="#{userBean.user.age}" />
+        <h:outputText value="#{messages.field_label_user_prenom}:" />
+        <h:outputText value="#{userBean.user.prenom}" />
 
         <h:outputText value="#{messages.field_label_user_nom}:" />
         <h:outputText value="#{userBean.user.nom}" />
 
-        <h:outputText value="#{messages.field_label_user_prenom}:" />
-        <h:outputText value="#{userBean.user.prenom}" />
-
-        <h:outputText value="#{messages.field_label_user_numero}:" />
-        <h:outputText value="#{userBean.user.numero}" />
+        <h:outputText value="#{messages.field_label_user_dateDeNaissance}:" />
+        <h:outputText value="#{userBean.user.dateDeNaissance}" ><f:convertDateTime /></h:outputText>
 
         <h:outputText value="#{messages.field_label_user_adresse}:" />
         <h:outputText value="#{userBean.user.adresse}" />
+
+        <h:outputText value="#{messages.field_label_user_ville}:" />
+        <h:outputText value="#{userBean.user.ville}" />
+
+        <h:outputText value="#{messages.field_label_user_codePostal}:" />
+        <h:outputText value="#{userBean.user.codePostal}" />
 
     </h:panelGrid>
 </html>

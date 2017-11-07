@@ -115,6 +115,16 @@ public class UserService extends BaseService<UserEntity> implements Serializable
         /* This is called before a User is deleted. Place here all the
            steps to cut dependencies to other entities */
         
+        this.cutAllGestionnaireSallesAssignments(user);
+        
+    }
+    
+    // Remove all assignments from all salle a user. Called before delete a user.
+    @Transactional
+    private void cutAllGestionnaireSallesAssignments(UserEntity user) {
+        entityManager
+                .createQuery("UPDATE Salle c SET c.gestionnaire = NULL WHERE c.gestionnaire = :p")
+                .setParameter("p", user).executeUpdate();
     }
     
     @Override
@@ -151,9 +161,9 @@ public class UserService extends BaseService<UserEntity> implements Serializable
                     queryParameters.put("status", UserStatus.valueOf(filters.get(filterProperty).toString()));
                     break;
                 
-                case "age":
-                    query.append(nextConnective).append(" o.age = :age");
-                    queryParameters.put("age", new Integer(filters.get(filterProperty).toString()));
+                case "prenom":
+                    query.append(nextConnective).append(" o.prenom LIKE :prenom");
+                    queryParameters.put("prenom", "%" + filters.get(filterProperty) + "%");
                     break;
 
                 case "nom":
@@ -161,19 +171,24 @@ public class UserService extends BaseService<UserEntity> implements Serializable
                     queryParameters.put("nom", "%" + filters.get(filterProperty) + "%");
                     break;
 
-                case "prenom":
-                    query.append(nextConnective).append(" o.prenom LIKE :prenom");
-                    queryParameters.put("prenom", "%" + filters.get(filterProperty) + "%");
-                    break;
-
-                case "numero":
-                    query.append(nextConnective).append(" o.numero LIKE :numero");
-                    queryParameters.put("numero", "%" + filters.get(filterProperty) + "%");
+                case "dateDeNaissance":
+                    query.append(nextConnective).append(" o.dateDeNaissance = :dateDeNaissance");
+                    queryParameters.put("dateDeNaissance", filters.get(filterProperty));
                     break;
 
                 case "adresse":
                     query.append(nextConnective).append(" o.adresse LIKE :adresse");
                     queryParameters.put("adresse", "%" + filters.get(filterProperty) + "%");
+                    break;
+
+                case "ville":
+                    query.append(nextConnective).append(" o.ville LIKE :ville");
+                    queryParameters.put("ville", "%" + filters.get(filterProperty) + "%");
+                    break;
+
+                case "codePostal":
+                    query.append(nextConnective).append(" o.codePostal LIKE :codePostal");
+                    queryParameters.put("codePostal", "%" + filters.get(filterProperty) + "%");
                     break;
 
                 }

@@ -61,12 +61,12 @@
         },
         {
           "id": 1,
-          "name": "age",
-          "type": "Number",
+          "name": "prenom",
+          "type": "String",
           "editable": true,
           "showInTable": true,
-          "integerLength": 5,
-          "required": false
+          "stringLength": 50,
+          "required": true
         },
         {
           "id": 2,
@@ -75,41 +75,50 @@
           "editable": true,
           "showInTable": true,
           "stringLength": 50,
-          "required": false
+          "required": true
         },
         {
           "id": 3,
-          "name": "prenom",
-          "type": "String",
+          "name": "dateDeNaissance",
+          "type": "Date",
           "editable": true,
           "showInTable": true,
-          "stringLength": 50,
-          "required": false
+          "required": true
         },
         {
           "id": 4,
-          "name": "numero",
-          "type": "String",
-          "editable": true,
-          "showInTable": true,
-          "stringLength": 50,
-          "required": false
-        },
-        {
-          "id": 5,
           "name": "adresse",
           "type": "String",
           "editable": true,
           "showInTable": true,
-          "stringLength": "200",
-          "required": false
+          "stringLength": "150",
+          "required": true
+        },
+        {
+          "id": 5,
+          "name": "ville",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "100",
+          "required": true
+        },
+        {
+          "id": 6,
+          "name": "codePostal",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "10",
+          "required": true
         }
       ]
     },
     {
-      "name": "Spectacle",
-      "id": 1000,
-      "lookupField": "productname",
+      "name": "Artiste",
+      "id": 1,
+      "lookupField": 0,
+      "imageUploadEnabled": true,
       "aclEnabled": true,
       "authorization": [
         {
@@ -129,26 +138,36 @@
           "readPerm": 1,
           "updatePerm": "0",
           "deletePerm": "0",
-          "changeOwnerPerm": 1,
+          "changeOwnerPerm": 0,
           "ownerRoleEnabled": false
         },
         {
           "roleId": "registered001",
           "roleName": "Registered",
-          "createPerm": 0,
-          "readPerm": 0,
-          "updatePerm": 0,
-          "deletePerm": 0,
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
           "changeOwnerPerm": 0,
           "ownerRoleEnabled": false
         },
         {
           "roleId": 3,
-          "roleName": "Organisateur",
-          "createPerm": "1",
-          "readPerm": 0,
-          "updatePerm": "1",
-          "deletePerm": "1",
+          "roleName": "Superviseur",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 4,
+          "roleName": "Gérant",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
           "changeOwnerPerm": 0,
           "ownerRoleEnabled": false
         }
@@ -163,17 +182,104 @@
           "required": true
         },
         {
-          "id": "productname",
+          "id": 1,
           "name": "nom",
           "type": "String",
           "editable": true,
           "showInTable": true,
-          "stringLength": 50,
+          "stringLength": "100",
           "required": true
         },
         {
-          "id": "price",
-          "name": "type",
+          "id": 2,
+          "name": "bio",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "300",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "Spectacle",
+      "id": 2,
+      "lookupField": 0,
+      "imageUploadEnabled": true,
+      "aclEnabled": true,
+      "authorization": [
+        {
+          "roleId": 1,
+          "roleName": "Administrator",
+          "createPerm": 1,
+          "readPerm": 1,
+          "updatePerm": 1,
+          "deletePerm": 1,
+          "changeOwnerPerm": 1,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 2,
+          "roleName": "Public",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": "registered001",
+          "roleName": "Registered",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 3,
+          "roleName": "Superviseur",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 4,
+          "roleName": "Gérant",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        }
+      ],
+      "fields": [
+        {
+          "id": 0,
+          "name": "id",
+          "type": "Autoincremented ID",
+          "editable": false,
+          "showInTable": false,
+          "required": true
+        },
+        {
+          "id": 1,
+          "name": "nom",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "100",
+          "required": true
+        },
+        {
+          "id": 2,
+          "name": "genre",
           "type": "Enumeration (Single)",
           "editable": true,
           "showInTable": true,
@@ -181,8 +287,8 @@
           "enumerationValues": "concert, theatre, humour, spectacle, exposition, salon, opera, loisir, festival, cirque, sport, cabaret, musee, monument, parc, cinema, spectacleenfant"
         },
         {
-          "id": "stock",
-          "name": "cible",
+          "id": 3,
+          "name": "public",
           "type": "Enumeration (Multiple)",
           "editable": true,
           "showInTable": true,
@@ -190,209 +296,33 @@
           "enumerationValues": "famille, couple, amis, enfant, adolescent, adulte"
         },
         {
-          "id": "launch",
-          "name": "sujet",
+          "id": 4,
+          "name": "theme",
           "type": "String",
           "editable": true,
           "showInTable": true,
-          "stringLength": "200",
-          "required": false
-        },
-        {
-          "id": "discontinued",
-          "name": "creation",
-          "type": "Date",
-          "editable": true,
-          "showInTable": true,
+          "stringLength": "100",
           "required": true
         },
         {
-          "id": 1,
+          "id": 6,
           "name": "description",
           "type": "String",
           "editable": true,
           "showInTable": true,
-          "stringLength": "500",
+          "stringLength": "300",
           "required": false
         },
         {
-          "id": 2,
-          "name": "artiste",
-          "type": "Number",
+          "id": 7,
+          "name": "artistes",
+          "type": "Relation",
           "editable": true,
           "showInTable": true,
-          "integerLength": 5,
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "Salle",
-      "id": 1,
-      "lookupField": 0,
-      "aclEnabled": true,
-      "authorization": [
-        {
-          "roleId": 1,
-          "roleName": "Administrator",
-          "createPerm": 1,
-          "readPerm": 1,
-          "updatePerm": 1,
-          "deletePerm": 1,
-          "changeOwnerPerm": 1,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": 2,
-          "roleName": "Public",
-          "createPerm": "0",
-          "readPerm": "1",
-          "updatePerm": "0",
-          "deletePerm": "0",
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": "registered001",
-          "roleName": "Registered",
-          "createPerm": "0",
-          "readPerm": 1,
-          "updatePerm": "0",
-          "deletePerm": "0",
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": 3,
-          "roleName": "Organisateur",
-          "createPerm": 1,
-          "readPerm": 1,
-          "updatePerm": 1,
-          "deletePerm": 1,
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        }
-      ],
-      "fields": [
-        {
-          "id": 0,
-          "name": "id",
-          "type": "Autoincremented ID",
-          "editable": false,
-          "showInTable": false,
-          "required": true
-        },
-        {
-          "id": 1,
-          "name": "nom",
-          "type": "String",
-          "editable": true,
-          "showInTable": true,
-          "stringLength": "100",
-          "required": true
-        },
-        {
-          "id": 2,
-          "name": "adresse",
-          "type": "String",
-          "editable": true,
-          "showInTable": true,
-          "stringLength": "200",
-          "required": true
-        },
-        {
-          "id": 3,
-          "name": "nbPlaceFosse",
-          "type": "Number",
-          "editable": true,
-          "showInTable": true,
-          "integerLength": 5,
-          "required": true
-        },
-        {
-          "id": 4,
-          "name": "nbPlaceBalcon",
-          "type": "Number",
-          "editable": true,
-          "showInTable": true,
-          "integerLength": 5,
-          "required": true
-        },
-        {
-          "id": 5,
-          "name": "nbPlaceOrchestre",
-          "type": "Number",
-          "editable": true,
-          "showInTable": true,
-          "integerLength": 5,
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "Artiste",
-      "id": 2,
-      "lookupField": 0,
-      "aclEnabled": true,
-      "authorization": [
-        {
-          "roleId": 1,
-          "roleName": "Administrator",
-          "createPerm": 1,
-          "readPerm": 1,
-          "updatePerm": 1,
-          "deletePerm": 1,
-          "changeOwnerPerm": 1,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": 2,
-          "roleName": "Public",
-          "createPerm": "0",
-          "readPerm": 1,
-          "updatePerm": "0",
-          "deletePerm": "0",
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": "registered001",
-          "roleName": "Registered",
-          "createPerm": "0",
-          "readPerm": 1,
-          "updatePerm": "0",
-          "deletePerm": "0",
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        },
-        {
-          "roleId": 3,
-          "roleName": "Organisateur",
-          "createPerm": 1,
-          "readPerm": 1,
-          "updatePerm": 1,
-          "deletePerm": 1,
-          "changeOwnerPerm": 0,
-          "ownerRoleEnabled": false
-        }
-      ],
-      "fields": [
-        {
-          "id": 0,
-          "name": "id",
-          "type": "Autoincremented ID",
-          "editable": false,
-          "showInTable": false,
-          "required": true
-        },
-        {
-          "id": 1,
-          "name": "nom",
-          "type": "String",
-          "editable": true,
-          "showInTable": true,
-          "stringLength": "100",
-          "required": false
+          "referenceType": "n:m",
+          "referenceEntity": "Artiste",
+          "useReverseRelation": true,
+          "reverseName": "spectacles"
         }
       ]
     },
@@ -434,11 +364,21 @@
         },
         {
           "roleId": 3,
-          "roleName": "Organisateur",
-          "createPerm": 1,
+          "roleName": "Superviseur",
+          "createPerm": "0",
           "readPerm": 1,
-          "updatePerm": 1,
-          "deletePerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 4,
+          "roleName": "Gérant",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
           "changeOwnerPerm": 0,
           "ownerRoleEnabled": false
         }
@@ -454,16 +394,15 @@
         },
         {
           "id": 1,
-          "name": "spectacle",
-          "type": "Number",
+          "name": "date",
+          "type": "Date",
           "editable": true,
           "showInTable": true,
-          "integerLength": 5,
           "required": true
         },
         {
           "id": 2,
-          "name": "salle",
+          "name": "nbPlacesFosseLibres",
           "type": "Number",
           "editable": true,
           "showInTable": true,
@@ -472,15 +411,16 @@
         },
         {
           "id": 3,
-          "name": "date",
-          "type": "Date",
+          "name": "nbPlacesBalconLibres",
+          "type": "Number",
           "editable": true,
           "showInTable": true,
+          "integerLength": 5,
           "required": true
         },
         {
           "id": 4,
-          "name": "nbPlaceFosseDisponible",
+          "name": "nbPlacesOrchestreLibres",
           "type": "Number",
           "editable": true,
           "showInTable": true,
@@ -489,26 +429,17 @@
         },
         {
           "id": 5,
-          "name": "nbPlaceBalconDisponible",
-          "type": "Number",
+          "name": "salle",
+          "type": "Relation",
           "editable": true,
           "showInTable": true,
-          "integerLength": 5,
-          "required": true
-        },
-        {
-          "id": 6,
-          "name": "nbPlaceOrchestreDisponible",
-          "type": "Number",
-          "editable": true,
-          "showInTable": true,
-          "integerLength": 5,
-          "required": true
+          "referenceType": "n:1",
+          "referenceEntity": "Salle"
         }
       ]
     },
     {
-      "name": "Panier",
+      "name": "Salle",
       "id": 4,
       "lookupField": 0,
       "aclEnabled": true,
@@ -527,7 +458,7 @@
           "roleId": 2,
           "roleName": "Public",
           "createPerm": "0",
-          "readPerm": "0",
+          "readPerm": 1,
           "updatePerm": "0",
           "deletePerm": "0",
           "changeOwnerPerm": 0,
@@ -537,7 +468,7 @@
           "roleId": "registered001",
           "roleName": "Registered",
           "createPerm": "0",
-          "readPerm": "0",
+          "readPerm": 1,
           "updatePerm": "0",
           "deletePerm": "0",
           "changeOwnerPerm": 0,
@@ -545,9 +476,152 @@
         },
         {
           "roleId": 3,
-          "roleName": "Organisateur",
+          "roleName": "Superviseur",
+          "createPerm": "1",
+          "readPerm": 1,
+          "updatePerm": "1",
+          "deletePerm": 1,
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 4,
+          "roleName": "Gérant",
+          "createPerm": "1",
+          "readPerm": 1,
+          "updatePerm": 1,
+          "deletePerm": 1,
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        }
+      ],
+      "fields": [
+        {
+          "id": 0,
+          "name": "id",
+          "type": "Autoincremented ID",
+          "editable": false,
+          "showInTable": false,
+          "required": true
+        },
+        {
+          "id": 1,
+          "name": "nom",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "100",
+          "required": true
+        },
+        {
+          "id": 2,
+          "name": "adresse",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "100",
+          "required": true
+        },
+        {
+          "id": 3,
+          "name": "ville",
+          "type": "String",
+          "editable": true,
+          "showInTable": true,
+          "stringLength": "100",
+          "required": true
+        },
+        {
+          "id": 4,
+          "name": "nbPlacesFosse",
+          "type": "Number",
+          "editable": true,
+          "showInTable": true,
+          "integerLength": 5,
+          "required": true
+        },
+        {
+          "id": 5,
+          "name": "nbPlacesBalcon",
+          "type": "Number",
+          "editable": true,
+          "showInTable": true,
+          "integerLength": 5,
+          "required": true
+        },
+        {
+          "id": 6,
+          "name": "nbPlacesOrchestre",
+          "type": "Number",
+          "editable": true,
+          "showInTable": true,
+          "integerLength": 5,
+          "required": true
+        },
+        {
+          "id": 7,
+          "name": "Gestionnaire",
+          "type": "Relation",
+          "editable": true,
+          "showInTable": true,
+          "referenceType": "n:1",
+          "referenceEntity": "User",
+          "useReverseRelation": true,
+          "reverseName": ""
+        }
+      ]
+    },
+    {
+      "name": "Reservation",
+      "id": 5,
+      "lookupField": 0,
+      "aclEnabled": true,
+      "authorization": [
+        {
+          "roleId": 1,
+          "roleName": "Administrator",
+          "createPerm": 1,
+          "readPerm": 1,
+          "updatePerm": 1,
+          "deletePerm": 1,
+          "changeOwnerPerm": 1,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 2,
+          "roleName": "Public",
           "createPerm": "0",
-          "readPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": "registered001",
+          "roleName": "Registered",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 3,
+          "roleName": "Superviseur",
+          "createPerm": "0",
+          "readPerm": 1,
+          "updatePerm": "0",
+          "deletePerm": "0",
+          "changeOwnerPerm": 0,
+          "ownerRoleEnabled": false
+        },
+        {
+          "roleId": 4,
+          "roleName": "Gérant",
+          "createPerm": "0",
+          "readPerm": 1,
           "updatePerm": "0",
           "deletePerm": "0",
           "changeOwnerPerm": 0,
@@ -565,7 +639,7 @@
         },
         {
           "id": 1,
-          "name": "Utilisateur",
+          "name": "NbPlaceFosse",
           "type": "Number",
           "editable": true,
           "showInTable": true,
@@ -574,19 +648,37 @@
         },
         {
           "id": 2,
-          "name": "Representation",
+          "name": "NbPlaceBalcon",
           "type": "Number",
           "editable": true,
           "showInTable": true,
           "integerLength": 5,
           "required": true
+        },
+        {
+          "id": 3,
+          "name": "NbPlaceOrchestre",
+          "type": "Number",
+          "editable": true,
+          "showInTable": true,
+          "integerLength": 5,
+          "required": true
+        },
+        {
+          "id": 4,
+          "name": "ModePaiement",
+          "type": "Enumeration (Single)",
+          "editable": true,
+          "showInTable": true,
+          "required": false,
+          "enumerationValues": "cb, paypal, surPlace"
         }
       ]
     }
   ],
   "appSettings": {
     "generjeeversion": "1.0",
-    "appName": "MySpectacle",
+    "appName": "My Application",
     "package": "org.application",
     "masterDetailsStyle": "1",
     "dataListStyle": "1",
@@ -615,10 +707,15 @@
       },
       {
         "id": 3,
-        "name": "Organisateur",
+        "name": "Superviseur",
+        "canBeDeleted": true
+      },
+      {
+        "id": 4,
+        "name": "Gérant",
         "canBeDeleted": true
       }
     ]
   },
-  "guid": "d8326966-c5a4-49c1-f874-0efcc42a4e09"
+  "guid": "22081599-f9d4-405d-5124-ecd56502f052"
 }

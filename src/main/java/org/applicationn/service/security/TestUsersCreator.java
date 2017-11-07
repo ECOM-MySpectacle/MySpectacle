@@ -1,6 +1,7 @@
 package org.applicationn.service.security;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +43,18 @@ public class TestUsersCreator {
             admin.setStatus(UserStatus.Active);
             admin.setEmail("admin@domain.test");
             
+            admin.setPrenom("x");
+            
+            admin.setNom("x");
+            
+            admin.setDateDeNaissance(new Date());
+            
+            admin.setAdresse("x");
+            
+            admin.setVille("x");
+            
+            admin.setCodePostal("x");
+            
             userService.save(admin);
             
             logger.log(Level.WARNING, "Creating test user 'registered' with password 'registered'.");
@@ -52,17 +65,63 @@ public class TestUsersCreator {
             registeredUser.setStatus(UserStatus.Active);
             registeredUser.setEmail("registered@domain.test");
             
+            registeredUser.setPrenom("x");
+            
+            registeredUser.setNom("x");
+            
+            registeredUser.setDateDeNaissance(new Date());
+            
+            registeredUser.setAdresse("x");
+            
+            registeredUser.setVille("x");
+            
+            registeredUser.setCodePostal("x");
+            
             userService.save(registeredUser);
             
-            logger.log(Level.WARNING, "Creating test user 'organisateur' with password 'organisateur'.");
-            UserEntity organisateurUser = new UserEntity();
-            organisateurUser.setUsername("organisateur");
-            organisateurUser.setPassword("organisateur");
-            organisateurUser.setRoles(Arrays.asList(new UserRole[]{UserRole.Organisateur}));
-            organisateurUser.setStatus(UserStatus.Active);
-            organisateurUser.setEmail("organisateur@domain.test");
+            logger.log(Level.WARNING, "Creating test user 'superviseur' with password 'superviseur'.");
+            UserEntity superviseurUser = new UserEntity();
+            superviseurUser.setUsername("superviseur");
+            superviseurUser.setPassword("superviseur");
+            superviseurUser.setRoles(Arrays.asList(new UserRole[]{UserRole.Superviseur}));
+            superviseurUser.setStatus(UserStatus.Active);
+            superviseurUser.setEmail("superviseur@domain.test");
             
-            userService.save(organisateurUser);
+            superviseurUser.setPrenom("x");
+            
+            superviseurUser.setNom("x");
+            
+            superviseurUser.setDateDeNaissance(new Date());
+            
+            superviseurUser.setAdresse("x");
+            
+            superviseurUser.setVille("x");
+            
+            superviseurUser.setCodePostal("x");
+            
+            userService.save(superviseurUser);
+            
+            logger.log(Level.WARNING, "Creating test user 'gerant' with password 'gerant'.");
+            UserEntity gerantUser = new UserEntity();
+            gerantUser.setUsername("gerant");
+            gerantUser.setPassword("gerant");
+            gerantUser.setRoles(Arrays.asList(new UserRole[]{UserRole.Gerant}));
+            gerantUser.setStatus(UserStatus.Active);
+            gerantUser.setEmail("gerant@domain.test");
+            
+            gerantUser.setPrenom("x");
+            
+            gerantUser.setNom("x");
+            
+            gerantUser.setDateDeNaissance(new Date());
+            
+            gerantUser.setAdresse("x");
+            
+            gerantUser.setVille("x");
+            
+            gerantUser.setCodePostal("x");
+            
+            userService.save(gerantUser);
             
         }
     }

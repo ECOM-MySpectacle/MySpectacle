@@ -7,6 +7,7 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import org.applicationn.domain.RepresentationEntity;
+import org.applicationn.domain.SalleEntity;
 
 @Named
 public class RepresentationService extends BaseService<RepresentationEntity> implements Serializable {
@@ -35,6 +36,16 @@ public class RepresentationService extends BaseService<RepresentationEntity> imp
         /* This is called before a Representation is deleted. Place here all the
            steps to cut dependencies to other entities */
         
+    }
+
+    @Transactional
+    public List<RepresentationEntity> findAvailableRepresentations(SalleEntity salle) {
+        return entityManager.createQuery("SELECT o FROM Representation o WHERE o.salle IS NULL", RepresentationEntity.class).getResultList();
+    }
+
+    @Transactional
+    public List<RepresentationEntity> findRepresentationsBySalle(SalleEntity salle) {
+        return entityManager.createQuery("SELECT o FROM Representation o WHERE o.salle = :salle", RepresentationEntity.class).setParameter("salle", salle).getResultList();
     }
 
 }

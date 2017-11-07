@@ -5,5 +5,5 @@ package org.applicationn.domain.security;
  * */
 public enum UserRole {
 
-    Administrator, Registered, Organisateur;
+    Administrator, Registered, Superviseur, Gerant;
 }

@@ -28,28 +28,6 @@
               <p:columnToggler datasource="representationTable" trigger="toggler" />
           </f:facet>
           
-          <p:column headerText="#{messages.field_label_representation_spectacle}" sortBy="#{representation.spectacle}" filterBy="#{representation.spectacle}">
-            <f:facet name="filter">
-                <p:inputText id="spectacleFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateSpectacleFilter(); return false; }" >
-                    <p:remoteCommand name="updateSpectacleFilter" update="representationTable:spectacleFilter" />
-                    <f:convertNumber integerOnly="true" />
-                </p:inputText>
-            </f:facet>
-            <h:outputText value="#{representation.spectacle}" ><f:convertNumber /></h:outputText>
-          </p:column>
-
-          <p:column headerText="#{messages.field_label_representation_salle}" sortBy="#{representation.salle}" filterBy="#{representation.salle}">
-            <f:facet name="filter">
-                <p:inputText id="salleFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateSalleFilter(); return false; }" >
-                    <p:remoteCommand name="updateSalleFilter" update="representationTable:salleFilter" />
-                    <f:convertNumber integerOnly="true" />
-                </p:inputText>
-            </f:facet>
-            <h:outputText value="#{representation.salle}" ><f:convertNumber /></h:outputText>
-          </p:column>
-
           <p:column headerText="#{messages.field_label_representation_date}" sortBy="#{representation.date}" filterBy="#{representation.date}">
             <f:facet name="filter">
                 <p:inputText id="dateFilter"
@@ -61,37 +39,53 @@
             <h:outputText value="#{representation.date}"><f:convertDateTime /></h:outputText>
           </p:column>
 
-          <p:column headerText="#{messages.field_label_representation_nbPlaceFosseDisponible}" sortBy="#{representation.nbPlaceFosseDisponible}" filterBy="#{representation.nbPlaceFosseDisponible}">
+          <p:column headerText="#{messages.field_label_representation_nbPlacesFosseLibres}" sortBy="#{representation.nbPlacesFosseLibres}" filterBy="#{representation.nbPlacesFosseLibres}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceFosseDisponibleFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceFosseDisponibleFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceFosseDisponibleFilter" update="representationTable:nbPlaceFosseDisponibleFilter" />
+                <p:inputText id="nbPlacesFosseLibresFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlacesFosseLibresFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesFosseLibresFilter" update="representationTable:nbPlacesFosseLibresFilter" />
                     <f:convertNumber integerOnly="true" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{representation.nbPlaceFosseDisponible}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{representation.nbPlacesFosseLibres}" ><f:convertNumber /></h:outputText>
           </p:column>
 
-          <p:column headerText="#{messages.field_label_representation_nbPlaceBalconDisponible}" sortBy="#{representation.nbPlaceBalconDisponible}" filterBy="#{representation.nbPlaceBalconDisponible}">
+          <p:column headerText="#{messages.field_label_representation_nbPlacesBalconLibres}" sortBy="#{representation.nbPlacesBalconLibres}" filterBy="#{representation.nbPlacesBalconLibres}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceBalconDisponibleFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceBalconDisponibleFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceBalconDisponibleFilter" update="representationTable:nbPlaceBalconDisponibleFilter" />
+                <p:inputText id="nbPlacesBalconLibresFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlacesBalconLibresFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesBalconLibresFilter" update="representationTable:nbPlacesBalconLibresFilter" />
                     <f:convertNumber integerOnly="true" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{representation.nbPlaceBalconDisponible}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{representation.nbPlacesBalconLibres}" ><f:convertNumber /></h:outputText>
           </p:column>
 
-          <p:column headerText="#{messages.field_label_representation_nbPlaceOrchestreDisponible}" sortBy="#{representation.nbPlaceOrchestreDisponible}" filterBy="#{representation.nbPlaceOrchestreDisponible}">
+          <p:column headerText="#{messages.field_label_representation_nbPlacesOrchestreLibres}" sortBy="#{representation.nbPlacesOrchestreLibres}" filterBy="#{representation.nbPlacesOrchestreLibres}">
             <f:facet name="filter">
-                <p:inputText id="nbPlaceOrchestreDisponibleFilter"
-                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlaceOrchestreDisponibleFilter(); return false; }" >
-                    <p:remoteCommand name="updateNbPlaceOrchestreDisponibleFilter" update="representationTable:nbPlaceOrchestreDisponibleFilter" />
+                <p:inputText id="nbPlacesOrchestreLibresFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('representationTable').filter(); updateNbPlacesOrchestreLibresFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlacesOrchestreLibresFilter" update="representationTable:nbPlacesOrchestreLibresFilter" />
                     <f:convertNumber integerOnly="true" />
                 </p:inputText>
             </f:facet>
-            <h:outputText value="#{representation.nbPlaceOrchestreDisponible}" ><f:convertNumber /></h:outputText>
+            <h:outputText value="#{representation.nbPlacesOrchestreLibres}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_representation_salle}" sortBy="#{representation.salle}" filterBy="#{representation.salle}">
+            <f:facet name="filter">
+            <p:selectOneMenu  id="salleFilter"
+                            style="width:145px;"
+                            onchange="PF('representationTable').filter(); return false;">
+                <f:selectItem noSelectionOption="true" itemLabel="" />
+                <f:selectItems itemLabel="#{salle.id}"
+                            value="#{representationBean.salles}" 
+                            var="salle" 
+                            itemValue="#{salle}" />
+                <o:converter converterId="omnifaces.SelectItemsConverter" list="#{representationBean.salles}" />
+            </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{representation.salle.id}" />
           </p:column>
 
           <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
@@ -159,6 +153,32 @@
               <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewRepresentationDialogWidget').hide()" type="button" />
           </div>
         </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="createSalleFromEditDialog"
+        rendered="#{representationBean.isPermitted('salle:create')}"
+        header="#{messages.dialog_representation_create_salle}" modal="true"
+        widgetVar="createSalleFromEditDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{salleBean.reset}" />
+        <p:outputPanel id="createSallePanel">
+                <h:form id="createSalleForm">
+                    <ui:include src="/pages/salle/salleEditInclude.xhtml">
+                        <ui:param name="hideRepresentationSelectInput" value="true" />
+                    </ui:include>
+                    <div style="text-align: center; margin: 10px">
+                        <p:commandButton
+                            action="#{representationBean.updateSalle(salleBean.salle)}"
+                            value="#{messages.label_save}" icon="ui-icon-disk"
+                            actionListener="#{salleBean.persist}"
+                            update=":editRepresentationForm:salleSelectInput :createSallePanel :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('createSalleFromEditDialogWidget').hide()" />
+                        <p:commandButton value="#{messages.label_close}"
+                            icon="ui-icon-close"
+                            onclick="PF('createSalleFromEditDialogWidget').hide()"
+                            type="button" />
+                    </div>
+                </h:form>
+            </p:outputPanel>
     </p:dialog>
     
   </ui:define>

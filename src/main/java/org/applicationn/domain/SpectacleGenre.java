@@ -1,6 +1,6 @@
 package org.applicationn.domain;
 
-public enum SpectacleType {
+public enum SpectacleGenre {
     
     CONCERT, THEATRE, HUMOUR, SPECTACLE, EXPOSITION, SALON, OPERA, LOISIR, FESTIVAL, CIRQUE, SPORT, CABARET, MUSEE, MONUMENT, PARC, CINEMA, SPECTACLEENFANT;
 }

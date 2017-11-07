@@ -16,7 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.applicationn.domain.ArtisteEntity;
+import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.service.ArtisteService;
+import org.applicationn.service.SpectacleService;
 
 @Path("/artistes")
 @Named
@@ -26,6 +28,9 @@ public class ArtisteResource implements Serializable {
     
     @Inject
     private ArtisteService artisteService;
+    
+    @Inject
+    private SpectacleService spectacleService;
     
     /**
      * Get the complete list of Artiste Entries <br/>
@@ -107,6 +112,63 @@ public class ArtisteResource implements Serializable {
     public void deleteArtiste(@PathParam("id") Long id) {
         ArtisteEntity artiste = artisteService.find(id);
         artisteService.delete(artiste);
+    }
+    
+    /**
+     * Get the list of Spectacless that is assigned to a Artiste <br/>
+     * HTTP Method: GET <br/>
+     * Example URL: /artistes/3/spectacless
+     * @param artisteId
+     * @return List of SpectacleEntity
+     */
+    @GET
+    @Path("{id}/spectacless")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SpectacleEntity> getSpectacless(@PathParam("id") Long artisteId) {
+        ArtisteEntity artiste = artisteService.find(artisteId);
+        artiste = artisteService.fetchSpectacless(artiste);
+        return artiste.getSpectacless();
+    }
+    
+    /**
+     * Assign an existing Spectacles to an existing Artiste <br/>
+     * HTTP Method: PUT <br/>
+     * PUT Request Body: empty <br/>
+     * Example URL: /artistes/3/spectacless/8
+     * @param artisteId
+     * @param spectaclesId
+     */
+    @PUT
+    @Path("{id}/spectacless/{spectaclesId}")
+    public void assignSpectacles(@PathParam("id") Long artisteId, @PathParam("spectaclesId") Long spectaclesId) {
+        
+        ArtisteEntity artiste = artisteService.find(artisteId);
+        SpectacleEntity spectacles = spectacleService.find(spectaclesId);
+        
+        spectacles = spectacleService.fetchArtistess(spectacles);
+        spectacles.getArtistess().add(artiste);
+        spectacleService.update(spectacles);
+        
+    }
+    
+    /**
+     * Remove a Artiste-to-Spectacles Assignment <br/>
+     * HTTP Method: DELETE <br/>
+     * Example URL: /artistes/3/spectacless/8
+     * @param artisteId
+     * @param spectaclesId
+     */
+    @DELETE
+    @Path("{id}/spectacless/{spectaclesId}")
+    public void unassignSpectacles(@PathParam("id") Long artisteId, @PathParam("spectaclesId") Long spectaclesId) {
+
+        ArtisteEntity artiste = artisteService.find(artisteId);
+        SpectacleEntity spectacles = spectacleService.find(spectaclesId);
+        
+        spectacles = spectacleService.fetchArtistess(spectacles);
+        spectacles.getArtistess().remove(artiste);
+        spectacleService.update(spectacles);
+        
     }
     
 }

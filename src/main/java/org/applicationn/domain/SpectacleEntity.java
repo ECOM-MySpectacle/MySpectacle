@@ -1,9 +1,10 @@
 package org.applicationn.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -12,13 +13,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity(name="Spectacle")
 @Table(name="\"SPECTACLE\"")
@@ -27,39 +29,48 @@ public class SpectacleEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 50)
-    @Column(length = 50, name="\"nom\"")
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private SpectacleImage image;
+    
+    @Size(max = 100)
+    @Column(length = 100, name="\"nom\"")
     @NotNull
     private String nom;
 
-    @Column(name="\"TYPE\"")
+    @Column(name="\"GENRE\"")
     @Enumerated(EnumType.STRING)
-    private SpectacleType type;
+    private SpectacleGenre genre;
 
-    @ElementCollection(targetClass = SpectacleCible.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = SpectaclePublicc.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "SPECTACLE_CIBLE", joinColumns = { @JoinColumn(name = "SPECTACLE_ID") })
-    @Column(name = "\"CIBLE\"")
-    private Set<SpectacleCible> cible;
+    @CollectionTable(name = "SPECTACLE_PUBLICC", joinColumns = { @JoinColumn(name = "SPECTACLE_ID") })
+    @Column(name = "\"PUBLICC\"")
+    private Set<SpectaclePublicc> publicc;
 
-    @Size(max = 200)
-    @Column(length = 200, name="\"sujet\"")
-    private String sujet;
-
-    @Column(name="\"creation\"")
-    @Temporal(TemporalType.DATE)
+    @Size(max = 100)
+    @Column(length = 100, name="\"theme\"")
     @NotNull
-    private Date creation;
+    private String theme;
 
-    @Size(max = 500)
-    @Column(length = 500, name="\"description\"")
+    @Size(max = 300)
+    @Column(length = 300, name="\"description\"")
     private String description;
 
-    @Column(name="\"artiste\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer artiste;
+    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinTable(name="SPECTACLE_ARTISTESS",
+              joinColumns={@JoinColumn(name="SPECTACLE_ID", referencedColumnName="ID")},
+              inverseJoinColumns={@JoinColumn(name="ARTISTES_ID", referencedColumnName="ID")})
+    private List<ArtisteEntity> artistess;
 
+    @XmlTransient
+    public SpectacleImage getImage() {
+        return image;
+    }
+
+    public void setImage(SpectacleImage image) {
+        this.image = image;
+    }
+    
     public String getNom() {
         return this.nom;
     }
@@ -68,36 +79,28 @@ public class SpectacleEntity extends BaseEntity implements Serializable {
         this.nom = nom;
     }
 
-    public SpectacleType getType() {
-        return type;
+    public SpectacleGenre getGenre() {
+        return genre;
     }
 
-    public void setType(SpectacleType type) {
-        this.type = type;
+    public void setGenre(SpectacleGenre genre) {
+        this.genre = genre;
     }
 
-    public Set<SpectacleCible> getCible() {
-        return cible;
+    public Set<SpectaclePublicc> getPublicc() {
+        return publicc;
     }
 
-    public void setCible(Set<SpectacleCible> cible) {
-        this.cible = cible;
+    public void setPublicc(Set<SpectaclePublicc> publicc) {
+        this.publicc = publicc;
     }
 
-    public String getSujet() {
-        return this.sujet;
+    public String getTheme() {
+        return this.theme;
     }
 
-    public void setSujet(String sujet) {
-        this.sujet = sujet;
-    }
-
-    public Date getCreation() {
-        return this.creation;
-    }
-
-    public void setCreation(Date creation) {
-        this.creation = creation;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public String getDescription() {
@@ -108,12 +111,13 @@ public class SpectacleEntity extends BaseEntity implements Serializable {
         this.description = description;
     }
 
-    public Integer getArtiste() {
-        return this.artiste;
+    @XmlTransient
+    public List<ArtisteEntity> getArtistess() {
+        return artistess;
     }
 
-    public void setArtiste(Integer artiste) {
-        this.artiste = artiste;
+    public void setArtistess(List<ArtisteEntity> artistes) {
+        this.artistess = artistes;
     }
 
 }
