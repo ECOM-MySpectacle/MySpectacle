@@ -1,2 +1,2 @@
 FROM metz/wildfly-mysql
-ADD target/MySpectacle.war /opt/jboss/wildfly/standalone/deployments/
+ADD target/MyApplication.war /opt/jboss/wildfly/standalone/deployments/
