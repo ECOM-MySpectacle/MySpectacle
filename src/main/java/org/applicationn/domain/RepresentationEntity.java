@@ -44,6 +44,10 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
     @ManyToOne(optional=true)
     @JoinColumn(name = "SALLE_ID", referencedColumnName = "ID")
     private SalleEntity salle;
+    
+    @ManyToOne(optional=true)
+    @JoinColumn(name = "SPECTACLE_ID", referencedColumnName = "ID")
+    private SpectacleEntity spectacle;
 
     public Date getDate() {
         return this.date;
@@ -83,6 +87,14 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
 
     public void setSalle(SalleEntity salle) {
         this.salle = salle;
+    }
+    
+    public SpectacleEntity getSpectacle() {
+        return this.spectacle;
+    }
+
+    public void setSalle(SpectacleEntity spectacle) {
+        this.spectacle = spectacle;
     }
 
 }

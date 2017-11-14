@@ -163,7 +163,7 @@
         },
         {
           "roleId": 4,
-          "roleName": "Gérant",
+          "roleName": "Gï¿½rant",
           "createPerm": "0",
           "readPerm": 1,
           "updatePerm": "0",
@@ -250,7 +250,7 @@
         },
         {
           "roleId": 4,
-          "roleName": "Gérant",
+          "roleName": "Gï¿½rant",
           "createPerm": "0",
           "readPerm": 1,
           "updatePerm": "0",
@@ -374,7 +374,7 @@
         },
         {
           "roleId": 4,
-          "roleName": "Gérant",
+          "roleName": "Gï¿½rant",
           "createPerm": "0",
           "readPerm": 1,
           "updatePerm": "0",
@@ -435,6 +435,15 @@
           "showInTable": true,
           "referenceType": "n:1",
           "referenceEntity": "Salle"
+        },
+        {
+          "id": 6,
+          "name": "spectacle",
+          "type": "Relation",
+          "editable": true,
+          "showInTable": true,
+          "referenceType": "n:1",
+          "referenceEntity": "Spectacle"
         }
       ]
     },
@@ -486,7 +495,7 @@
         },
         {
           "roleId": 4,
-          "roleName": "Gérant",
+          "roleName": "Gï¿½rant",
           "createPerm": "1",
           "readPerm": 1,
           "updatePerm": 1,
@@ -619,7 +628,7 @@
         },
         {
           "roleId": 4,
-          "roleName": "Gérant",
+          "roleName": "Gï¿½rant",
           "createPerm": "0",
           "readPerm": 1,
           "updatePerm": "0",
@@ -712,7 +721,7 @@
       },
       {
         "id": 4,
-        "name": "Gérant",
+        "name": "Gï¿½rant",
         "canBeDeleted": true
       }
     ]
