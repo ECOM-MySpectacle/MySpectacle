@@ -2,18 +2,18 @@ package org.applicationn.rest;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.json.JsonException;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
+import java.io.StringReader;
 
-import org.applicationn.search.ArtisteSearch;
-import org.applicationn.search.RepresentationSearch;
-import org.applicationn.search.SalleSearch;
-import org.applicationn.search.SpectacleSearch;
+import org.applicationn.search.*;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
@@ -26,11 +26,18 @@ public class RechercheResource implements Serializable
 	@Inject
 	private RechercheService service;
 
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public String post()
+	{
+		return "{\"error\":\"Not part of the API\"}";
+	}
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getIsNotAllowed()
 	{
-		return "{\"error\":\"Use POST\"}";
+		return "{\"error\":\"Not allowed\"}";
 	}
 
 	@Path("spectacles")
@@ -82,20 +89,7 @@ public class RechercheResource implements Serializable
 	{
 		SpectacleSearch search = new SpectacleSearch(service);
 
-		try
-		{
-			search.createFilters(json);
-		}
-		catch(UnknownFilterException e)
-		{
-			return unknownFilter(e.getFilter());
-		}
-		catch(JsonException e)
-		{
-			return badRequest();
-		}
-
-		return search.find();
+		return findByCriteria(json, search);
 	}
 
 	@Path("salles")
@@ -105,20 +99,7 @@ public class RechercheResource implements Serializable
 	{
 		SalleSearch search = new SalleSearch(service);
 
-		try
-		{
-			search.createFilters(json);
-		}
-		catch(UnknownFilterException e)
-		{
-			return unknownFilter(e.getFilter());
-		}
-		catch(JsonException e)
-		{
-			return badRequest();
-		}
-
-		return search.find();
+		return findByCriteria(json, search);
 	}
 
 	@Path("artistes")
@@ -128,20 +109,7 @@ public class RechercheResource implements Serializable
 	{
 		ArtisteSearch search = new ArtisteSearch(service);
 
-		try
-		{
-			search.createFilters(json);
-		}
-		catch(UnknownFilterException e)
-		{
-			return unknownFilter(e.getFilter());
-		}
-		catch(JsonException e)
-		{
-			return badRequest();
-		}
-
-		return search.find();
+		return findByCriteria(json, search);
 	}
 
 	@Path("representations")
@@ -151,19 +119,38 @@ public class RechercheResource implements Serializable
 	{
 		RepresentationSearch search = new RepresentationSearch(service);
 
+		return findByCriteria(json, search);
+	}
+
+	private Object findByCriteria(String json, Search search)
+	{
+		SearchParameters params;
+
 		try
 		{
-			search.createFilters(json);
+			JsonObject o;
+
+			try(JsonReader reader = Json.createReader(new StringReader(json)))
+			{
+				o = reader.readObject();
+			}
+
+			params = new SearchParameters();
+
+			params.page = o.getInt("page");
+			params.perPage = o.getInt("per_page");
+
+			search.createFilters(o.getJsonArray("filters"));
 		}
 		catch(UnknownFilterException e)
 		{
 			return unknownFilter(e.getFilter());
 		}
-		catch(JsonException e)
+		catch(Exception e)
 		{
 			return badRequest();
 		}
 
-		return search.find();
+		return search.find(params);
 	}
 }

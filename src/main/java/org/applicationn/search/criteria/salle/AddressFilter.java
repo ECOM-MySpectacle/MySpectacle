@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.salle;
 
 public class AddressFilter extends SalleFilter
 {
-	public static final String ID = "address";
+	public static final String ID = "sa_address";
 	private final String address;
 
 	public AddressFilter(String address)

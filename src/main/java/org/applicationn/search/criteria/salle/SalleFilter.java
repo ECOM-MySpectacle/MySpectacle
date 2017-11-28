@@ -12,6 +12,6 @@ public abstract class SalleFilter extends Filter
 	@Override
 	public String attribute(String attr)
 	{
-		return "s." + attr;
+		return "sa." + attr;
 	}
 }

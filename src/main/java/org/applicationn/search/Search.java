@@ -1,7 +1,9 @@
 package org.applicationn.search;
 
-import javax.json.*;
-import java.io.StringReader;
+import javax.json.JsonArray;
+import javax.json.JsonException;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 import java.util.*;
 
 import org.applicationn.domain.BaseEntity;
@@ -9,7 +11,7 @@ import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
-abstract class Search<T extends BaseEntity>
+public abstract class Search<T extends BaseEntity>
 {
 	private final Map<String, List<Filter>> filters = new HashMap<>();
 	protected final RechercheService service;
@@ -19,23 +21,16 @@ abstract class Search<T extends BaseEntity>
 		this.service = service;
 	}
 
-	abstract List<T> findAll();
+	abstract SearchResult<T> findAll(SearchParameters params);
 
-	abstract List<T> findAllMatching(String condition);
+	abstract SearchResult<T> findAllMatching(SearchParameters params, String condition);
 
 	abstract Filter createFilter(JsonObject json) throws UnknownFilterException, JsonException;
 
-	public final void createFilters(String json) throws UnknownFilterException, JsonException
+	public final void createFilters(JsonArray a) throws UnknownFilterException, JsonException
 	{
-		if(json != null && !json.isEmpty())
+		if(a != null && !a.isEmpty())
 		{
-			JsonArray a;
-
-			try(JsonReader reader = Json.createReader(new StringReader(json)))
-			{
-				a = reader.readArray();
-			}
-
 			for(JsonValue v : a)
 			{
 				if(v.getValueType() == JsonValue.ValueType.OBJECT)
@@ -85,16 +80,16 @@ abstract class Search<T extends BaseEntity>
 		return condition.toString();
 	}
 
-	public final List<T> find()
+	public final SearchResult<T> find(SearchParameters params)
 	{
 		if(filters.isEmpty())
 		{
-			return findAll();
+			return findAll(params);
 		}
 
 		StringJoiner condition = new StringJoiner(") AND (", "(", ")");
 		filters.values().stream().map(this::flattenFilters).forEach(condition::add);
 
-		return condition.length() == 0 ? Collections.emptyList() : findAllMatching(condition.toString());
+		return condition.length() == 0 ? SearchResult.EMPTY : findAllMatching(params, condition.toString());
 	}
 }

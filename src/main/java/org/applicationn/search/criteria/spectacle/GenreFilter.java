@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.spectacle;
 
 public class GenreFilter extends SpectacleFilter
 {
-	public static final String ID = "genre";
+	public static final String ID = "sp_genre";
 	private final String[] genres;
 
 	public GenreFilter(String[] genres)

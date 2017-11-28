@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.representation;
 
 public class AvailSeatsFosseFilter extends RepresentationFilter
 {
-	public static final String ID = "seats_fosse";
+	public static final String ID = "r_avail_seats_fosse";
 	private final int seats;
 
 	public AvailSeatsFosseFilter(int seats)

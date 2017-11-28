@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.applicationn.domain.*;
+import org.applicationn.search.SearchParameters;
+import org.applicationn.search.SearchResult;
 
 @Named
 public class RechercheService implements Serializable
@@ -18,48 +20,50 @@ public class RechercheService implements Serializable
 	private EntityManager entityManager;
 
 	@Transactional
-	private <T extends BaseEntity> List<T> findAllEntities(Class<T> classOfT, String query)
+	private <T extends BaseEntity> SearchResult<T> findAllEntities(Class<T> classOfT, SearchParameters params, String query)
 	{
-		return entityManager.createQuery(query, classOfT).getResultList();
+		List<T> entities = entityManager.createQuery(query, classOfT).getResultList();
+
+		return new SearchResult<>(params, entities);
 	}
 
-	public List<SpectacleEntity> findAllSpectacleEntities()
+	public SearchResult<SpectacleEntity> findAllSpectacleEntities(SearchParameters params)
 	{
-		return findAllEntities(SpectacleEntity.class, "SELECT sp FROM Spectacle sp");
+		return findAllEntities(SpectacleEntity.class, params, "SELECT sp FROM Spectacle sp");
 	}
 
-	public List<SpectacleEntity> findAllSpectacleEntitiesMatching(String criteria)
+	public SearchResult<SpectacleEntity> findAllSpectacleEntitiesMatching(SearchParameters params, String criteria)
 	{
-		return findAllEntities(SpectacleEntity.class, "SELECT sp FROM Spectacle sp WHERE " + criteria);
+		return findAllEntities(SpectacleEntity.class, params, "SELECT sp FROM Spectacle sp WHERE " + criteria);
 	}
 
-	public List<SalleEntity> findAllSalleEntities()
+	public SearchResult<SalleEntity> findAllSalleEntities(SearchParameters params)
 	{
-		return findAllEntities(SalleEntity.class, "SELECT sa FROM Salle sa");
+		return findAllEntities(SalleEntity.class, params, "SELECT sa FROM Salle sa");
 	}
 
-	public List<SalleEntity> findAllSalleEntitiesMatching(String criteria)
+	public SearchResult<SalleEntity> findAllSalleEntitiesMatching(SearchParameters params, String criteria)
 	{
-		return findAllEntities(SalleEntity.class, "SELECT sa FROM Salle sa WHERE " + criteria);
+		return findAllEntities(SalleEntity.class, params, "SELECT sa FROM Salle sa WHERE " + criteria);
 	}
 
-	public List<ArtisteEntity> findAllArtisteEntities()
+	public SearchResult<ArtisteEntity> findAllArtisteEntities(SearchParameters params)
 	{
-		return findAllEntities(ArtisteEntity.class, "SELECT a FROM Artiste a");
+		return findAllEntities(ArtisteEntity.class, params, "SELECT a FROM Artiste a");
 	}
 
-	public List<ArtisteEntity> findAllArtisteEntitiesMatching(String criteria)
+	public SearchResult<ArtisteEntity> findAllArtisteEntitiesMatching(SearchParameters params, String criteria)
 	{
-		return findAllEntities(ArtisteEntity.class, "SELECT a FROM Artiste a WHERE " + criteria);
+		return findAllEntities(ArtisteEntity.class, params, "SELECT a FROM Artiste a WHERE " + criteria);
 	}
 
-	public List<RepresentationEntity> findAllRepresentationEntities()
+	public SearchResult<RepresentationEntity> findAllRepresentationEntities(SearchParameters params)
 	{
-		return findAllEntities(RepresentationEntity.class, "SELECT r FROM Representation r");
+		return findAllEntities(RepresentationEntity.class, params, "SELECT r FROM Representation r");
 	}
 
-	public List<RepresentationEntity> findAllRepresentationEntitiesMatching(String criteria)
+	public SearchResult<RepresentationEntity> findAllRepresentationEntitiesMatching(SearchParameters params, String criteria)
 	{
-		return findAllEntities(RepresentationEntity.class, "SELECT r FROM Representation r JOIN r.salle sa JOIN r.spectacle sp JOIN sp.artistess a WHERE " + criteria);
+		return findAllEntities(RepresentationEntity.class, params, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp LEFT JOIN sp.artistess a WHERE " + criteria);
 	}
 }

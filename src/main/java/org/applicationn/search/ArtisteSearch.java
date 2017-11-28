@@ -1,7 +1,6 @@
 package org.applicationn.search;
 
 import javax.json.JsonObject;
-import java.util.List;
 
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.search.criteria.Filter;
@@ -17,15 +16,15 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 	}
 
 	@Override
-	List<ArtisteEntity> findAll()
+	SearchResult<ArtisteEntity> findAll(SearchParameters params)
 	{
-		return service.findAllArtisteEntities();
+		return service.findAllArtisteEntities(params);
 	}
 
 	@Override
-	List<ArtisteEntity> findAllMatching(String condition)
+	SearchResult<ArtisteEntity> findAllMatching(SearchParameters params, String condition)
 	{
-		return service.findAllArtisteEntitiesMatching(condition);
+		return service.findAllArtisteEntitiesMatching(params, condition);
 	}
 
 	@Override

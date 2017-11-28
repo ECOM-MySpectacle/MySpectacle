@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.spectacle;
 
 public class ArtistFilter extends SpectacleFilter
 {
-	public static final String ID = "artist";
+	public static final String ID = "sp_artist";
 	private final String name;
 
 	public ArtistFilter(String name)

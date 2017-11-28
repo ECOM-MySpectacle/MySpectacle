@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.spectacle;
 
 public class ThemeFilter extends SpectacleFilter
 {
-	public static final String ID = "theme";
+	public static final String ID = "sp_theme";
 	private final String theme;
 
 	public ThemeFilter(String theme)

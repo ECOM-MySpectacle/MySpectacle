@@ -2,7 +2,6 @@ package org.applicationn.search;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
@@ -19,15 +18,15 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	List<SpectacleEntity> findAll()
+	SearchResult<SpectacleEntity> findAll(SearchParameters params)
 	{
-		return service.findAllSpectacleEntities();
+		return service.findAllSpectacleEntities(params);
 	}
 
 	@Override
-	List<SpectacleEntity> findAllMatching(String condition)
+	SearchResult<SpectacleEntity> findAllMatching(SearchParameters params, String condition)
 	{
-		return service.findAllSpectacleEntitiesMatching(condition);
+		return service.findAllSpectacleEntitiesMatching(params, condition);
 	}
 
 	@Override

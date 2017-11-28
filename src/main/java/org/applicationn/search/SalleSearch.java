@@ -1,7 +1,6 @@
 package org.applicationn.search;
 
 import javax.json.JsonObject;
-import java.util.List;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
@@ -17,15 +16,15 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	List<SalleEntity> findAll()
+	SearchResult<SalleEntity> findAll(SearchParameters params)
 	{
-		return service.findAllSalleEntities();
+		return service.findAllSalleEntities(params);
 	}
 
 	@Override
-	List<SalleEntity> findAllMatching(String condition)
+	SearchResult<SalleEntity> findAllMatching(SearchParameters params, String condition)
 	{
-		return service.findAllSalleEntitiesMatching(condition);
+		return service.findAllSalleEntitiesMatching(params, condition);
 	}
 
 	@Override

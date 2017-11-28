@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.representation;
 
 public class DateFilter extends RepresentationFilter
 {
-	public static final String ID = "date";
+	public static final String ID = "r_date";
 	private final String from, to;
 
 	public DateFilter(String from, String to)

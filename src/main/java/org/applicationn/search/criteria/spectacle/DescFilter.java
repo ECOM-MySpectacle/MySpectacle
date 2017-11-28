@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.spectacle;
 
 public class DescFilter extends SpectacleFilter
 {
-	public static final String ID = "description";
+	public static final String ID = "sp_description";
 	private final String desc;
 
 	public DescFilter(String desc)
