@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+        <p:outputPanel styleClass="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-6,ui-grid-col-2" layout="grid" style="max-width:400px">
+            
+                <h:outputLabel value="#{messages.field_label_representation_date}:" for="dateEditInput" />
+                <p:calendar id="dateEditInput" navigator="true" value="#{representationBean.representation.date}" label="#{messages.field_label_representation_date}" />
+                <p:message for="dateEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesFosseLibres}:" for="nbPlacesFosseLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesFosseLibres}"  id="nbPlacesFosseLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesFosseLibres}" />
+                <p:message for="nbPlacesFosseLibresEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesBalconLibres}:" for="nbPlacesBalconLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesBalconLibres}"  id="nbPlacesBalconLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesBalconLibres}" />
+                <p:message for="nbPlacesBalconLibresEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_nbPlacesOrchestreLibres}:" for="nbPlacesOrchestreLibresEditInput" />
+                <p:inputText value="#{representationBean.representation.nbPlacesOrchestreLibres}"  id="nbPlacesOrchestreLibresEditInput" 
+                    label="#{messages.field_label_representation_nbPlacesOrchestreLibres}" />
+                <p:message for="nbPlacesOrchestreLibresEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_representation_salle}:" for="salleSelectInput" rendered="#{not hideSalleSelectInput}"/>
+                <h:panelGroup rendered="#{not hideSalleSelectInput}">
+                    <p:selectOneMenu value="#{representationBean.representation.salle}"
+                                    id="salleSelectInput">
+                        <f:selectItem noSelectionOption="true" itemLabel="" />
+                        <f:selectItems value="#{representationBean.salles}" 
+                                    var="salle" 
+                                    itemLabel="#{salle.id}"
+                                    itemValue="#{salle}" />
+                        <o:converter converterId="omnifaces.SelectItemsConverter" list="#{representationBean.salles}" />
+                    </p:selectOneMenu>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not hideSalleSelectInput}">
+                
+                    <p:commandButton icon="ui-icon-plusthick" title="#{messages.label_create}"
+                              action="#{salleBean.prepareNewSalle()}"
+                              update=":createSalleFromEditDialog"
+                              resetValues="true"
+                              oncomplete="PF('createSalleFromEditDialogWidget').show()"
+                              rendered="#{applicationBean.componentExists('createSalleFromEditDialog') and representationBean.isPermitted('salle:create')}"
+                              style="vertical-align:top;" partialSubmit="true" process="@this">
+                    </p:commandButton>
+                    
+                    <p:message for="salleSelectInput" display="icon" rendered="#{not hideSalleSelectInput}"/>
+                </h:panelGroup>
+                
+            </p:panelGrid>
+
+        </p:outputPanel>
+</html>

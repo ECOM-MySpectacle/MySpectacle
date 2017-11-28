@@ -1,0 +1,68 @@
+body,div,td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+a, img {
+    border:none;
+    outline:none
+}
+
+.ui-button {
+	/* Overwrite this behavior: http://forum.primefaces.org/viewtopic.php?t=43754 */
+	width: auto !important;
+	min-width: 25px;
+}
+
+.action-column {
+    text-align: center;
+}
+
+.column-header {
+    white-space:pre-line;
+}
+
+.dialog {
+    width: auto;
+}
+
+.col1 {
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.col2 {
+    vertical-align: top;
+}
+
+.col3 {
+    vertical-align: top;
+}
+
+.ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50px;
+    vertical-align: bottom;
+}
+
+.ui-grid-content, .ui-grid {
+    border: none;
+}
+
+.ui-fluid .ui-selectonemenu .ui-selectonemenu-trigger {
+	/* Overwrite scary ui-fluid selectmenu style of PrimeFaces 5.2 */
+    box-sizing: border-box;
+    padding: 0 3px;
+    width: 24px;
+}
+
+.icon-entity {
+    background: url(../resources/images/entity.png) !important;
+    height:15px;
+    width:15px;
+    margin-right:5px;
+}

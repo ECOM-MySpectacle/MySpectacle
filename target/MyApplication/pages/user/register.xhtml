@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<ui:composition template="/templates/layout.xhtml">
+
+<ui:define name="content">
+
+  <!--  Email sending may be slow, so show waiting animation to prevent user from sending twice -->
+  <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+  <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage name="images/waiting.gif" alt="loading..." />
+  </p:dialog>
+
+  <h:form id="form1">
+    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="false" />
+  </h:form>
+  
+  <h:form prependId="false">
+    <p:panel>
+      <h3><h:outputText value="#{messages.please_register}" /></h3>
+      
+      <o:validateEqual components="emailEditInput emailRepeatEditInput"
+              showMessageFor="emailRepeatEditInput" message="#{messages.user_email_different_input}"/>
+      
+      <p:panelGrid columns="3">
+        <h:outputLabel for="usernameInput" value="#{messages.registration_username}:" />
+        <p:inputText id="usernameInput" required="true"
+            value="#{userRegistrationBean.user.username}" label="#{messages.registration_username}">
+        </p:inputText>
+        <p:message for="usernameInput" display="icon" />
+           
+        <h:outputLabel value="#{messages.registration_password}:" for="passwordEditInput" />
+        <p:password value="#{userRegistrationBean.user.password}" id="passwordEditInput" required="true"
+             match="passwordRepeatEditInput" label="#{messages.registration_password}" />
+        <p:message for="passwordEditInput" display="icon" />
+     
+        <h:outputLabel value="#{messages.registration_password_repeat}:" for="passwordRepeatEditInput" />
+        <p:password value="#{userRegistrationBean.user.password}" id="passwordRepeatEditInput" required="true"
+              label="#{messages.registration_password_repeat}" />
+        <p:message for="passwordRepeatEditInput" display="icon" />
+     
+        <h:outputLabel value="#{messages.registration_email}:" for="emailEditInput" />
+        <p:inputText value="#{userRegistrationBean.user.email}" id="emailEditInput"
+              label="#{messages.registration_email}" />
+        <p:message for="passwordEditInput" display="icon" />
+     
+        <h:outputLabel value="#{messages.registration_email_repeat}:" for="emailRepeatEditInput" />
+        <p:inputText value="#{userRegistrationBean.user.email}" id="emailRepeatEditInput"
+                label="#{messages.registration_email_repeat}" />
+        <p:message for="emailRepeatEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_prenom}:" for="prenomEditInput" />
+                <p:inputText value="#{userBean.user.prenom}" id="prenomEditInput" 
+                    label="#{messages.field_label_user_prenom}" />
+                <p:message for="prenomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_nom}:" for="nomEditInput" />
+                <p:inputText value="#{userBean.user.nom}" id="nomEditInput" 
+                    label="#{messages.field_label_user_nom}" />
+                <p:message for="nomEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_dateDeNaissance}:" for="dateDeNaissanceEditInput" />
+                <p:calendar id="dateDeNaissanceEditInput" navigator="true" value="#{userBean.user.dateDeNaissance}" label="#{messages.field_label_user_dateDeNaissance}" />
+                <p:message for="dateDeNaissanceEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_adresse}:" for="adresseEditInput" />
+                <p:inputText value="#{userBean.user.adresse}" id="adresseEditInput" 
+                    label="#{messages.field_label_user_adresse}" />
+                <p:message for="adresseEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_ville}:" for="villeEditInput" />
+                <p:inputText value="#{userBean.user.ville}" id="villeEditInput" 
+                    label="#{messages.field_label_user_ville}" />
+                <p:message for="villeEditInput" display="icon" />
+
+                <h:outputLabel value="#{messages.field_label_user_codePostal}:" for="codePostalEditInput" />
+                <p:inputText value="#{userBean.user.codePostal}" id="codePostalEditInput" 
+                    label="#{messages.field_label_user_codePostal}" />
+                <p:message for="codePostalEditInput" display="icon" />
+
+        <f:facet name="footer">
+            <p:commandButton action="#{userRegistrationBean.register}" value="#{messages.registration_submit}"/>
+        </f:facet>
+      </p:panelGrid>
+    </p:panel>
+
+  </h:form>
+
+</ui:define>
+</ui:composition>
+</html>

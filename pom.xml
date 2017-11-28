@@ -36,6 +36,12 @@
             <artifactId>primefaces</artifactId>
             <version>6.0</version>
         </dependency>
+
+	<dependency>
+	    <groupId>io.swagger</groupId>
+	    <artifactId>swagger-jersey-jaxrs</artifactId>
+	    <version>1.5.12</version>
+	</dependency>
         
         <dependency>
             <groupId>org.omnifaces</groupId>
@@ -88,6 +94,22 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.0.2.Final</version>
+            </plugin>
+
+	<plugin>
+                <groupId>com.sebastian-daschner</groupId>
+                <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
+                <version>0.14</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>analyze-jaxrs</goal>
+                        </goals>
+                        <configuration>
+                            <backend>swagger</backend>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             
         </plugins>
