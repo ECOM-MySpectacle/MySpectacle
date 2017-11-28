@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+    <p:outputPanel styleClass="ui-fluid" rendered="#{not salleBean.isPermitted(salleBean.salle, 'salle:read')}">
+        <h:outputText value="#{messages.access_denied}" />
+    </p:outputPanel>
+    
+    <h:panelGrid columns="2" styleClass="dialog" columnClasses="col1,col2" rendered="#{salleBean.isPermitted(salleBean.salle, 'salle:read')}">
+        
+        <h:outputText value="#{messages.field_label_salle_nom}:" />
+        <h:outputText value="#{salleBean.salle.nom}" />
+
+        <h:outputText value="#{messages.field_label_salle_adresse}:" />
+        <h:outputText value="#{salleBean.salle.adresse}" />
+
+        <h:outputText value="#{messages.field_label_salle_ville}:" />
+        <h:outputText value="#{salleBean.salle.ville}" />
+
+        <h:outputText value="#{messages.field_label_salle_nbPlacesFosse}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesFosse}" />
+
+        <h:outputText value="#{messages.field_label_salle_nbPlacesBalcon}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesBalcon}" />
+
+        <h:outputText value="#{messages.field_label_salle_nbPlacesOrchestre}:" />
+        <h:outputText value="#{salleBean.salle.nbPlacesOrchestre}" />
+
+        <h:outputText value="#{messages.field_label_salle_gestionnaire}:" />
+        <h:outputText value="#{salleBean.salle.gestionnaire.username}" />
+
+    </h:panelGrid>
+</html>

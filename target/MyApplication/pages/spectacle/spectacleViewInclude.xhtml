@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+    <p:outputPanel styleClass="ui-fluid" rendered="#{not spectacleBean.isPermitted(spectacleBean.spectacle, 'spectacle:read')}">
+        <h:outputText value="#{messages.access_denied}" />
+    </p:outputPanel>
+    
+    <p:panel header="#{messages.label_image}" style="max-width:400px" rendered="#{spectacleBean.isPermitted(spectacleBean.spectacle, 'spectacle:read')}">
+        <o:graphicImage value="#{spectacleBean.uploadedImageContents}" dataURI="true"
+            rendered="#{not empty spectacleBean.uploadedImageContents}" width="200px"/>
+    </p:panel>
+    
+    <h:panelGrid columns="2" styleClass="dialog" columnClasses="col1,col2" rendered="#{spectacleBean.isPermitted(spectacleBean.spectacle, 'spectacle:read')}">
+        
+        <h:outputText value="#{messages.field_label_spectacle_nom}:" />
+        <h:outputText value="#{spectacleBean.spectacle.nom}" />
+
+        <h:outputText value="#{messages.field_label_spectacle_genre}:" />
+        <h:outputText value="#{spectacleBean.getLabelForGenre(spectacleBean.spectacle.genre)}" />
+
+        <h:outputText value="#{messages.field_label_spectacle_publicc}:" />
+        <p:outputPanel>
+            <ui:repeat value="#{spectacleBean.spectacle.publicc.toArray()}" var="publicc">
+                <h:outputText value="#{spectacleBean.getLabelForPublicc(publicc)}" /><br/>
+            </ui:repeat>
+        </p:outputPanel>
+
+        <h:outputText value="#{messages.field_label_spectacle_theme}:" />
+        <h:outputText value="#{spectacleBean.spectacle.theme}" />
+
+        <h:outputText value="#{messages.field_label_spectacle_description}:" />
+        <h:outputText value="#{spectacleBean.spectacle.description}" />
+
+    </h:panelGrid>
+</html>

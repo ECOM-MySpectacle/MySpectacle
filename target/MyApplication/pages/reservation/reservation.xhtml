@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<ui:composition template="/templates/layout.xhtml">
+  <ui:define name="content">
+
+    <h:form prependId="false" id="reservationDataForm" onkeypress="if (event.keyCode == 13) {return false; }">
+
+        <p:dataTable id="reservationTable" value="#{reservationBean.reservationList}" var="reservation" resizableColumns="true" paginator="true"
+                paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,25,50" rows="10" draggableColumns="true"
+                paginatorPosition="bottom" widgetVar="reservationTable" emptyMessage="#{messages.label_no_records_found}"
+                reflow="true">
+        
+          <f:facet name="header" >
+
+              <p:commandButton value="#{messages.create_new_reservation}" icon="ui-icon-plusthick" action="#{reservationBean.prepareNewReservation()}"
+                      resetValues="true" update=":editReservationDialog" oncomplete="PF('editReservationDialogWidget').show()"
+                      rendered="#{reservationBean.isPermitted('reservation:create')}" style="float:left" />
+              
+              <p:commandButton id="toggler" type="button" value="#{messages.table_select_columns}" icon="ui-icon-calculator" />
+              <p:columnToggler datasource="reservationTable" trigger="toggler" />
+          </f:facet>
+          
+          <p:column headerText="#{messages.field_label_reservation_nbPlaceFosse}" sortBy="#{reservation.nbPlaceFosse}" filterBy="#{reservation.nbPlaceFosse}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceFosseFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('reservationTable').filter(); updateNbPlaceFosseFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceFosseFilter" update="reservationTable:nbPlaceFosseFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{reservation.nbPlaceFosse}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_reservation_nbPlaceBalcon}" sortBy="#{reservation.nbPlaceBalcon}" filterBy="#{reservation.nbPlaceBalcon}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceBalconFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('reservationTable').filter(); updateNbPlaceBalconFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceBalconFilter" update="reservationTable:nbPlaceBalconFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{reservation.nbPlaceBalcon}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_reservation_nbPlaceOrchestre}" sortBy="#{reservation.nbPlaceOrchestre}" filterBy="#{reservation.nbPlaceOrchestre}">
+            <f:facet name="filter">
+                <p:inputText id="nbPlaceOrchestreFilter"
+                        onkeypress="if (event.keyCode == 13) {PF('reservationTable').filter(); updateNbPlaceOrchestreFilter(); return false; }" >
+                    <p:remoteCommand name="updateNbPlaceOrchestreFilter" update="reservationTable:nbPlaceOrchestreFilter" />
+                    <f:convertNumber integerOnly="true" />
+                </p:inputText>
+            </f:facet>
+            <h:outputText value="#{reservation.nbPlaceOrchestre}" ><f:convertNumber /></h:outputText>
+          </p:column>
+
+          <p:column headerText="#{messages.field_label_reservation_modePaiement}"
+                    sortBy="#{reservation.modePaiement}" filterBy="#{reservation.modePaiement}">
+              <f:facet name="filter">
+                  <p:selectOneMenu id="modePaiementFilter"
+                                  style="width:145px;"
+                                  onchange="PF('reservationTable').filter(); return false;" >
+                      <f:selectItem noSelectionOption="true" itemLabel="" />
+                      <f:selectItems value="#{reservationBean.modePaiementSelectItems}" />
+                  </p:selectOneMenu>
+              </f:facet>
+              <h:outputText value="#{reservationBean.getLabelForModePaiement(reservation.modePaiement)}" />
+          </p:column>
+
+          <p:column styleClass="action-column" headerText="#{messages.table_actions_column}" width="115" exportable="false">
+            
+            <p:commandButton icon="ui-icon-zoomin" update=":viewReservationDialog" oncomplete="PF('viewReservationDialogWidget').show()" title="#{messages.label_view}">
+              <f:setPropertyActionListener value="#{reservation}" target="#{reservationBean.reservation}" />
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-pencil" update=":editReservationDialog"
+                resetValues="true" rendered="#{reservationBean.isPermitted(reservation, 'reservation:update')}"
+                action="#{reservationBean.onDialogOpen(reservation)}"
+                oncomplete="PF('editReservationDialogWidget').show()"
+                title="#{messages.label_edit}" >
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-close" rendered="#{reservationBean.isPermitted(reservation, 'reservation:delete')}"
+                oncomplete="PF('deleteReservationDialogWidget').show()"
+                title="#{messages.label_delete}" >
+                <f:setPropertyActionListener value="#{reservation}"
+                    target="#{reservationBean.reservation}" />
+            </p:commandButton>
+    
+          </p:column>
+          
+        </p:dataTable>
+        
+    </h:form>
+
+    <p:confirmDialog id="deleteReservationDialog" widgetVar="deleteReservationDialogWidget"
+        rendered="#{reservationBean.isPermitted(reservationBean.reservation, 'reservation:delete')}" header="#{messages.label_confirm_deletion}"
+        severity="alarm">
+        <f:facet name="message"><h:outputText value="#{messages.label_delete_record}" escape="false"/></f:facet>
+        <p:outputPanel>
+          <h:form>
+            <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_yes}" action="#{reservationBean.delete}" update=":reservationDataForm :growlForm:growl" oncomplete="PF('deleteReservationDialogWidget').hide()" />
+              <p:commandButton value="#{messages.label_no}" onclick="PF('deleteReservationDialogWidget').hide()" type="button" />
+            </div>
+          </h:form>
+        </p:outputPanel>
+    </p:confirmDialog>
+    
+    <p:dialog dynamic="true" id="editReservationDialog" header="#{messages.label_reservation_caption}"
+            modal="true" widgetVar="editReservationDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{reservationBean.reset}"/>
+        <h:form id="editReservationForm" >
+            <p:outputPanel id="reservationEditPanel">
+                <ui:include src="/pages/reservation/reservationEditInclude.xhtml"/>
+                <div style="text-align: center; margin:10px">
+                    <p:commandButton value="#{messages.label_save}"
+                            icon="ui-icon-disk" action="#{reservationBean.persist}"
+                            update=":editReservationForm:reservationEditPanel :reservationDataForm :growlForm:growl"
+                            oncomplete="if(!args.validationFailed) PF('editReservationDialogWidget').hide()" />
+                    <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('editReservationDialogWidget').hide()" type="button" />
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog dynamic="true" id="viewReservationDialog" header="#{messages.label_reservation_caption}" modal="true" widgetVar="viewReservationDialogWidget" maximizable="true">
+        <p:ajax event="close" listener="#{reservationBean.reset}" />
+        <h:form id="viewReservationForm">
+          <ui:include src="/pages/reservation/reservationViewInclude.xhtml"/>
+          <div style="text-align: center; margin:10px">
+              <p:commandButton value="#{messages.label_close}" icon="ui-icon-close" onclick="PF('viewReservationDialogWidget').hide()" type="button" />
+          </div>
+        </h:form>
+    </p:dialog>
+    
+  </ui:define>
+</ui:composition>
+</html>
