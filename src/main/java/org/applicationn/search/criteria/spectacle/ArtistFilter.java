@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.spectacle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class ArtistFilter extends Filter
+public class ArtistFilter extends SpectacleFilter
 {
 	public static final String ID = "artist";
 	private final String name;
@@ -17,6 +15,6 @@ public class ArtistFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.artiste LIKE '%" + name + "'%";
+		return attribute("artiste") + " LIKE '%" + name + "'%";
 	}
 }

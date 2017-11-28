@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.salle.*;
 import org.applicationn.service.RechercheService;
 
@@ -28,9 +29,11 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o)
+	Filter createFilter(JsonObject o) throws UnknownFilterException
 	{
-		switch(o.getString("id"))
+		String id = o.getString("id");
+
+		switch(id)
 		{
 			case AddressFilter.ID:
 			{
@@ -64,7 +67,7 @@ public class SalleSearch extends Search<SalleEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(id);
 			}
 		}
 	}

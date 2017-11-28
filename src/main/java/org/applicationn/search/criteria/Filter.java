@@ -14,5 +14,7 @@ public abstract class Filter
 		return id;
 	}
 
+	public abstract String attribute(String attr);
+
 	public abstract String condition();
 }

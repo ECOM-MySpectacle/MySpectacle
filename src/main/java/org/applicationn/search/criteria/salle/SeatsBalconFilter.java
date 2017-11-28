@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.salle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class SeatsBalconFilter extends Filter
+public class SeatsBalconFilter extends SalleFilter
 {
 	public static final String ID = "seats_balcon";
 	private final int seats;
@@ -17,6 +15,6 @@ public class SeatsBalconFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.nbPlacesBalcon >= " + seats;
+		return attribute("nbPlacesBalcon") + " >= " + seats;
 	}
 }

@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.spectacle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class PublicFilter extends Filter
+public class PublicFilter extends SpectacleFilter
 {
 	public static final String ID = "public";
 	private final String[] publc;
@@ -17,6 +15,6 @@ public class PublicFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.publicc IN (" + String.join(",", publc) + ")";
+		return attribute("publicc") + " IN (" + String.join(",", publc) + ")";
 	}
 }

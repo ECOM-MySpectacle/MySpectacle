@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.spectacle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class ThemeFilter extends Filter
+public class ThemeFilter extends SpectacleFilter
 {
 	public static final String ID = "theme";
 	private final String theme;
@@ -17,6 +15,6 @@ public class ThemeFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.theme = '" + theme + "'";
+		return attribute("theme") + " = '" + theme + "'";
 	}
 }

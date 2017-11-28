@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.service.RechercheService;
 
@@ -30,9 +31,11 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	public Filter createFilter(JsonObject o)
+	public Filter createFilter(JsonObject o) throws UnknownFilterException
 	{
-		switch(o.getString("id"))
+		String id = o.getString("id");
+
+		switch(id)
 		{
 			case ArtistFilter.ID:
 			{
@@ -72,7 +75,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(id);
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.artiste.NameFilter;
 import org.applicationn.service.RechercheService;
 
@@ -28,9 +29,11 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o)
+	Filter createFilter(JsonObject o) throws UnknownFilterException
 	{
-		switch(o.getString("id"))
+		String id = o.getString("id");
+
+		switch(id)
 		{
 			case NameFilter.ID:
 			{
@@ -39,7 +42,7 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(id);
 			}
 		}
 	}

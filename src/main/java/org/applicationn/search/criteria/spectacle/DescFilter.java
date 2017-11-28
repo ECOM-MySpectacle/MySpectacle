@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.spectacle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class DescFilter extends Filter
+public class DescFilter extends SpectacleFilter
 {
 	public static final String ID = "description";
 	private final String desc;
@@ -17,6 +15,6 @@ public class DescFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.description LIKE '%" + desc + "%'";
+		return attribute("description") + " LIKE '%" + desc + "%'";
 	}
 }

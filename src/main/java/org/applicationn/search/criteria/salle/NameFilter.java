@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.salle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class NameFilter extends Filter
+public class NameFilter extends SalleFilter
 {
 	public static final String ID = "name";
 	private final String name;
@@ -17,6 +15,6 @@ public class NameFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.nom LIKE '%" + name + "%'";
+		return attribute("nom") + " LIKE '%" + name + "%'";
 	}
 }

@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.applicationn.domain.BaseEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
 abstract class Search<T extends BaseEntity>
@@ -22,9 +23,9 @@ abstract class Search<T extends BaseEntity>
 
 	abstract List<T> findAllMatching(String condition);
 
-	abstract Filter createFilter(JsonObject json) throws JsonException;
+	abstract Filter createFilter(JsonObject json) throws UnknownFilterException, JsonException;
 
-	public final boolean createFilters(String json)
+	public final void createFilters(String json) throws UnknownFilterException, JsonException
 	{
 		if(json != null && !json.isEmpty())
 		{
@@ -34,25 +35,12 @@ abstract class Search<T extends BaseEntity>
 			{
 				a = reader.readArray();
 			}
-			catch(JsonException e)
-			{
-				return false;
-			}
 
 			for(JsonValue v : a)
 			{
 				if(v.getValueType() == JsonValue.ValueType.OBJECT)
 				{
-					Filter filter;
-
-					try
-					{
-						filter = createFilter((JsonObject) v);
-					}
-					catch(JsonException e)
-					{
-						return false;
-					}
+					Filter filter = createFilter((JsonObject) v);
 
 					if(filter != null)
 					{
@@ -61,8 +49,6 @@ abstract class Search<T extends BaseEntity>
 				}
 			}
 		}
-
-		return true;
 	}
 
 	public final void addFilter(Filter filter)

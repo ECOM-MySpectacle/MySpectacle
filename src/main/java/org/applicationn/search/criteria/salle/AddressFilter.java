@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.salle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class AddressFilter extends Filter
+public class AddressFilter extends SalleFilter
 {
 	public static final String ID = "address";
 	private final String address;
@@ -17,6 +15,6 @@ public class AddressFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.addresse = '" + address + "'";
+		return attribute("addresse") + " = '" + address + "'";
 	}
 }

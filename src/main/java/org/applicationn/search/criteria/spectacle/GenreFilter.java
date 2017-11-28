@@ -1,8 +1,6 @@
 package org.applicationn.search.criteria.spectacle;
 
-import org.applicationn.search.criteria.Filter;
-
-public class GenreFilter extends Filter
+public class GenreFilter extends SpectacleFilter
 {
 	public static final String ID = "genre";
 	private final String[] genres;
@@ -17,6 +15,6 @@ public class GenreFilter extends Filter
 	@Override
 	public String condition()
 	{
-		return "o.genre IN (" + String.join(",", genres) + ")";
+		return attribute("genre") + " IN (" + String.join(",", genres) + ")";
 	}
 }

@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.UnknownFilterException;
+import org.applicationn.search.criteria.representation.AvailSeatsBalconFilter;
+import org.applicationn.search.criteria.representation.AvailSeatsFosseFilter;
+import org.applicationn.search.criteria.representation.AvailSeatsOrchestreFilter;
+import org.applicationn.search.criteria.spectacle.NameFilter;
 import org.applicationn.service.RechercheService;
 
 public class RepresentationSearch extends Search<RepresentationEntity>
@@ -27,13 +32,35 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o)
+	Filter createFilter(JsonObject o) throws UnknownFilterException
 	{
-		switch(o.getString("id"))
+		String id = o.getString("id");
+
+		switch(id)
 		{
+			case NameFilter.ID:
+			{
+				return new NameFilter(o.getString("name"));
+			}
+
+			case AvailSeatsBalconFilter.ID:
+			{
+				return new NameFilter(o.getString("avail_seats_balcon"));
+			}
+
+			case AvailSeatsFosseFilter.ID:
+			{
+				return new NameFilter(o.getString("avail_seats_fosse"));
+			}
+
+			case AvailSeatsOrchestreFilter.ID:
+			{
+				return new NameFilter(o.getString("avail_seats_orchestre"));
+			}
+
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(id);
 			}
 		}
 	}

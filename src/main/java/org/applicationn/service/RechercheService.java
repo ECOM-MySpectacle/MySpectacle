@@ -25,41 +25,41 @@ public class RechercheService implements Serializable
 
 	public List<SpectacleEntity> findAllSpectacleEntities()
 	{
-		return findAllEntities(SpectacleEntity.class, "SELECT o FROM Spectacle o");
+		return findAllEntities(SpectacleEntity.class, "SELECT sp FROM Spectacle sp");
 	}
 
 	public List<SpectacleEntity> findAllSpectacleEntitiesMatching(String criteria)
 	{
-		return findAllEntities(SpectacleEntity.class, "SELECT o FROM Spectacle o WHERE " + criteria);
+		return findAllEntities(SpectacleEntity.class, "SELECT sp FROM Spectacle sp WHERE " + criteria);
 	}
 
 	public List<SalleEntity> findAllSalleEntities()
 	{
-		return findAllEntities(SalleEntity.class, "SELECT o FROM Salle o");
+		return findAllEntities(SalleEntity.class, "SELECT sa FROM Salle sa");
 	}
 
 	public List<SalleEntity> findAllSalleEntitiesMatching(String criteria)
 	{
-		return findAllEntities(SalleEntity.class, "SELECT o FROM Salle o WHERE " + criteria);
+		return findAllEntities(SalleEntity.class, "SELECT sa FROM Salle sa WHERE " + criteria);
 	}
 
 	public List<ArtisteEntity> findAllArtisteEntities()
 	{
-		return findAllEntities(ArtisteEntity.class, "SELECT o FROM Artiste o");
+		return findAllEntities(ArtisteEntity.class, "SELECT a FROM Artiste a");
 	}
 
 	public List<ArtisteEntity> findAllArtisteEntitiesMatching(String criteria)
 	{
-		return findAllEntities(ArtisteEntity.class, "SELECT o FROM Artiste o WHERE " + criteria);
+		return findAllEntities(ArtisteEntity.class, "SELECT a FROM Artiste a WHERE " + criteria);
 	}
 
 	public List<RepresentationEntity> findAllRepresentationEntities()
 	{
-		return findAllEntities(RepresentationEntity.class, "SELECT o FROM Representation o");
+		return findAllEntities(RepresentationEntity.class, "SELECT r FROM Representation r");
 	}
 
 	public List<RepresentationEntity> findAllRepresentationEntitiesMatching(String criteria)
 	{
-		return findAllEntities(RepresentationEntity.class, "SELECT o FROM Representation o WHERE " + criteria);
+		return findAllEntities(RepresentationEntity.class, "SELECT r FROM Representation r JOIN r.salle sa JOIN r.spectacle sp JOIN sp.artistess a WHERE " + criteria);
 	}
 }
