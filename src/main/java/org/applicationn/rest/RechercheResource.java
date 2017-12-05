@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.io.StringReader;
 
 import org.applicationn.search.*;
+import org.applicationn.search.criteria.InvalidFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
@@ -35,41 +36,9 @@ public class RechercheResource implements Serializable
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getIsNotAllowed()
+	public String get()
 	{
 		return "{\"error\":\"Not allowed\"}";
-	}
-
-	@Path("spectacles")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String noGetSpectacles()
-	{
-		return getIsNotAllowed();
-	}
-
-	@Path("artistes")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String noGetArtistes()
-	{
-		return getIsNotAllowed();
-	}
-
-	@Path("representations")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String noGetRepresentations()
-	{
-		return getIsNotAllowed();
-	}
-
-	@Path("salles")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String noGetSalles()
-	{
-		return getIsNotAllowed();
 	}
 
 	private String badRequest()
@@ -82,44 +51,77 @@ public class RechercheResource implements Serializable
 		return "{\"error\":\"Unknown filter: " + filter + "\"}";
 	}
 
+	private String invalidFilter(String filter)
+	{
+		return "{\"error\":\"Invalid filter: " + filter + "\"}";
+	}
+
+	/**
+	 * Get the list of Spectacle Entries matching the given criteria<br/>
+	 * HTTP Method: POST<br/>
+	 * PUT Request Body: a JSON object containing a page number "page", the number of elements per page "per_page"
+	 * and the list of filters in the "filters" array<br/>
+	 * URL: /recherche/representations
+	 *
+	 * @return List of RepresentationEntity (JSON)
+	 */
 	@Path("spectacles")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object findSpectaclesByCriteria(String json)
 	{
-		SpectacleSearch search = new SpectacleSearch(service);
-
-		return findByCriteria(json, search);
+		return findByCriteria(json, new SpectacleSearch(service));
 	}
 
+	/**
+	 * Get the list of Salle Entries matching the given criteria<br/>
+	 * HTTP Method: POST<br/>
+	 * PUT Request Body: a JSON object containing a page number "page", the number of elements per page "per_page"
+	 * and the list of filters in the "filters" array<br/>
+	 * URL: /recherche/representations
+	 *
+	 * @return List of RepresentationEntity (JSON)
+	 */
 	@Path("salles")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object findSallesByCriteria(String json)
 	{
-		SalleSearch search = new SalleSearch(service);
-
-		return findByCriteria(json, search);
+		return findByCriteria(json, new SalleSearch(service));
 	}
 
+	/**
+	 * Get the list of Artiste Entries matching the given criteria<br/>
+	 * HTTP Method: POST<br/>
+	 * PUT Request Body: a JSON object containing a page number "page", the number of elements per page "per_page"
+	 * and the list of filters in the "filters" array<br/>
+	 * URL: /recherche/representations
+	 *
+	 * @return List of RepresentationEntity (JSON)
+	 */
 	@Path("artistes")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object findArtistesByCriteria(String json)
 	{
-		ArtisteSearch search = new ArtisteSearch(service);
-
-		return findByCriteria(json, search);
+		return findByCriteria(json, new ArtisteSearch(service));
 	}
 
+	/**
+	 * Get the list of Representation Entries matching the given criteria<br/>
+	 * HTTP Method: POST<br/>
+	 * PUT Request Body: a JSON object containing a page number "page", the number of elements per page "per_page"
+	 * and the list of filters in the "filters" array<br/>
+	 * URL: /recherche/representations
+	 *
+	 * @return List of RepresentationEntity (JSON)
+	 */
 	@Path("representations")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object findRepresentationsByCriteria(String json)
 	{
-		RepresentationSearch search = new RepresentationSearch(service);
-
-		return findByCriteria(json, search);
+		return findByCriteria(json, new RepresentationSearch(service));
 	}
 
 	private Object findByCriteria(String json, Search search)
@@ -145,6 +147,10 @@ public class RechercheResource implements Serializable
 		catch(UnknownFilterException e)
 		{
 			return unknownFilter(e.getFilter());
+		}
+		catch(InvalidFilterException e)
+		{
+			return invalidFilter(e.getFilter());
 		}
 		catch(Exception e)
 		{

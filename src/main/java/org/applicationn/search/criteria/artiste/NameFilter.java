@@ -1,13 +1,20 @@
 package org.applicationn.search.criteria.artiste;
 
+import org.applicationn.search.criteria.InvalidFilterException;
+
 public class NameFilter extends ArtisteFilter
 {
 	public static final String ID = "a_name";
 	private final String name;
 
-	public NameFilter(String name)
+	public NameFilter(String name) throws InvalidFilterException
 	{
 		super(ID);
+
+		if(name == null || name.isEmpty())
+		{
+			throw new InvalidFilterException(ID);
+		}
 
 		this.name = name;
 	}

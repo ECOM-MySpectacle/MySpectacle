@@ -4,6 +4,7 @@ import javax.json.JsonObject;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.InvalidFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.salle.*;
 import org.applicationn.service.RechercheService;
@@ -28,7 +29,7 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o) throws UnknownFilterException
+	Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
 	{
 		String id = o.getString("id");
 

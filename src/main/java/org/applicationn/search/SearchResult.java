@@ -6,9 +6,18 @@ import java.util.List;
 
 import org.applicationn.domain.BaseEntity;
 
+/**
+ * Holds the result of a search query.
+ *
+ * @param <T> The type of elements queried
+ */
 public class SearchResult<T extends BaseEntity>
 {
-	static final SearchResult EMPTY = new SearchResult(new SearchParameters(), Collections.EMPTY_LIST);
+	/**
+	 * Empty result
+	 */
+	@SuppressWarnings("rawtypes")
+	static final SearchResult EMPTY = new SearchResult<>(new SearchParameters(), Collections.emptyList());
 	private final int pages, total;
 	private final List<T> entities;
 
@@ -30,9 +39,9 @@ public class SearchResult<T extends BaseEntity>
 		}
 	}
 
-	public List<T> getEntities()
+	public int getPages()
 	{
-		return entities;
+		return pages;
 	}
 
 	public int getTotal()
@@ -40,8 +49,8 @@ public class SearchResult<T extends BaseEntity>
 		return total;
 	}
 
-	public int getPages()
+	public List<T> getEntities()
 	{
-		return pages;
+		return entities;
 	}
 }

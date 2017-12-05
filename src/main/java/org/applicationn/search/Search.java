@@ -8,11 +8,22 @@ import java.util.*;
 
 import org.applicationn.domain.BaseEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.InvalidFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
+/**
+ * Base class for searches.<br/>
+ * Each search has filters which are predicates that an entity must satisfy in order to be returned.<br/>
+ * If multiple filters of the same identifier are given, they are OR'd together.
+ *
+ * @param <T> The type of elements queried
+ */
 public abstract class Search<T extends BaseEntity>
 {
+	/**
+	 * The map of list of filters.<br/>
+	 */
 	private final Map<String, List<Filter>> filters = new HashMap<>();
 	protected final RechercheService service;
 
@@ -21,13 +32,34 @@ public abstract class Search<T extends BaseEntity>
 		this.service = service;
 	}
 
+	/**
+	 * Returns all entities regardless of filters.
+	 *
+	 * @param params The search params
+	 * @return All entities
+	 */
 	abstract SearchResult<T> findAll(SearchParameters params);
 
+	/**
+	 * Returns all entities matching the filters.
+	 *
+	 * @param params The search params
+	 * @return All entities
+	 */
 	abstract SearchResult<T> findAllMatching(SearchParameters params, String condition);
 
-	abstract Filter createFilter(JsonObject json) throws UnknownFilterException, JsonException;
+	/**
+	 * Creates a {@link Filter} from a JSON object.
+	 *
+	 * @param json the JSON object representing the filter
+	 * @return The filter
+	 * @throws UnknownFilterException if the filter is unrecognized
+	 * @throws InvalidFilterException if the filter is invalid
+	 * @throws JsonException          if a JSON exception occurs
+	 */
+	abstract Filter createFilter(JsonObject json) throws UnknownFilterException, InvalidFilterException, JsonException;
 
-	public final void createFilters(JsonArray a) throws UnknownFilterException, JsonException
+	public final void createFilters(JsonArray a) throws UnknownFilterException, InvalidFilterException, JsonException
 	{
 		if(a != null && !a.isEmpty())
 		{
@@ -46,6 +78,11 @@ public abstract class Search<T extends BaseEntity>
 		}
 	}
 
+	/**
+	 * Adds a filter to the filter list.
+	 *
+	 * @param filter the filter
+	 */
 	public final void addFilter(Filter filter)
 	{
 		String id = filter.getId();
@@ -61,11 +98,21 @@ public abstract class Search<T extends BaseEntity>
 		l.add(filter);
 	}
 
+	/**
+	 * Removed a filter to the filter list.
+	 *
+	 * @param id the filter id
+	 */
 	public final void removeFilter(String id)
 	{
 		filters.remove(id);
 	}
 
+	/**
+	 * Gets the list of filters by id.
+	 *
+	 * @param id the filter identifier
+	 */
 	public final List<Filter> getFilter(String id)
 	{
 		return filters.get(id);

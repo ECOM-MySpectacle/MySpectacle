@@ -1,13 +1,20 @@
 package org.applicationn.search.criteria.spectacle;
 
+import org.applicationn.search.criteria.InvalidFilterException;
+
 public class DescFilter extends SpectacleFilter
 {
 	public static final String ID = "sp_description";
 	private final String desc;
 
-	public DescFilter(String desc)
+	public DescFilter(String desc) throws InvalidFilterException
 	{
 		super(ID);
+
+		if(desc == null || desc.isEmpty())
+		{
+			throw new InvalidFilterException(ID);
+		}
 
 		this.desc = desc;
 	}

@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.InvalidFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.service.RechercheService;
@@ -30,7 +31,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	public Filter createFilter(JsonObject o) throws UnknownFilterException
+	public Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
 	{
 		String id = o.getString("id");
 

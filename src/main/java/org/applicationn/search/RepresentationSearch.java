@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.InvalidFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.representation.AvailSeatsBalconFilter;
 import org.applicationn.search.criteria.representation.AvailSeatsFosseFilter;
@@ -38,7 +39,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o) throws UnknownFilterException
+	Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
 	{
 		String id = o.getString("id");
 
