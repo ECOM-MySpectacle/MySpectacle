@@ -1,0 +1,18 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  post:
+    - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/MyApplication:$CIRCLE_SHA1 .
+
+test:
+  post:
+    - docker run -d -p 8080:8080 --name MyApplication $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/MyApplication:$CIRCLE_SHA1; sleep 10
+    - curl --retry 10 --retry-delay 5 localhost:8080 
+
+deployment:
+  prod:
+    branch: master
+    commands:
+      - ./deploy.sh
