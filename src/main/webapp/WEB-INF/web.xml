@@ -121,15 +121,15 @@
     </context-param>
     <context-param>
         <param-name>mail.username</param-name>
-        <param-value>_your_gmail_address_@gmail.com</param-value>
+        <param-value>ecommyspectacle@gmail.com</param-value>
     </context-param>
     <context-param>
         <param-name>mail.password</param-name>
-        <param-value>_your_gmail_password_</param-value>
+        <param-value>hugedindoon</param-value>
     </context-param>
     <context-param>
         <param-name>mail.from</param-name>
-        <param-value>_your_gmail_address_@gmail.com</param-value>
+        <param-value>ecommyspectacle@gmail.com</param-value>
     </context-param>
     
     <error-page>
