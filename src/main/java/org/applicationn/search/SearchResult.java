@@ -25,7 +25,7 @@ public class SearchResult<T extends BaseEntity>
 	{
 		total = result.size();
 		int page = params.page, perPage = params.perPage;
-		pages = total / perPage + 1;
+		pages = (int) Math.ceil((double) total / (double) perPage);
 
 		if(page < 1 || page > pages)
 		{
