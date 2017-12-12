@@ -15,7 +15,7 @@ mvn clean compile package
 
 docker build -t tirandule .
 
-docker run -p 8080:8080 tirandule
+docker run -p 8080:8080 -p 25:25 tirandule
 ```
 
 L'application est alors disponible à [localhost:8080/MySpectacle](http://localhost:8080/MySpectacle)
