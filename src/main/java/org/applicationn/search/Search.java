@@ -1,6 +1,5 @@
 package org.applicationn.search;
 
-import javax.json.JsonArray;
 import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -51,29 +50,28 @@ public abstract class Search<T extends BaseEntity>
 	/**
 	 * Creates a {@link Filter} from a JSON object.
 	 *
+	 * @param key  the key
 	 * @param json the JSON object representing the filter
 	 * @return The filter
-	 * @throws UnknownFilterException if the filter is unrecognized
 	 * @throws InvalidFilterException if the filter is invalid
 	 * @throws JsonException          if a JSON exception occurs
 	 */
-	abstract Filter createFilter(JsonObject json) throws UnknownFilterException, InvalidFilterException, JsonException;
+	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException;
 
-	public final void createFilters(JsonArray a) throws UnknownFilterException, InvalidFilterException, JsonException
+	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, JsonException
 	{
-		if(a != null && !a.isEmpty())
+		if(o != null && !o.isEmpty())
 		{
-			for(JsonValue v : a)
+			for(Map.Entry<String, JsonValue> entry : o.entrySet())
 			{
-				if(v.getValueType() == JsonValue.ValueType.OBJECT)
-				{
-					Filter filter = createFilter((JsonObject) v);
+				Filter filter = createFilter(entry.getKey(), entry.getValue());
 
-					if(filter != null)
-					{
-						addFilter(filter);
-					}
+				if(filter == null)
+				{
+					throw new UnknownFilterException(entry.getKey());
 				}
+
+				addFilter(filter);
 			}
 		}
 	}

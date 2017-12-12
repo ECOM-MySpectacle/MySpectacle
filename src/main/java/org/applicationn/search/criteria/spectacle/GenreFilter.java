@@ -1,6 +1,7 @@
 package org.applicationn.search.criteria.spectacle;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 import org.applicationn.domain.SpectacleGenre;
 import org.applicationn.search.criteria.InvalidFilterException;
@@ -33,6 +34,8 @@ public class GenreFilter extends SpectacleFilter
 	@Override
 	public String condition()
 	{
-		return attribute("genre") + " IN (" + String.join(",", genres) + ")";
+		StringJoiner joiner = new StringJoiner("','", "'", "'");
+		Arrays.stream(genres).forEach(joiner::add);
+		return attribute("genre") + " IN (" + joiner.toString() + ")";
 	}
 }

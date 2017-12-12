@@ -1,11 +1,11 @@
 package org.applicationn.search;
 
-import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.artiste.NameFilter;
 import org.applicationn.service.RechercheService;
 
@@ -29,20 +29,18 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
+	Filter createFilter(String key, JsonValue value) throws InvalidFilterException
 	{
-		String id = o.getString("id");
-
-		switch(id)
+		switch(key)
 		{
 			case NameFilter.ID:
 			{
-				return new NameFilter(o.getString("name"));
+				return new NameFilter(((JsonString) value).getString());
 			}
 
 			default:
 			{
-				throw new UnknownFilterException(id);
+				return null;
 			}
 		}
 	}

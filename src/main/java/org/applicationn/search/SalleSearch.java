@@ -1,11 +1,12 @@
 package org.applicationn.search;
 
-import javax.json.JsonObject;
+import javax.json.JsonNumber;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.salle.*;
 import org.applicationn.service.RechercheService;
 
@@ -29,45 +30,43 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
+	Filter createFilter(String key, JsonValue value) throws InvalidFilterException
 	{
-		String id = o.getString("id");
-
-		switch(id)
+		switch(key)
 		{
 			case AddressFilter.ID:
 			{
-				return new AddressFilter(o.getString("address"));
+				return new AddressFilter(((JsonString) value).getString());
 			}
 
 			case CityFilter.ID:
 			{
-				return new CityFilter(o.getString("city"));
+				return new CityFilter(((JsonString) value).getString());
 			}
 
 			case NameFilter.ID:
 			{
-				return new NameFilter(o.getString("name"));
+				return new NameFilter(((JsonString) value).getString());
 			}
 
 			case SeatsBalconFilter.ID:
 			{
-				return new SeatsBalconFilter(o.getInt("seats_balcon"));
+				return new SeatsBalconFilter(((JsonNumber) value).intValue());
 			}
 
 			case SeatsFosseFilter.ID:
 			{
-				return new SeatsFosseFilter(o.getInt("seats_fosse"));
+				return new SeatsFosseFilter(((JsonNumber) value).intValue());
 			}
 
 			case SeatsOrchestreFilter.ID:
 			{
-				return new SeatsOrchestreFilter(o.getInt("seats_orchestre"));
+				return new SeatsOrchestreFilter(((JsonNumber) value).intValue());
 			}
 
 			default:
 			{
-				throw new UnknownFilterException(id);
+				return null;
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package org.applicationn.search.criteria.spectacle;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 import org.applicationn.domain.SpectaclePublicc;
 import org.applicationn.search.criteria.InvalidFilterException;
@@ -33,6 +34,8 @@ public class PublicFilter extends SpectacleFilter
 	@Override
 	public String condition()
 	{
-		return attribute("publicc") + " IN (" + String.join(",", publc) + ")";
+		StringJoiner joiner = new StringJoiner("','", "'", "'");
+		Arrays.stream(publc).forEach(joiner::add);
+		return attribute("publicc") + " IN (" + joiner.toString() + ")";
 	}
 }
