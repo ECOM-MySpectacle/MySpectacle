@@ -51,6 +51,6 @@ jobs:
       - deploy:
           name: Deploy application Docker image to AWS
           command: |
-            if [ "${CIRCLE_BRANCH}" == "g" ]; then
+            if [ "${CIRCLE_BRANCH}" == "generjee2" ]; then
               /app/deploy.sh
             fi
