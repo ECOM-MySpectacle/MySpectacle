@@ -1,13 +1,13 @@
 package org.applicationn.search;
 
 import javax.json.JsonArray;
-import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.service.RechercheService;
 
@@ -31,25 +31,23 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	public Filter createFilter(JsonObject o) throws UnknownFilterException, InvalidFilterException
+	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException
 	{
-		String id = o.getString("id");
-
-		switch(id)
+		switch(key)
 		{
 			case ArtistFilter.ID:
 			{
-				return new ArtistFilter(o.getString("artist"));
+				return new ArtistFilter(((JsonString) value).getString());
 			}
 
 			case DescFilter.ID:
 			{
-				return new DescFilter(o.getString("description"));
+				return new DescFilter(((JsonString) value).getString());
 			}
 
 			case GenreFilter.ID:
 			{
-				JsonArray a = o.getJsonArray("genre");
+				JsonArray a = ((JsonArray) value);
 				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
 				return new GenreFilter(genres);
@@ -57,12 +55,12 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case NameFilter.ID:
 			{
-				return new NameFilter(o.getString("name"));
+				return new NameFilter(((JsonString) value).getString());
 			}
 
 			case PublicFilter.ID:
 			{
-				JsonArray a = o.getJsonArray("public");
+				JsonArray a = ((JsonArray) value);
 				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
 				return new PublicFilter(publc);
@@ -70,12 +68,12 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case ThemeFilter.ID:
 			{
-				return new ThemeFilter(o.getString("theme"));
+				return new ThemeFilter(((JsonString) value).getString());
 			}
 
 			default:
 			{
-				throw new UnknownFilterException(id);
+				return null;
 			}
 		}
 	}
