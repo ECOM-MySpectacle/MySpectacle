@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class SeatsFosseFilter extends SalleFilter
 {
-	public static final String ID = "sa_seats_fosse";
+	public static final String ID = "seats_fosse";
 	private final int seats;
 
 	public SeatsFosseFilter(int seats) throws InvalidFilterException
