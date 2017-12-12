@@ -1,4 +1,4 @@
-version: 2
+﻿version: 2
 jobs:
   build:
     working_directory: /app
@@ -19,8 +19,8 @@ jobs:
       - run:
           name: Set Environment variables
           command: |
-		xmlfile="/app/src/main/webapp/WEB-INF/web.xml"
-		xmlstarlet edit -L -N my='http://xmlns.jcp.org/xml/ns/javaee' -u "//my:web-app/my:context-param[my:param-name='mail.password']/my:param-value" -v '$MAIL_PASSWORD' $xmlfile
+            xmlfile="/app/src/main/webapp/WEB-INF/web.xml"
+            xmlstarlet edit -L -N my='http://xmlns.jcp.org/xml/ns/javaee' -u "//my:web-app/my:context-param[my:param-name='mail.password']/my:param-value" -v '$MAIL_PASSWORD' $xmlfile
       - run:
           name: Build JavaEE application (mvn package)
           command: |
