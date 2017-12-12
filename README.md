@@ -30,4 +30,4 @@ cd MySpectacle
 ./deployECv2.sh
 ```
 
-L'application est alors disponible à [http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/pages/main.xhtml]http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/pages/main.xhtml
+L'application est alors disponible à http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/pages/main.xhtml
