@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class DescFilter extends SpectacleFilter
 {
-	public static final String ID = "sp_description";
+	public static final String ID = "description";
 	private final String desc;
 
 	public DescFilter(String desc) throws InvalidFilterException

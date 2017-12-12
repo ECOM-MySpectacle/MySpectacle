@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class DateFilter extends RepresentationFilter
 {
-	public static final String ID = "r_date";
+	public static final String ID = "date";
 	private final String from, to;
 
 	public DateFilter(String from, String to) throws InvalidFilterException

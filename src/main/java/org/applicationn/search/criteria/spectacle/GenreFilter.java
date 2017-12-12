@@ -8,7 +8,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class GenreFilter extends SpectacleFilter
 {
-	public static final String ID = "sp_genre";
+	public static final String ID = "genre";
 	private final String[] genres;
 
 	public GenreFilter(String[] genres) throws InvalidFilterException

@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class AvailSeatsOrchestreFilter extends RepresentationFilter
 {
-	public static final String ID = "r_avail_seats_orchestre";
+	public static final String ID = "avail_seats_orchestre";
 	private final int seats;
 
 	public AvailSeatsOrchestreFilter(int seats) throws InvalidFilterException

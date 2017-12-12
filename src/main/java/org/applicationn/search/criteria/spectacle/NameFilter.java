@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class NameFilter extends SpectacleFilter
 {
-	public static final String ID = "sp_name";
+	public static final String ID = "name";
 	private final String name;
 
 	public NameFilter(String name) throws InvalidFilterException

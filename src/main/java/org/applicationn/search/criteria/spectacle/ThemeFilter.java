@@ -4,7 +4,7 @@ import org.applicationn.search.criteria.InvalidFilterException;
 
 public class ThemeFilter extends SpectacleFilter
 {
-	public static final String ID = "sp_theme";
+	public static final String ID = "theme";
 	private final String theme;
 
 	public ThemeFilter(String theme) throws InvalidFilterException
