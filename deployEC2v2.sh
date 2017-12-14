@@ -18,4 +18,4 @@ sudo docker build -t tirandule .
 
 echo "[DEPLOY] Déploiement du conteneur 'app', logs disponible dans le fichier log  "
 
-sudo docker run --name=app -p 8080:8080 tirandule > log &
+sudo docker run --name=app -p 8080:8080 tirandule > log 
