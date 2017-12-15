@@ -5,13 +5,11 @@ import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.io.StringReader;
+import java.util.Objects;
 
 import org.applicationn.search.*;
 import org.applicationn.search.criteria.InvalidFilterException;
@@ -44,7 +42,7 @@ public class RechercheResource implements Serializable
 	@Inject
 	private UserService userService;
 
-	private DataSet test;
+	private static boolean populated = false;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,13 +76,15 @@ public class RechercheResource implements Serializable
 	@Path("populate")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String populate()
+	public String populate(@QueryParam("force") Boolean force)
 	{
-		if(test == null)
+		if(!populated || Objects.equals(force, Boolean.TRUE))
 		{
-			test = new DataSet(artisteService, spectacleService, salleService, representationService, userService);
+			DataSet test = new DataSet(artisteService, spectacleService, salleService, representationService, userService);
 
 			test.populate();
+
+			populated = true;
 
 			return "{\"error\":\"Success\"}";
 		}
