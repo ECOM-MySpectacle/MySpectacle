@@ -39,7 +39,7 @@ Chaque paquet JSON doit être de la forme suivante :
 où :
 * **page** est le numéro de page *(entier positif)*
 * **per_page** est le nombre d'entités par page *(entier positif)*
-* **filters** est la liste des filtres de recherche *(object vide ou non, ouchaque clé correspond à un filtre)*
+* **filters** est la liste des filtres de recherche *(object vide ou non, ou chaque clé correspond à un filtre)*
 
 L'API renverra alors un paquet JSON contenant le résultat de la requête dans ce format :
 
