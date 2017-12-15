@@ -6,10 +6,7 @@ import java.util.stream.IntStream;
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.representation.AvailSeatsBalconFilter;
-import org.applicationn.search.criteria.representation.AvailSeatsFosseFilter;
-import org.applicationn.search.criteria.representation.AvailSeatsOrchestreFilter;
-import org.applicationn.search.criteria.representation.DateFilter;
+import org.applicationn.search.criteria.representation.*;
 import org.applicationn.search.criteria.salle.CityFilter;
 import org.applicationn.search.criteria.spectacle.GenreFilter;
 import org.applicationn.search.criteria.spectacle.NameFilter;
@@ -71,6 +68,11 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
 				return new PublicFilter(publc);
+			}
+
+			case AvailSeatsFilter.ID:
+			{
+				return new AvailSeatsFilter(((JsonNumber) value).intValue());
 			}
 
 			case AvailSeatsBalconFilter.ID:

@@ -97,34 +97,15 @@ public class RechercheResource implements Serializable
 	 * HTTP Method: POST<br/>
 	 * POST Request Body: a JSON object containing a page number "page", the number of elements per page "per_page" and the list of filters in the "filters" array<br/>
 	 * URL: /recherche/representations
-	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":[&lt;list of filters&gt;]}
-	 * FILTER: {"id":&lt;filter identifier&gt;,&lt;parameters...&gt;}<br/>
+	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":{&lt;list of filters&gt;}}<br/>
 	 * Available filters:
 	 * <ul>
-	 * <li>artist (sp_artist)
-	 * <ul>
-	 * <li>name: artist id</li>
-	 * </ul></li>
-	 * <li>description (sp_desc)
-	 * <ul>
-	 * <li>desc: description</li>
-	 * </ul></li>
-	 * <li>genre (sp_genre)
-	 * <ul>
+	 * <li>artist: name of the artist</li>
+	 * <li>description: spectacle description</li>
 	 * <li>genre: list of spectacle genres</li>
-	 * </ul></li>
-	 * <li>name (sp_name)
-	 * <ul>
 	 * <li>name: spectacle name</li>
-	 * </ul></li>
-	 * <li>public (sp_public)
-	 * <ul>
 	 * <li>public: list of targetted audience</li>
-	 * </ul></li>
-	 * <li>theme (sp_theme)
-	 * <ul>
 	 * <li>theme: spectacle theme</li>
-	 * </ul></li>
 	 * </ul>
 	 *
 	 * @return List of RepresentationEntity (JSON)
@@ -142,16 +123,15 @@ public class RechercheResource implements Serializable
 	 * HTTP Method: POST<br/>
 	 * POST Request Body: a JSON object containing a page number "page", the number of elements per page "per_page" and the list of filters in the "filters" array<br/>
 	 * URL: /recherche/representations
-	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":[&lt;list of filters&gt;]}
-	 * FILTER: {"id":&lt;filter identifier&gt;,&lt;parameters...&gt;}<br/>
+	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":{&lt;list of filters&gt;}}<br/>
 	 * Available filters:
 	 * <ul>
-	 * <li>address (sa_address)</li>
-	 * <li>city (sa_city)</li>
-	 * <li>name (sa_name)</li>
-	 * <li>'balcon' seats (sa_seats_balcon)</li>
-	 * <li>'fosse' seats (sa_seats_fosse)</li>
-	 * <li>'orchestre' seats (sa_seats_orchestre)</li>
+	 * <li>address</li>
+	 * <li>city</li>
+	 * <li>name</li>
+	 * <li>'balcon' seats (seats_balcon)</li>
+	 * <li>'fosse' seats (seats_fosse)</li>
+	 * <li>'orchestre' seats (seats_orchestre)</li>
 	 * </ul>
 	 *
 	 * @return List of RepresentationEntity (JSON)
@@ -169,11 +149,10 @@ public class RechercheResource implements Serializable
 	 * HTTP Method: POST<br/>
 	 * POST Request Body: a JSON object containing a page number "page", the number of elements per page "per_page" and the list of filters in the "filters" array<br/>
 	 * URL: /recherche/representations
-	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":[&lt;list of filters&gt;]}
-	 * FILTER: {"id":&lt;filter identifier&gt;,&lt;parameters...&gt;}<br/>
+	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":{&lt;list of filters&gt;}}<br/>
 	 * Available filters:
 	 * <ul>
-	 * <li>name (a_name)</li>
+	 * <li>name</li>
 	 * </ul>
 	 *
 	 * @return List of RepresentationEntity (JSON)
@@ -191,21 +170,20 @@ public class RechercheResource implements Serializable
 	 * HTTP Method: POST<br/>
 	 * PUT Request Body: a JSON object containing a page number "page", the number of elements per page "per_page" and the list of filters in the "filters" array<br/>
 	 * URL: /recherche/representations
-	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":[&lt;list of filters&gt;]}
-	 * FILTER: {"id":&lt;filter identifier&gt;,&lt;parameters...&gt;}<br/>
+	 * DATA: {"page":&lt;page number&gt;,"per_page":&lt;elements per page&gt;,"filters":{&lt;list of filters&gt;}}<br/>
 	 * Available filters:
 	 * <ul>
-	 * <li>available 'balcon' seats (r_avail_seats_balcon)</li>
-	 * <li>available 'fosse' seats (r_avail_seats_fosse)</li>
-	 * <li>available 'orchestre' seats (r_avail_seats_orchestre)</li>
-	 * <li>date (r_date)</li>
+	 * <li>available 'balcon' seats (avail_seats_balcon)</li>
+	 * <li>available 'fosse' seats (avail_seats_fosse)</li>
+	 * <li>available 'orchestre' seats (avail_seats_orchestre)</li>
+	 * <li>date</li>
 	 * </ul>
-	 * Inherited filters:
+	 * Inherited filters from spectacles:
 	 * <ul>
-	 * <li>sp_name</li>
-	 * <li>sp_genre</li>
-	 * <li>sp_city</li>
-	 * <li>sp_public</li>
+	 * <li>name</li>
+	 * <li>genre</li>
+	 * <li>city</li>
+	 * <li>public</li>
 	 * </ul>
 	 *
 	 * @return List of RepresentationEntity (JSON)
