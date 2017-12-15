@@ -5,7 +5,7 @@
 L'API de recherche de MySpectacle permet la récupération d'entités sur la base de critères de recherche ou filtres.
 Les entités pouvant être recherchées sont les spectacles, les salles, les artistes et notamment les représentations.
 
-## URL
+## Accès
 
 L'API est disponible depuis la section "recherche" :  
 http://&lt;site MySpectacle&gt;/api/recherche/&lt;entité&gt;  
@@ -14,6 +14,8 @@ où &lt;entité&gt; est l'un des mots clés suivants :
 * salles
 * spectacles
 * representations
+
+La racine se situe ici : http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/api/recherche/
 
 ## Utilisation
 
