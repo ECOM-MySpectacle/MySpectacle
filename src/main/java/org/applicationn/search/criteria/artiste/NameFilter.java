@@ -1,6 +1,6 @@
 package org.applicationn.search.criteria.artiste;
 
-import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
 
 public class NameFilter extends ArtisteFilter
 {

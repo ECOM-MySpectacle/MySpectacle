@@ -12,10 +12,10 @@ import org.applicationn.service.security.UserService;
 
 public class DataSet
 {
-	private ArtisteService artisteService;
-	private SpectacleService spectacleService;
-	private SalleService salleService;
-	private RepresentationService representationService;
+	private final ArtisteService artisteService;
+	private final SpectacleService spectacleService;
+	private final SalleService salleService;
+	private final RepresentationService representationService;
 	private final UserService userService;
 
 	public DataSet(ArtisteService artisteService, SpectacleService spectacleService, SalleService salleService, RepresentationService representationService, UserService userService)

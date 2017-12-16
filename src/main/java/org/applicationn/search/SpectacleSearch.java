@@ -7,8 +7,9 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.MalformedFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.MalformedFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.service.RechercheService;
 
@@ -20,19 +21,13 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	SearchResult<SpectacleEntity> findAll(SearchQuery query)
+	SearchResult<SpectacleEntity> find(SearchQuery query)
 	{
-		return service.findAllSpectacleEntities(query);
+		return service.findSpectacleEntities(query);
 	}
 
 	@Override
-	SearchResult<SpectacleEntity> findAllMatching(SearchQuery query)
-	{
-		return service.findAllSpectacleEntitiesMatching(query);
-	}
-
-	@Override
-	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException
+	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException, UnknownFilterException
 	{
 		switch(key)
 		{
@@ -43,7 +38,10 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case GenreFilter.ID:
 			{
-				return GenreFilter.parse(value);
+				JsonArray a = (JsonArray) value;
+				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
+
+				return new GenreFilter(genres);
 			}
 
 			case NameFilter.ID:
@@ -53,7 +51,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case PublicFilter.ID:
 			{
-				JsonArray a = ((JsonArray) value);
+				JsonArray a = (JsonArray) value;
 				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
 				return new PublicFilter(publc);
@@ -66,7 +64,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(key);
 			}
 		}
 	}

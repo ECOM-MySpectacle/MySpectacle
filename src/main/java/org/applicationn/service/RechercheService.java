@@ -23,7 +23,7 @@ public class RechercheService implements Serializable
 	@Transactional
 	private <T extends BaseEntity> SearchResult<T> findAllEntities(Class<T> classOfT, SearchQuery query, String sql)
 	{
-		TypedQuery<T> statement = entityManager.createQuery(sql, classOfT);
+		TypedQuery<T> statement = entityManager.createQuery(query.condition == null ? sql : sql + " WHERE " + query.condition, classOfT);
 
 		if(query.vars != null && !query.vars.isEmpty())
 		{
@@ -35,43 +35,23 @@ public class RechercheService implements Serializable
 		return new SearchResult<>(query.params, entities);
 	}
 
-	public SearchResult<SpectacleEntity> findAllSpectacleEntities(SearchQuery query)
+	public SearchResult<SpectacleEntity> findSpectacleEntities(SearchQuery query)
 	{
 		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp LEFT JOIN FETCH sp.image");
 	}
 
-	public SearchResult<SpectacleEntity> findAllSpectacleEntitiesMatching(SearchQuery query)
-	{
-		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp LEFT JOIN FETCH sp.image WHERE " + query.condition);
-	}
-
-	public SearchResult<SalleEntity> findAllSalleEntities(SearchQuery query)
+	public SearchResult<SalleEntity> findSalleEntities(SearchQuery query)
 	{
 		return findAllEntities(SalleEntity.class, query, "SELECT sa FROM Salle sa");
 	}
 
-	public SearchResult<SalleEntity> findAllSalleEntitiesMatching(SearchQuery query)
-	{
-		return findAllEntities(SalleEntity.class, query, "SELECT sa FROM Salle sa WHERE " + query.condition);
-	}
-
-	public SearchResult<ArtisteEntity> findAllArtisteEntities(SearchQuery query)
+	public SearchResult<ArtisteEntity> findArtisteEntities(SearchQuery query)
 	{
 		return findAllEntities(ArtisteEntity.class, query, "SELECT a FROM Artiste a");
 	}
 
-	public SearchResult<ArtisteEntity> findAllArtisteEntitiesMatching(SearchQuery query)
-	{
-		return findAllEntities(ArtisteEntity.class, query, "SELECT a FROM Artiste a WHERE " + query.condition);
-	}
-
-	public SearchResult<RepresentationEntity> findAllRepresentationEntities(SearchQuery query)
+	public SearchResult<RepresentationEntity> findRepresentationEntities(SearchQuery query)
 	{
 		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp LEFT JOIN FETCH r.spectacle.image");
-	}
-
-	public SearchResult<RepresentationEntity> findAllRepresentationEntitiesMatching(SearchQuery query)
-	{
-		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp LEFT JOIN FETCH r.spectacle.image WHERE " + query.condition);
 	}
 }

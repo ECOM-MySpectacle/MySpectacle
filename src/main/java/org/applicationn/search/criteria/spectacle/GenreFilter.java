@@ -1,15 +1,10 @@
 package org.applicationn.search.criteria.spectacle;
 
-import javax.json.JsonArray;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleGenre;
-import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.MalformedFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
 
 public class GenreFilter extends SpectacleFilter
 {
@@ -28,33 +23,23 @@ public class GenreFilter extends SpectacleFilter
 
 		for(String genre : genres)
 		{
-			SpectacleGenre sg = Arrays.stream(SpectacleGenre.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
+			EnumSet<SpectacleGenre> f = get(genre);
 
-			if(sg == null)
+			if(f == null)
 			{
-				throw new InvalidFilterException(ID);
+				SpectacleGenre sg = Arrays.stream(SpectacleGenre.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
+
+				if(sg == null)
+				{
+					throw new InvalidFilterException(ID);
+				}
+
+				e.add(sg);
 			}
-
-			e.add(sg);
-		}
-
-		setVar("genres", e);
-	}
-
-	public GenreFilter(String multigenres) throws InvalidFilterException
-	{
-		super(ID);
-
-		if(multigenres == null || multigenres.isEmpty())
-		{
-			throw new InvalidFilterException(ID);
-		}
-
-		EnumSet<SpectacleGenre> e = get(multigenres);
-
-		if(e == null)
-		{
-			throw new InvalidFilterException(ID);
+			else
+			{
+				e.addAll(f);
+			}
 		}
 
 		setVar("genres", e);
@@ -121,29 +106,9 @@ public class GenreFilter extends SpectacleFilter
 		}
 	}
 
-	public static GenreFilter parse(JsonValue json) throws InvalidFilterException, MalformedFilterException
-	{
-		JsonValue.ValueType type = json.getValueType();
-
-		if(type == JsonValue.ValueType.ARRAY)
-		{
-			JsonArray a = ((JsonArray) json);
-			String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-			return new GenreFilter(genres);
-		}
-
-		if(type == JsonValue.ValueType.STRING)
-		{
-			return new GenreFilter(((JsonString) json).getString());
-		}
-
-		throw new MalformedFilterException(ID);
-	}
-
 	@Override
 	public String condition()
 	{
-		return attribute("genre") + " IN (" + variable("genres") + ")";
+		return attribute("genre") + " IN " + variable("genres");
 	}
 }

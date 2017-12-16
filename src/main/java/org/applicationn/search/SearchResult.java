@@ -16,8 +16,7 @@ public class SearchResult<T extends BaseEntity>
 	/**
 	 * Empty result
 	 */
-	@SuppressWarnings("rawtypes")
-	static final SearchResult EMPTY = new SearchResult<>(new SearchParameters(), Collections.emptyList());
+	private static final SearchResult EMPTY = new SearchResult<>(new SearchParameters(), Collections.emptyList());
 	private final int pages, total;
 	private final List<T> entities;
 
@@ -37,6 +36,18 @@ public class SearchResult<T extends BaseEntity>
 
 			entities = new ArrayList<>(result.subList(start, max));
 		}
+	}
+
+	/**
+	 * Returns an empty result.<br/>
+	 * This is the type-safe way of obtaining an empty result.
+	 *
+	 * @param <T> the type of entities this result would have contained
+	 * @return An empty result
+	 */
+	public static <T extends BaseEntity> SearchResult<T> empty()
+	{
+		return EMPTY;
 	}
 
 	public int getPages()

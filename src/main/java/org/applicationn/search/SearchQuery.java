@@ -24,7 +24,7 @@ public class SearchQuery
 	 * @param params the query parameters
 	 * @return A filter-less query
 	 */
-	public static SearchQuery withoutCondition(SearchParameters params)
+	public static SearchQuery empty(SearchParameters params)
 	{
 		return new SearchQuery(params, null, null);
 	}

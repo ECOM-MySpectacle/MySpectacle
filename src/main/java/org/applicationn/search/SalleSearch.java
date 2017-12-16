@@ -6,7 +6,8 @@ import javax.json.JsonValue;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.salle.*;
 import org.applicationn.service.RechercheService;
 
@@ -18,19 +19,13 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	SearchResult<SalleEntity> findAll(SearchQuery query)
+	SearchResult<SalleEntity> find(SearchQuery query)
 	{
-		return service.findAllSalleEntities(query);
+		return service.findSalleEntities(query);
 	}
 
 	@Override
-	SearchResult<SalleEntity> findAllMatching(SearchQuery query)
-	{
-		return service.findAllSalleEntitiesMatching(query);
-	}
-
-	@Override
-	Filter createFilter(String key, JsonValue value) throws InvalidFilterException
+	Filter createFilter(String key, JsonValue value) throws InvalidFilterException, UnknownFilterException
 	{
 		switch(key)
 		{
@@ -66,7 +61,7 @@ public class SalleSearch extends Search<SalleEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(key);
 			}
 		}
 	}

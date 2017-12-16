@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 import org.applicationn.domain.SpectaclePublicc;
-import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
 
 public class PublicFilter extends SpectacleFilter
 {

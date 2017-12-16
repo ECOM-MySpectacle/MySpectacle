@@ -7,9 +7,9 @@ import java.util.*;
 
 import org.applicationn.domain.BaseEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.MalformedFilterException;
-import org.applicationn.search.criteria.UnknownFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.MalformedFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
 /**
@@ -22,7 +22,7 @@ import org.applicationn.service.RechercheService;
 public abstract class Search<T extends BaseEntity>
 {
 	/**
-	 * The map of list of filters.<br/>
+	 * The map of list of filters.
 	 */
 	private final Map<String, List<Filter>> filters = new HashMap<>();
 	protected final RechercheService service;
@@ -33,20 +33,12 @@ public abstract class Search<T extends BaseEntity>
 	}
 
 	/**
-	 * Returns all entities regardless of filters.
+	 * Returns all entities that satisfy the query.
 	 *
-	 * @param query The search params
-	 * @return All entities
-	 */
-	abstract SearchResult<T> findAll(SearchQuery query);
-
-	/**
-	 * Returns all entities matching the filters.
-	 *
-	 * @param query The search query (contains the search params, filters and vars)
+	 * @param query The search query
 	 * @return All matching entities
 	 */
-	abstract SearchResult<T> findAllMatching(SearchQuery query);
+	abstract SearchResult<T> find(SearchQuery query);
 
 	/**
 	 * Creates a {@link Filter} from a JSON object.
@@ -57,7 +49,7 @@ public abstract class Search<T extends BaseEntity>
 	 * @throws InvalidFilterException if the filter is invalid
 	 * @throws JsonException          if a JSON exception occurs
 	 */
-	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException, MalformedFilterException;
+	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException, MalformedFilterException, UnknownFilterException;
 
 	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, MalformedFilterException
 	{
@@ -75,11 +67,6 @@ public abstract class Search<T extends BaseEntity>
 				catch(JsonException e)
 				{
 					throw new MalformedFilterException(key);
-				}
-
-				if(filter == null)
-				{
-					throw new UnknownFilterException(key);
 				}
 
 				addFilter(filter);
@@ -107,26 +94,6 @@ public abstract class Search<T extends BaseEntity>
 		l.add(filter);
 	}
 
-	/**
-	 * Removed a filter to the filter list.
-	 *
-	 * @param id the filter id
-	 */
-	public final void removeFilter(String id)
-	{
-		filters.remove(id);
-	}
-
-	/**
-	 * Gets the list of filters by id.
-	 *
-	 * @param id the filter identifier
-	 */
-	public final List<Filter> getFilter(String id)
-	{
-		return filters.get(id);
-	}
-
 	private String flattenFilters(List<Filter> f, Map<String, Object> vars)
 	{
 		StringJoiner condition = new StringJoiner(") OR (", "(", ")");
@@ -144,13 +111,13 @@ public abstract class Search<T extends BaseEntity>
 	{
 		if(filters.isEmpty())
 		{
-			return findAll(SearchQuery.withoutCondition(params));
+			return find(SearchQuery.empty(params));
 		}
 
 		StringJoiner condition = new StringJoiner(") AND (", "(", ")");
 		Map<String, Object> vars = new HashMap<>();
 		filters.values().stream().map(l -> flattenFilters(l, vars)).forEach(condition::add);
 
-		return condition.length() == 0 ? SearchResult.EMPTY : findAllMatching(new SearchQuery(params, condition.toString(), vars));
+		return condition.length() == 0 ? SearchResult.empty() : find(new SearchQuery(params, condition.toString(), vars));
 	}
 }

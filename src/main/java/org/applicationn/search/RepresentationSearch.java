@@ -5,8 +5,9 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.MalformedFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.MalformedFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.representation.*;
 import org.applicationn.search.criteria.salle.CityFilter;
 import org.applicationn.search.criteria.spectacle.GenreFilter;
@@ -22,19 +23,13 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 	}
 
 	@Override
-	SearchResult<RepresentationEntity> findAll(SearchQuery query)
+	SearchResult<RepresentationEntity> find(SearchQuery query)
 	{
-		return service.findAllRepresentationEntities(query);
+		return service.findRepresentationEntities(query);
 	}
 
 	@Override
-	SearchResult<RepresentationEntity> findAllMatching(SearchQuery query)
-	{
-		return service.findAllRepresentationEntitiesMatching(query);
-	}
-
-	@Override
-	Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException
+	Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException, UnknownFilterException
 	{
 		switch(key)
 		{
@@ -45,14 +40,15 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 
 			case GenreFilter.ID:
 			{
-				return GenreFilter.parse(value);
+				JsonArray a = (JsonArray) value;
+				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
+
+				return new GenreFilter(genres);
 			}
 
 			case DateFilter.ID:
 			{
-				JsonObject o = ((JsonObject) value);
-
-				return new DateFilter(o.getString("from"), o.getString("to"));
+				return DateFilter.parse(value);
 			}
 
 			case CityFilter.ID:
@@ -90,7 +86,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(key);
 			}
 		}
 	}

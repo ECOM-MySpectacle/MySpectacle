@@ -12,9 +12,9 @@ import java.io.StringReader;
 import java.util.Objects;
 
 import org.applicationn.search.*;
-import org.applicationn.search.criteria.InvalidFilterException;
-import org.applicationn.search.criteria.MalformedFilterException;
-import org.applicationn.search.criteria.UnknownFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.MalformedFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.service.*;
 import org.applicationn.service.security.UserService;
 import org.applicationn.test.DataSet;

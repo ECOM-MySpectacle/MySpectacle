@@ -5,7 +5,8 @@ import javax.json.JsonValue;
 
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.artiste.NameFilter;
 import org.applicationn.service.RechercheService;
 
@@ -17,19 +18,13 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 	}
 
 	@Override
-	SearchResult<ArtisteEntity> findAll(SearchQuery query)
+	SearchResult<ArtisteEntity> find(SearchQuery query)
 	{
-		return service.findAllArtisteEntities(query);
+		return service.findArtisteEntities(query);
 	}
 
 	@Override
-	SearchResult<ArtisteEntity> findAllMatching(SearchQuery query)
-	{
-		return service.findAllArtisteEntitiesMatching(query);
-	}
-
-	@Override
-	Filter createFilter(String key, JsonValue value) throws InvalidFilterException
+	Filter createFilter(String key, JsonValue value) throws InvalidFilterException, UnknownFilterException
 	{
 		switch(key)
 		{
@@ -40,7 +35,7 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 
 			default:
 			{
-				return null;
+				throw new UnknownFilterException(key);
 			}
 		}
 	}
