@@ -10,8 +10,8 @@ abstract class RepresentationFilter extends Filter
 	}
 
 	@Override
-	protected String attribute(String attr)
+	protected String tableVarName()
 	{
-		return "r." + attr;
+		return "r";
 	}
 }

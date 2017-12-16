@@ -10,8 +10,8 @@ abstract class ArtisteFilter extends Filter
 	}
 
 	@Override
-	protected String attribute(String attr)
+	protected String tableVarName()
 	{
-		return "a." + attr;
+		return "a";
 	}
 }

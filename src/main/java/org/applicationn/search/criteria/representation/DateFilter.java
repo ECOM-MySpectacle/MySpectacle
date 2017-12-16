@@ -1,11 +1,13 @@
 package org.applicationn.search.criteria.representation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.applicationn.search.criteria.InvalidFilterException;
 
 public class DateFilter extends RepresentationFilter
 {
 	public static final String ID = "date";
-	private final String from, to;
 
 	public DateFilter(String from, String to) throws InvalidFilterException
 	{
@@ -16,13 +18,22 @@ public class DateFilter extends RepresentationFilter
 			throw new InvalidFilterException(ID);
 		}
 
-		this.from = from;
-		this.to = to;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+		try
+		{
+			setVar("from", df.parse(from));
+			setVar("to", df.parse(to));
+		}
+		catch(ParseException e)
+		{
+			throw new InvalidFilterException(ID);
+		}
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("date") + " BETWEEN '" + from + "' AND '" + to + "'";
+		return attribute("date") + " BETWEEN " + variable("from") + " AND " + variable("to");
 	}
 }

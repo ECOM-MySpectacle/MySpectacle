@@ -10,8 +10,8 @@ abstract class SpectacleFilter extends Filter
 	}
 
 	@Override
-	protected String attribute(String attr)
+	protected String tableVarName()
 	{
-		return "sp." + attr;
+		return "sp";
 	}
 }

@@ -5,7 +5,6 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class AvailSeatsOrchestreFilter extends RepresentationFilter
 {
 	public static final String ID = "avail_seats_orchestre";
-	private final int seats;
 
 	public AvailSeatsOrchestreFilter(int seats) throws InvalidFilterException
 	{
@@ -16,12 +15,12 @@ public class AvailSeatsOrchestreFilter extends RepresentationFilter
 			throw new InvalidFilterException(ID);
 		}
 
-		this.seats = seats;
+		setVar("avail_seats_orchestre", seats);
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("nbPlacesOrchestreLibres") + " >= " + seats;
+		return attribute("nbPlacesOrchestreLibres") + " >= " + variable("avail_seats_orchestre");
 	}
 }

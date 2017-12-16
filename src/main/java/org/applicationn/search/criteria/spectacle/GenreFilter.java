@@ -1,7 +1,7 @@
 package org.applicationn.search.criteria.spectacle;
 
 import java.util.Arrays;
-import java.util.StringJoiner;
+import java.util.EnumSet;
 
 import org.applicationn.domain.SpectacleGenre;
 import org.applicationn.search.criteria.InvalidFilterException;
@@ -9,7 +9,6 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class GenreFilter extends SpectacleFilter
 {
 	public static final String ID = "genre";
-	private final String[] genres;
 
 	public GenreFilter(String[] genres) throws InvalidFilterException
 	{
@@ -20,22 +19,26 @@ public class GenreFilter extends SpectacleFilter
 			throw new InvalidFilterException(ID);
 		}
 
+		EnumSet<SpectacleGenre> e = EnumSet.noneOf(SpectacleGenre.class);
+
 		for(String genre : genres)
 		{
-			if(Arrays.stream(SpectacleGenre.values()).map(Enum::toString).noneMatch(s -> s.equalsIgnoreCase(genre)))
+			SpectacleGenre sg = Arrays.stream(SpectacleGenre.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
+
+			if(sg == null)
 			{
 				throw new InvalidFilterException(ID);
 			}
+
+			e.add(sg);
 		}
 
-		this.genres = genres;
+		setVar("genres", e);
 	}
 
 	@Override
 	public String condition()
 	{
-		StringJoiner joiner = new StringJoiner("','", "'", "'");
-		Arrays.stream(genres).forEach(joiner::add);
-		return attribute("genre") + " IN (" + joiner.toString() + ")";
+		return attribute("genre") + " IN (" + variable("genres") + ")";
 	}
 }

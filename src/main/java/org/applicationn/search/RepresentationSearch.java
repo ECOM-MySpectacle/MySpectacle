@@ -21,15 +21,15 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 	}
 
 	@Override
-	SearchResult<RepresentationEntity> findAll(SearchParameters params)
+	SearchResult<RepresentationEntity> findAll(SearchQuery query)
 	{
-		return service.findAllRepresentationEntities(params);
+		return service.findAllRepresentationEntities(query);
 	}
 
 	@Override
-	SearchResult<RepresentationEntity> findAllMatching(SearchParameters params, String condition)
+	SearchResult<RepresentationEntity> findAllMatching(SearchQuery query)
 	{
-		return service.findAllRepresentationEntitiesMatching(params, condition);
+		return service.findAllRepresentationEntitiesMatching(query);
 	}
 
 	@Override

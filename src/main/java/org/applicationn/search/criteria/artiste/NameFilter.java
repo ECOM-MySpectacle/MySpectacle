@@ -5,23 +5,29 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class NameFilter extends ArtisteFilter
 {
 	public static final String ID = "name";
-	private final String name;
 
 	public NameFilter(String name) throws InvalidFilterException
 	{
 		super(ID);
 
-		if(name == null || name.isEmpty())
+		if(name == null)
 		{
 			throw new InvalidFilterException(ID);
 		}
 
-		this.name = name;
+		name = name.trim();
+
+		if(name.isEmpty())
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		setVar("name", "%" + name.toLowerCase() + "%");
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("nom") + " LIKE '%" + name + "%'";
+		return lower("nom") + " LIKE " + variable("name");
 	}
 }

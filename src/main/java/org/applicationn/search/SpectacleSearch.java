@@ -19,15 +19,15 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	SearchResult<SpectacleEntity> findAll(SearchParameters params)
+	SearchResult<SpectacleEntity> findAll(SearchQuery query)
 	{
-		return service.findAllSpectacleEntities(params);
+		return service.findAllSpectacleEntities(query);
 	}
 
 	@Override
-	SearchResult<SpectacleEntity> findAllMatching(SearchParameters params, String condition)
+	SearchResult<SpectacleEntity> findAllMatching(SearchQuery query)
 	{
-		return service.findAllSpectacleEntitiesMatching(params, condition);
+		return service.findAllSpectacleEntitiesMatching(query);
 	}
 
 	@Override

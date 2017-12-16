@@ -5,7 +5,6 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class SeatsBalconFilter extends SalleFilter
 {
 	public static final String ID = "seats_balcon";
-	private final int seats;
 
 	public SeatsBalconFilter(int seats) throws InvalidFilterException
 	{
@@ -16,12 +15,12 @@ public class SeatsBalconFilter extends SalleFilter
 			throw new InvalidFilterException(ID);
 		}
 
-		this.seats = seats;
+		setVar("seats_balcon", seats);
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("nbPlacesBalcon") + " >= " + seats;
+		return attribute("nbPlacesBalcon") + " >= " + variable("seats_balcon");
 	}
 }

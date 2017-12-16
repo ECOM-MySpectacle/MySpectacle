@@ -5,23 +5,29 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class DescFilter extends SpectacleFilter
 {
 	public static final String ID = "description";
-	private final String desc;
 
 	public DescFilter(String desc) throws InvalidFilterException
 	{
 		super(ID);
 
-		if(desc == null || desc.isEmpty())
+		if(desc == null)
 		{
 			throw new InvalidFilterException(ID);
 		}
 
-		this.desc = desc;
+		desc = desc.trim();
+
+		if(desc.isEmpty())
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		setVar("desc", "%" + desc.toLowerCase() + "%");
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("description") + " LIKE '%" + desc + "%'";
+		return lower("description") + " LIKE " + variable("desc");
 	}
 }

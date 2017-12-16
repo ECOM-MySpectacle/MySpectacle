@@ -5,23 +5,29 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class AddressFilter extends SalleFilter
 {
 	public static final String ID = "address";
-	private final String address;
 
 	public AddressFilter(String address) throws InvalidFilterException
 	{
 		super(ID);
 
-		if(address == null || address.isEmpty())
+		if(address == null)
 		{
 			throw new InvalidFilterException(ID);
 		}
 
-		this.address = address;
+		address = address.trim();
+
+		if(address.isEmpty())
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		setVar("address", "%" + address.toLowerCase() + "%");
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("addresse") + " = '" + address + "'";
+		return lower("addresse") + " = " + variable("address");
 	}
 }

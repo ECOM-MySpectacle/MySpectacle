@@ -9,7 +9,6 @@ import org.applicationn.search.criteria.InvalidFilterException;
 public class PublicFilter extends SpectacleFilter
 {
 	public static final String ID = "public";
-	private final String[] publc;
 
 	public PublicFilter(String[] publc) throws InvalidFilterException
 	{
@@ -20,22 +19,32 @@ public class PublicFilter extends SpectacleFilter
 			throw new InvalidFilterException(ID);
 		}
 
-		for(String p : publc)
+		int k = 0;
+
+		for(String genre : publc)
 		{
-			if(Arrays.stream(SpectaclePublicc.values()).map(Enum::toString).noneMatch(s -> s.equalsIgnoreCase(p)))
+			SpectaclePublicc sp = Arrays.stream(SpectaclePublicc.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
+
+			if(sp == null)
 			{
 				throw new InvalidFilterException(ID);
 			}
-		}
 
-		this.publc = publc;
+			setVar("public_" + k++, sp);
+		}
 	}
 
 	@Override
 	public String condition()
 	{
-		StringJoiner joiner = new StringJoiner("','", "'", "'");
-		Arrays.stream(publc).forEach(joiner::add);
-		return attribute("publicc") + " IN (" + joiner.toString() + ")";
+		String publicAttr = attribute("publicc");
+		StringJoiner condition = new StringJoiner(" AND ");
+
+		for(int k = 0, max = getVars().size(); k < max; k++)
+		{
+			condition.add(variable("public_" + k) + " MEMBER OF " + publicAttr);
+		}
+
+		return condition.toString();
 	}
 }

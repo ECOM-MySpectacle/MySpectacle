@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import org.applicationn.search.*;
 import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.criteria.MalformedFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.*;
 import org.applicationn.service.security.UserService;
@@ -44,33 +45,43 @@ public class RechercheResource implements Serializable
 
 	private static boolean populated = false;
 
+	private String error(String message)
+	{
+		return String.format("{\"error\":\"%s\"}", message);
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public String post()
 	{
-		return "{\"error\":\"Not part of the API\"}";
+		return error("Not part of the API");
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String get()
 	{
-		return "{\"error\":\"Not allowed\"}";
+		return error("Not allowed");
 	}
 
 	private String badRequest()
 	{
-		return "{\"error\":\"Bad request\"}";
+		return error("Bad request");
 	}
 
 	private String unknownFilter(String filter)
 	{
-		return "{\"error\":\"Unknown filter: " + filter + "\"}";
+		return error("Unknown filter: " + filter);
+	}
+
+	private String malFormedFilter(String filter)
+	{
+		return error("Mal formed filter: " + filter);
 	}
 
 	private String invalidFilter(String filter)
 	{
-		return "{\"error\":\"Invalid filter: " + filter + "\"}";
+		return error("Invalid filter: " + filter);
 	}
 
 	@Path("populate")
@@ -219,6 +230,10 @@ public class RechercheResource implements Serializable
 		catch(UnknownFilterException e)
 		{
 			return unknownFilter(e.getFilter());
+		}
+		catch(MalformedFilterException e)
+		{
+			return malFormedFilter(e.getFilter());
 		}
 		catch(InvalidFilterException e)
 		{

@@ -18,15 +18,15 @@ public class SalleSearch extends Search<SalleEntity>
 	}
 
 	@Override
-	SearchResult<SalleEntity> findAll(SearchParameters params)
+	SearchResult<SalleEntity> findAll(SearchQuery query)
 	{
-		return service.findAllSalleEntities(params);
+		return service.findAllSalleEntities(query);
 	}
 
 	@Override
-	SearchResult<SalleEntity> findAllMatching(SearchParameters params, String condition)
+	SearchResult<SalleEntity> findAllMatching(SearchQuery query)
 	{
-		return service.findAllSalleEntitiesMatching(params, condition);
+		return service.findAllSalleEntitiesMatching(query);
 	}
 
 	@Override

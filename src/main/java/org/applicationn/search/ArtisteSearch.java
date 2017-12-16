@@ -17,15 +17,15 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 	}
 
 	@Override
-	SearchResult<ArtisteEntity> findAll(SearchParameters params)
+	SearchResult<ArtisteEntity> findAll(SearchQuery query)
 	{
-		return service.findAllArtisteEntities(params);
+		return service.findAllArtisteEntities(query);
 	}
 
 	@Override
-	SearchResult<ArtisteEntity> findAllMatching(SearchParameters params, String condition)
+	SearchResult<ArtisteEntity> findAllMatching(SearchQuery query)
 	{
-		return service.findAllArtisteEntitiesMatching(params, condition);
+		return service.findAllArtisteEntitiesMatching(query);
 	}
 
 	@Override

@@ -10,8 +10,8 @@ abstract class SalleFilter extends Filter
 	}
 
 	@Override
-	protected String attribute(String attr)
+	protected String tableVarName()
 	{
-		return "sa." + attr;
+		return "sa";
 	}
 }

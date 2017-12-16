@@ -8,6 +8,7 @@ import java.util.*;
 import org.applicationn.domain.BaseEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.criteria.MalformedFilterException;
 import org.applicationn.search.criteria.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
@@ -34,18 +35,18 @@ public abstract class Search<T extends BaseEntity>
 	/**
 	 * Returns all entities regardless of filters.
 	 *
-	 * @param params The search params
+	 * @param query The search params
 	 * @return All entities
 	 */
-	abstract SearchResult<T> findAll(SearchParameters params);
+	abstract SearchResult<T> findAll(SearchQuery query);
 
 	/**
 	 * Returns all entities matching the filters.
 	 *
-	 * @param params The search params
-	 * @return All entities
+	 * @param query The search query (contains the search params, filters and vars)
+	 * @return All matching entities
 	 */
-	abstract SearchResult<T> findAllMatching(SearchParameters params, String condition);
+	abstract SearchResult<T> findAllMatching(SearchQuery query);
 
 	/**
 	 * Creates a {@link Filter} from a JSON object.
@@ -58,17 +59,27 @@ public abstract class Search<T extends BaseEntity>
 	 */
 	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException;
 
-	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, JsonException
+	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, MalformedFilterException
 	{
 		if(o != null && !o.isEmpty())
 		{
 			for(Map.Entry<String, JsonValue> entry : o.entrySet())
 			{
-				Filter filter = createFilter(entry.getKey(), entry.getValue());
+				String key = entry.getKey();
+				Filter filter;
+
+				try
+				{
+					filter = createFilter(key, entry.getValue());
+				}
+				catch(JsonException e)
+				{
+					throw new MalformedFilterException(key);
+				}
 
 				if(filter == null)
 				{
-					throw new UnknownFilterException(entry.getKey());
+					throw new UnknownFilterException(key);
 				}
 
 				addFilter(filter);
@@ -116,11 +127,15 @@ public abstract class Search<T extends BaseEntity>
 		return filters.get(id);
 	}
 
-	private String flattenFilters(List<Filter> f)
+	private String flattenFilters(List<Filter> f, Map<String, Object> vars)
 	{
 		StringJoiner condition = new StringJoiner(") OR (", "(", ")");
 
-		f.forEach(filter -> condition.add(filter.condition()));
+		f.forEach(filter ->
+		{
+			condition.add(filter.condition());
+			vars.putAll(filter.getVars());
+		});
 
 		return condition.toString();
 	}
@@ -129,12 +144,13 @@ public abstract class Search<T extends BaseEntity>
 	{
 		if(filters.isEmpty())
 		{
-			return findAll(params);
+			return findAll(SearchQuery.withoutCondition(params));
 		}
 
 		StringJoiner condition = new StringJoiner(") AND (", "(", ")");
-		filters.values().stream().map(this::flattenFilters).forEach(condition::add);
+		Map<String, Object> vars = new HashMap<>();
+		filters.values().stream().map(l -> flattenFilters(l, vars)).forEach(condition::add);
 
-		return condition.length() == 0 ? SearchResult.EMPTY : findAllMatching(params, condition.toString());
+		return condition.length() == 0 ? SearchResult.EMPTY : findAllMatching(new SearchQuery(params, condition.toString(), vars));
 	}
 }

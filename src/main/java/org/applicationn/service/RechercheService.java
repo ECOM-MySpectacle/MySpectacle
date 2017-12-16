@@ -3,12 +3,13 @@ package org.applicationn.service;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
 import org.applicationn.domain.*;
-import org.applicationn.search.SearchParameters;
+import org.applicationn.search.SearchQuery;
 import org.applicationn.search.SearchResult;
 
 @Named
@@ -20,50 +21,57 @@ public class RechercheService implements Serializable
 	private EntityManager entityManager;
 
 	@Transactional
-	private <T extends BaseEntity> SearchResult<T> findAllEntities(Class<T> classOfT, SearchParameters params, String query)
+	private <T extends BaseEntity> SearchResult<T> findAllEntities(Class<T> classOfT, SearchQuery query, String sql)
 	{
-		List<T> entities = entityManager.createQuery(query, classOfT).getResultList();
+		TypedQuery<T> statement = entityManager.createQuery(sql, classOfT);
 
-		return new SearchResult<>(params, entities);
+		if(query.vars != null && !query.vars.isEmpty())
+		{
+			query.vars.forEach(statement::setParameter);
+		}
+
+		List<T> entities = statement.getResultList();
+
+		return new SearchResult<>(query.params, entities);
 	}
 
-	public SearchResult<SpectacleEntity> findAllSpectacleEntities(SearchParameters params)
+	public SearchResult<SpectacleEntity> findAllSpectacleEntities(SearchQuery query)
 	{
-		return findAllEntities(SpectacleEntity.class, params, "SELECT sp FROM Spectacle sp");
+		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp");
 	}
 
-	public SearchResult<SpectacleEntity> findAllSpectacleEntitiesMatching(SearchParameters params, String criteria)
+	public SearchResult<SpectacleEntity> findAllSpectacleEntitiesMatching(SearchQuery query)
 	{
-		return findAllEntities(SpectacleEntity.class, params, "SELECT sp FROM Spectacle sp WHERE " + criteria);
+		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp WHERE " + query.condition);
 	}
 
-	public SearchResult<SalleEntity> findAllSalleEntities(SearchParameters params)
+	public SearchResult<SalleEntity> findAllSalleEntities(SearchQuery query)
 	{
-		return findAllEntities(SalleEntity.class, params, "SELECT sa FROM Salle sa");
+		return findAllEntities(SalleEntity.class, query, "SELECT sa FROM Salle sa");
 	}
 
-	public SearchResult<SalleEntity> findAllSalleEntitiesMatching(SearchParameters params, String criteria)
+	public SearchResult<SalleEntity> findAllSalleEntitiesMatching(SearchQuery query)
 	{
-		return findAllEntities(SalleEntity.class, params, "SELECT sa FROM Salle sa WHERE " + criteria);
+		return findAllEntities(SalleEntity.class, query, "SELECT sa FROM Salle sa WHERE " + query.condition);
 	}
 
-	public SearchResult<ArtisteEntity> findAllArtisteEntities(SearchParameters params)
+	public SearchResult<ArtisteEntity> findAllArtisteEntities(SearchQuery query)
 	{
-		return findAllEntities(ArtisteEntity.class, params, "SELECT a FROM Artiste a");
+		return findAllEntities(ArtisteEntity.class, query, "SELECT a FROM Artiste a");
 	}
 
-	public SearchResult<ArtisteEntity> findAllArtisteEntitiesMatching(SearchParameters params, String criteria)
+	public SearchResult<ArtisteEntity> findAllArtisteEntitiesMatching(SearchQuery query)
 	{
-		return findAllEntities(ArtisteEntity.class, params, "SELECT a FROM Artiste a WHERE " + criteria);
+		return findAllEntities(ArtisteEntity.class, query, "SELECT a FROM Artiste a WHERE " + query.condition);
 	}
 
-	public SearchResult<RepresentationEntity> findAllRepresentationEntities(SearchParameters params)
+	public SearchResult<RepresentationEntity> findAllRepresentationEntities(SearchQuery query)
 	{
-		return findAllEntities(RepresentationEntity.class, params, "SELECT r FROM Representation r");
+		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r");
 	}
 
-	public SearchResult<RepresentationEntity> findAllRepresentationEntitiesMatching(SearchParameters params, String criteria)
+	public SearchResult<RepresentationEntity> findAllRepresentationEntitiesMatching(SearchQuery query)
 	{
-		return findAllEntities(RepresentationEntity.class, params, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp LEFT JOIN sp.artistess a WHERE " + criteria);
+		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp WHERE " + query.condition);
 	}
 }
