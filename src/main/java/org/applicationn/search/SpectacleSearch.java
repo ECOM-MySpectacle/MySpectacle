@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.InvalidFilterException;
+import org.applicationn.search.criteria.MalformedFilterException;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.service.RechercheService;
 
@@ -31,15 +32,10 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException
+	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException
 	{
 		switch(key)
 		{
-			case ArtistFilter.ID:
-			{
-				return new ArtistFilter(((JsonString) value).getString());
-			}
-
 			case DescFilter.ID:
 			{
 				return new DescFilter(((JsonString) value).getString());
@@ -47,10 +43,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case GenreFilter.ID:
 			{
-				JsonArray a = ((JsonArray) value);
-				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-				return new GenreFilter(genres);
+				return GenreFilter.parse(value);
 			}
 
 			case NameFilter.ID:

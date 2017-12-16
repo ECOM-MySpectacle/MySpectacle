@@ -57,7 +57,7 @@ public abstract class Search<T extends BaseEntity>
 	 * @throws InvalidFilterException if the filter is invalid
 	 * @throws JsonException          if a JSON exception occurs
 	 */
-	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException;
+	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException, MalformedFilterException;
 
 	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, MalformedFilterException
 	{

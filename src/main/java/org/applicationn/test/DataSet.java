@@ -153,8 +153,7 @@ public class DataSet
 		SpectacleEntity gl = newSpectacle("Génie logiciel", SpectacleGenre.CABARET, EnumSet.of(SpectaclePublicc.AMIS, SpectaclePublicc.FAMILLE), "Architecture et tests logiciels", "Techniques de conception d'architecture et types de tests", Arrays.asList(lydieDuBousquet, yvesLedru));
 		SpectacleEntity glTD = newSpectacle("TD Génie logiciel", SpectacleGenre.THEATRE, EnumSet.of(SpectaclePublicc.FAMILLE), "TD Architecture et tests logiciels", "La version TD", Arrays.asList(lydieDuBousquet, yvesLedru));
 		SpectacleEntity vt = newSpectacle("Veuille technologique", SpectacleGenre.SPECTACLE, EnumSet.of(SpectaclePublicc.AMIS, SpectaclePublicc.FAMILLE, SpectaclePublicc.ENFANT), "Présentation d'entreprise", "Parcours, entreprise, technologies", Collections.singletonList(bernardTourancheau));
-		SpectacleEntity ecomMatin = newSpectacle("Projet ECOM (matin)", SpectacleGenre.LOISIR, EnumSet.of(SpectaclePublicc.AMIS), "Conception d'un logiciel e-commerce", "Voir la page wiki AIR", Arrays.asList(didierDonsez, sybilleCaffiau));
-		SpectacleEntity ecomApresMidi = newSpectacle("Projet ECOM (après-midi)", SpectacleGenre.LOISIR, EnumSet.of(SpectaclePublicc.AMIS), "Conception d'un logiciel e-commerce", "Voir la page wiki AIR", Arrays.asList(didierDonsez, sybilleCaffiau));
+		SpectacleEntity ecom = newSpectacle("Projet ECOM", SpectacleGenre.LOISIR, EnumSet.of(SpectaclePublicc.AMIS), "Conception d'un logiciel e-commerce", "Voir la page wiki AIR", Arrays.asList(didierDonsez, sybilleCaffiau));
 		SpectacleEntity sd = newSpectacle("Science des données", SpectacleGenre.THEATRE, EnumSet.of(SpectaclePublicc.ADULTE, SpectaclePublicc.COUPLE), "Classification, kmeans, hcluster, PAM", "Avec plusieurs arbres on fait une forêt", Arrays.asList(ahlameDouzal, massihRezaAmini));
 		SpectacleEntity ihma = newSpectacle("Interaction homme-machine avancée", SpectacleGenre.SPECTACLEENFANT, EnumSet.of(SpectaclePublicc.ENFANT), "Techniques de menus", "Y en a plein mais ils servent pas...", Collections.singletonList(laurenceNigay));
 		SpectacleEntity sdTP = newSpectacle("TP Science des données", SpectacleGenre.FESTIVAL, EnumSet.of(SpectaclePublicc.FAMILLE), "TP Classification, kmeans, hcluster, PAM", "La version TP", Arrays.asList(ahlameDouzal, massihRezaAmini));
@@ -169,8 +168,7 @@ public class DataSet
 		spectacleService.save(gl);
 		spectacleService.save(glTD);
 		spectacleService.save(vt);
-		spectacleService.save(ecomMatin);
-		spectacleService.save(ecomApresMidi);
+		spectacleService.save(ecom);
 		spectacleService.save(sd);
 		spectacleService.save(ihma);
 		spectacleService.save(sdTP);
@@ -185,9 +183,9 @@ public class DataSet
 		RepresentationEntity rp1 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 3, 10, pg257, gl);
 		RepresentationEntity rp2 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 0, 0, pg144, glTD);
 		RepresentationEntity rp3 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 1, 0, 0, pg007, vt);
-		RepresentationEntity rp4 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 2, 1, 4, imagF216, ecomMatin);
+		RepresentationEntity rp4 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 2, 1, 4, imagF216, ecom);
 		RepresentationEntity rp5 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 2, 1, 0, imagF117, sd);
-		RepresentationEntity rp6 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 0, 0, 0, imagF204, ecomApresMidi);
+		RepresentationEntity rp6 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 0, 0, 0, imagF204, ecom);
 		RepresentationEntity rp7 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 7, 4, 12, pg011, ihma);
 		RepresentationEntity rp8 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 2, 2, 2, pg011, sdTP);
 		RepresentationEntity rp9 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 5, 3, 7, imagF101, secuTP);
