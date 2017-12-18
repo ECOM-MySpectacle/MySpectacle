@@ -48,9 +48,9 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-      - deploy:
-          name: Deploy application Docker image to AWS
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              /app/deploy.sh
-            fi
+#      - deploy:
+#          name: Deploy application Docker image to AWS
+#          command: |
+#            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+#              /app/deploy.sh
+#            fi

@@ -30,4 +30,6 @@ cd MySpectacle
 ./deployECv2.sh
 ```
 
-L'application est alors disponible à http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/pages/main.xhtml
+L'application (backend) est alors disponible à http://ec2-35-177-143-19.eu-west-2.compute.amazonaws.com:8080/MyApplication/pages/main.xhtml
+
+L'application web est disponible ici : https://ecom-myspectacle.github.io/AngularWebsite/  (pensez à autoriser l'execution de scipts non certifiés si l'applicaion ne fonctionne pas (bouton dans la barre d'url sur Google Chrome)).
