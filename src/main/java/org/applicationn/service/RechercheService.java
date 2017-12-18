@@ -37,7 +37,7 @@ public class RechercheService implements Serializable
 
 	public SearchResult<SpectacleEntity> findSpectacleEntities(SearchQuery query)
 	{
-		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp LEFT JOIN FETCH sp.image");
+		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp");
 	}
 
 	public SearchResult<SalleEntity> findSalleEntities(SearchQuery query)
@@ -52,6 +52,6 @@ public class RechercheService implements Serializable
 
 	public SearchResult<RepresentationEntity> findRepresentationEntities(SearchQuery query)
 	{
-		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp LEFT JOIN FETCH r.spectacle.image");
+		return findAllEntities(RepresentationEntity.class, query, "SELECT r FROM Representation r LEFT JOIN r.salle sa LEFT JOIN r.spectacle sp");
 	}
 }

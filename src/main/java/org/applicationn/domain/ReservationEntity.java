@@ -1,72 +1,102 @@
 package org.applicationn.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
-@Entity(name="Reservation")
-@Table(name="\"RESERVATION\"")
+@Entity(name = "Reservation")
+@Table(name = "\"RESERVATION\"")
 @XmlRootElement
-public class ReservationEntity extends BaseEntity implements Serializable {
+public class ReservationEntity extends BaseEntity implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name="\"nbPlaceFosse\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer nbPlaceFosse;
+	@Column(name = "\"nbPlaceFosse\"")
+	@Digits(integer = 4, fraction = 0)
+	@NotNull
+	private Integer nbPlaceFosse;
 
-    @Column(name="\"nbPlaceBalcon\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer nbPlaceBalcon;
+	@Column(name = "\"nbPlaceBalcon\"")
+	@Digits(integer = 4, fraction = 0)
+	@NotNull
+	private Integer nbPlaceBalcon;
 
-    @Column(name="\"nbPlaceOrchestre\"")
-    @Digits(integer = 4, fraction = 0)
-    @NotNull
-    private Integer nbPlaceOrchestre;
+	@Column(name = "\"nbPlaceOrchestre\"")
+	@Digits(integer = 4, fraction = 0)
+	@NotNull
+	private Integer nbPlaceOrchestre;
 
-    @Column(name="\"MODEPAIEMENT\"")
-    @Enumerated(EnumType.STRING)
-    private ReservationModePaiement modePaiement;
+	@Column(name = "\"email\"")
+	private String email;
 
-    public Integer getNbPlaceFosse() {
-        return this.nbPlaceFosse;
-    }
+	@Column(name = "\"MODEPAIEMENT\"")
+	@Enumerated(EnumType.STRING)
+	private ReservationModePaiement modePaiement;
 
-    public void setNbPlaceFosse(Integer nbPlaceFosse) {
-        this.nbPlaceFosse = nbPlaceFosse;
-    }
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "REPRESENTATION_ID", referencedColumnName = "ID")
+	private RepresentationEntity representation;
 
-    public Integer getNbPlaceBalcon() {
-        return this.nbPlaceBalcon;
-    }
+	public Integer getNbPlaceFosse()
+	{
+		return this.nbPlaceFosse;
+	}
 
-    public void setNbPlaceBalcon(Integer nbPlaceBalcon) {
-        this.nbPlaceBalcon = nbPlaceBalcon;
-    }
+	public void setNbPlaceFosse(Integer nbPlaceFosse)
+	{
+		this.nbPlaceFosse = nbPlaceFosse;
+	}
 
-    public Integer getNbPlaceOrchestre() {
-        return this.nbPlaceOrchestre;
-    }
+	public Integer getNbPlaceBalcon()
+	{
+		return this.nbPlaceBalcon;
+	}
 
-    public void setNbPlaceOrchestre(Integer nbPlaceOrchestre) {
-        this.nbPlaceOrchestre = nbPlaceOrchestre;
-    }
+	public void setNbPlaceBalcon(Integer nbPlaceBalcon)
+	{
+		this.nbPlaceBalcon = nbPlaceBalcon;
+	}
 
-    public ReservationModePaiement getModePaiement() {
-        return modePaiement;
-    }
+	public Integer getNbPlaceOrchestre()
+	{
+		return this.nbPlaceOrchestre;
+	}
 
-    public void setModePaiement(ReservationModePaiement modePaiement) {
-        this.modePaiement = modePaiement;
-    }
+	public void setNbPlaceOrchestre(Integer nbPlaceOrchestre)
+	{
+		this.nbPlaceOrchestre = nbPlaceOrchestre;
+	}
 
+	public ReservationModePaiement getModePaiement()
+	{
+		return modePaiement;
+	}
+
+	public void setModePaiement(ReservationModePaiement modePaiement)
+	{
+		this.modePaiement = modePaiement;
+	}
+
+	public RepresentationEntity getRepresentation()
+	{
+		return this.representation;
+	}
+
+	public void setRepresentation(RepresentationEntity representation)
+	{
+		this.representation = representation;
+	}
+
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 }
