@@ -1,16 +1,14 @@
 package org.applicationn.search;
 
 import javax.json.JsonArray;
-import javax.json.JsonString;
 import javax.json.JsonValue;
 import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.exception.InvalidFilterException;
-import org.applicationn.search.exception.MalformedFilterException;
-import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.spectacle.*;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
 public class SpectacleSearch extends Search<SpectacleEntity>
@@ -27,13 +25,13 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	}
 
 	@Override
-	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException, MalformedFilterException, UnknownFilterException
+	public Filter createFilter(String key, JsonValue value) throws InvalidFilterException, UnknownFilterException
 	{
 		switch(key)
 		{
 			case DescFilter.ID:
 			{
-				return new DescFilter(((JsonString) value).getString());
+				return DescFilter.parse(value);
 			}
 
 			case GenreFilter.ID:
@@ -46,7 +44,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case NameFilter.ID:
 			{
-				return new NameFilter(((JsonString) value).getString());
+				return NameFilter.parse(value);
 			}
 
 			case PublicFilter.ID:
@@ -59,7 +57,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case ThemeFilter.ID:
 			{
-				return new ThemeFilter(((JsonString) value).getString());
+				return ThemeFilter.parse(value);
 			}
 
 			default:

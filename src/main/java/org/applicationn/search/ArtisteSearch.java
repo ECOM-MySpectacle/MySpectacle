@@ -1,13 +1,12 @@
 package org.applicationn.search;
 
-import javax.json.JsonString;
 import javax.json.JsonValue;
 
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.artiste.NameFilter;
 import org.applicationn.search.exception.InvalidFilterException;
 import org.applicationn.search.exception.UnknownFilterException;
-import org.applicationn.search.criteria.artiste.NameFilter;
 import org.applicationn.service.RechercheService;
 
 public class ArtisteSearch extends Search<ArtisteEntity>
@@ -30,7 +29,7 @@ public class ArtisteSearch extends Search<ArtisteEntity>
 		{
 			case NameFilter.ID:
 			{
-				return new NameFilter(((JsonString) value).getString());
+				return NameFilter.parse(value);
 			}
 
 			default:

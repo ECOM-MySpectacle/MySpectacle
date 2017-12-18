@@ -1,18 +1,20 @@
 package org.applicationn.search;
 
-import javax.json.*;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonValue;
 import java.util.stream.IntStream;
 
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.exception.InvalidFilterException;
-import org.applicationn.search.exception.MalformedFilterException;
-import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.search.criteria.representation.*;
 import org.applicationn.search.criteria.salle.CityFilter;
 import org.applicationn.search.criteria.spectacle.GenreFilter;
 import org.applicationn.search.criteria.spectacle.NameFilter;
 import org.applicationn.search.criteria.spectacle.PublicFilter;
+import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.MalformedFilterException;
+import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
 public class RepresentationSearch extends Search<RepresentationEntity>
@@ -35,7 +37,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 		{
 			case NameFilter.ID:
 			{
-				return new NameFilter(((JsonString) value).getString());
+				return NameFilter.parse(value);
 			}
 
 			case GenreFilter.ID:
@@ -53,7 +55,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 
 			case CityFilter.ID:
 			{
-				return new CityFilter(((JsonString) value).getString());
+				return CityFilter.parse(value);
 			}
 
 			case PublicFilter.ID:

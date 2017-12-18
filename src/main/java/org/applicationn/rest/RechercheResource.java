@@ -97,10 +97,10 @@ public class RechercheResource implements Serializable
 
 			populated = true;
 
-			return "{\"error\":\"Success\"}";
+			return error("OK");
 		}
 
-		return "{\"error\":\"Test set already initialized\"}";
+		return error("Test set already initialized");
 	}
 
 	/**

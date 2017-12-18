@@ -1,14 +1,13 @@
 package org.applicationn.search;
 
 import javax.json.JsonNumber;
-import javax.json.JsonString;
 import javax.json.JsonValue;
 
 import org.applicationn.domain.SalleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.salle.*;
 import org.applicationn.search.exception.InvalidFilterException;
 import org.applicationn.search.exception.UnknownFilterException;
-import org.applicationn.search.criteria.salle.*;
 import org.applicationn.service.RechercheService;
 
 public class SalleSearch extends Search<SalleEntity>
@@ -31,17 +30,17 @@ public class SalleSearch extends Search<SalleEntity>
 		{
 			case AddressFilter.ID:
 			{
-				return new AddressFilter(((JsonString) value).getString());
+				return AddressFilter.parse(value);
 			}
 
 			case CityFilter.ID:
 			{
-				return new CityFilter(((JsonString) value).getString());
+				return CityFilter.parse(value);
 			}
 
 			case NameFilter.ID:
 			{
-				return new NameFilter(((JsonString) value).getString());
+				return NameFilter.parse(value);
 			}
 
 			case SeatsBalconFilter.ID:

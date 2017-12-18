@@ -1,26 +1,17 @@
 package org.applicationn.search.criteria.salle;
 
+import javax.json.JsonString;
+import javax.json.JsonValue;
+
 import org.applicationn.search.exception.InvalidFilterException;
 
 public class CityFilter extends SalleFilter
 {
 	public static final String ID = "city";
 
-	public CityFilter(String city) throws InvalidFilterException
+	private CityFilter(String city)
 	{
 		super(ID);
-
-		if(city == null)
-		{
-			throw new InvalidFilterException(ID);
-		}
-
-		city = city.trim();
-
-		if(city.isEmpty())
-		{
-			throw new InvalidFilterException(ID);
-		}
 
 		setVar("city", "%" + city.toLowerCase() + "%");
 	}
@@ -29,5 +20,17 @@ public class CityFilter extends SalleFilter
 	public String condition()
 	{
 		return lower("ville") + " = " + variable("city");
+	}
+
+	public static CityFilter parse(JsonValue json) throws InvalidFilterException
+	{
+		String value = ((JsonString) json).getString();
+
+		if(value == null)
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		return value.trim().isEmpty() ? null : new CityFilter(value);
 	}
 }

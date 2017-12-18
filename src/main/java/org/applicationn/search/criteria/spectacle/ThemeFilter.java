@@ -1,26 +1,17 @@
 package org.applicationn.search.criteria.spectacle;
 
+import javax.json.JsonString;
+import javax.json.JsonValue;
+
 import org.applicationn.search.exception.InvalidFilterException;
 
 public class ThemeFilter extends SpectacleFilter
 {
 	public static final String ID = "theme";
 
-	public ThemeFilter(String theme) throws InvalidFilterException
+	private ThemeFilter(String theme)
 	{
 		super(ID);
-
-		if(theme == null)
-		{
-			throw new InvalidFilterException(ID);
-		}
-
-		theme = theme.trim();
-
-		if(theme.isEmpty())
-		{
-			throw new InvalidFilterException(ID);
-		}
 
 		setVar("theme", "%" + theme.toLowerCase() + "%");
 	}
@@ -28,6 +19,18 @@ public class ThemeFilter extends SpectacleFilter
 	@Override
 	public String condition()
 	{
-		return lower("theme") + " = " + variable("theme");
+		return lower("theme") + " LIKE " + variable("theme");
+	}
+
+	public static ThemeFilter parse(JsonValue json) throws InvalidFilterException
+	{
+		String value = ((JsonString) json).getString();
+
+		if(value == null)
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		return value.trim().isEmpty() ? null : new ThemeFilter(value);
 	}
 }

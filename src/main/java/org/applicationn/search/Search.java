@@ -7,9 +7,8 @@ import java.util.*;
 
 import org.applicationn.domain.BaseEntity;
 import org.applicationn.search.criteria.Filter;
-import org.applicationn.search.exception.InvalidFilterException;
+import org.applicationn.search.exception.FilterException;
 import org.applicationn.search.exception.MalformedFilterException;
-import org.applicationn.search.exception.UnknownFilterException;
 import org.applicationn.service.RechercheService;
 
 /**
@@ -46,12 +45,12 @@ public abstract class Search<T extends BaseEntity>
 	 * @param key  the key
 	 * @param json the JSON object representing the filter
 	 * @return The filter
-	 * @throws InvalidFilterException if the filter is invalid
-	 * @throws JsonException          if a JSON exception occurs
+	 * @throws FilterException if the filter is invalid
+	 * @throws JsonException   if a JSON exception occurs
 	 */
-	abstract Filter createFilter(String key, JsonValue json) throws InvalidFilterException, JsonException, MalformedFilterException, UnknownFilterException;
+	abstract Filter createFilter(String key, JsonValue json) throws FilterException, JsonException;
 
-	public final void createFilters(JsonObject o) throws UnknownFilterException, InvalidFilterException, MalformedFilterException
+	public final void createFilters(JsonObject o) throws FilterException
 	{
 		if(o != null && !o.isEmpty())
 		{
@@ -69,7 +68,10 @@ public abstract class Search<T extends BaseEntity>
 					throw new MalformedFilterException(key);
 				}
 
-				addFilter(filter);
+				if(filter != null)
+				{
+					addFilter(filter);
+				}
 			}
 		}
 	}
