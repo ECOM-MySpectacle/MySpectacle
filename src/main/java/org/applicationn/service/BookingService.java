@@ -132,8 +132,9 @@ public class BookingService implements Serializable
 		{
 			booking.entries.forEach(entry -> RegistrationMailSender.sendQRCode(booking.email, booking.name, Long.toString(entry.id), entry.balcon + entry.fosse + entry.orchestre, spectacles.get(entry.id)));
 		}
-		catch(Exception ignored)
+		catch(Exception e)
 		{
+			e.printStackTrace();
 		}
 	}
 }
