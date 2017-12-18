@@ -16,6 +16,7 @@ import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.domain.ReservationEntity;
 import org.applicationn.service.security.RegistrationMailSender;
 
+@Named
 public class BookingService implements Serializable
 {
 	private static final long serialVersionUID = 1L;
