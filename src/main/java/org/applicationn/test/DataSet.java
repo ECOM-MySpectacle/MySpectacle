@@ -117,22 +117,22 @@ public class DataSet
 		artisteService.save(jeremyWambecke);
 		artisteService.save(dominiqueBarthel);
 
-		SalleEntity pg257 = newSalle("PG salle 257", "Polytech", "Saint-Martin-d'Hères", 5, 8, 39, gestionnaire); // 52
-		SalleEntity pg144 = newSalle("PG salle 144", "Polytech", "Saint-Martin-d'Hères", 7, 10, 49, gestionnaire); // 66
-		SalleEntity pg007 = newSalle("PG amphi 007", "Polytech", "Saint-Martin-d'Hères", 6, 9, 46, gestionnaire); // 61
-		SalleEntity imagF216 = newSalle("IMAG TP F216", "IMAG", "Saint-Martin-d'Hères", 5, 10, 20, gestionnaire); // ?
-		SalleEntity imagF217 = newSalle("IMAG TP F217", "IMAG", "Saint-Martin-d'Hères", 6, 6, 18, gestionnaire); // ?
-		SalleEntity imagF202 = newSalle("IMAG TP F202", "IMAG", "Saint-Martin-d'Hères", 12, 10, 30, gestionnaire); // ?
-		SalleEntity imagF204 = newSalle("IMAG TP F204", "IMAG", "Saint-Martin-d'Hères", 8, 11, 25, gestionnaire); // ?
-		SalleEntity imagF117 = newSalle("IMAG TD F117", "IMAG", "Saint-Martin-d'Hères", 13, 17, 50, gestionnaire); // ?
-		SalleEntity pg011 = newSalle("PG salle 011", "Polytech", "Saint-Martin-d'Hères", 10, 5, 30, gestionnaire); // 45
-		SalleEntity imagF101 = newSalle("IMAG TP F101", "IMAG", "Saint-Martin-d'Hères", 11, 18, 27, gestionnaire); // ?
-		SalleEntity imagF102 = newSalle("IMAG TP F102", "IMAG", "Saint-Martin-d'Hères", 14, 10, 29, gestionnaire); // ?
-		SalleEntity imagF319 = newSalle("IMAG TD F319", "IMAG", "Saint-Martin-d'Hères", 6, 6, 20, gestionnaire); // ?
-		SalleEntity pgAnglais = newSalle("PG salle anglais", "Polytech", "Saint-Martin-d'Hères", 4, 5, 27, gestionnaire); // 36
-		SalleEntity imagF321 = newSalle("IMAG TD F321", "IMAG", "Saint-Martin-d'Hères", 9, 9, 23, gestionnaire); // ?
-		SalleEntity pg035 = newSalle("PG salle 035", "Polytech", "Saint-Martin-d'Hères", 3, 5, 23, gestionnaire); // 32
-		SalleEntity pg052 = newSalle("PG salle 052", "Polytech", "Saint-Martin-d'Hères", 8, 12, 30, gestionnaire); // 60
+		SalleEntity pg257 = newSalle("PG salle 257", "Polytech", "Auvergne-Rhône-Alpes", 5, 8, 39, gestionnaire); // 52
+		SalleEntity pg144 = newSalle("PG salle 144", "Polytech", "Auvergne-Rhône-Alpes", 7, 10, 49, gestionnaire); // 66
+		SalleEntity pg007 = newSalle("PG amphi 007", "Polytech", "Auvergne-Rhône-Alpes", 6, 9, 46, gestionnaire); // 61
+		SalleEntity imagF216 = newSalle("IMAG TP F216", "IMAG", "Auvergne-Rhône-Alpes", 5, 10, 20, gestionnaire); // ?
+		SalleEntity imagF217 = newSalle("IMAG TP F217", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 18, gestionnaire); // ?
+		SalleEntity imagF202 = newSalle("IMAG TP F202", "IMAG", "Auvergne-Rhône-Alpes", 12, 10, 30, gestionnaire); // ?
+		SalleEntity imagF204 = newSalle("IMAG TP F204", "IMAG", "Auvergne-Rhône-Alpes", 8, 11, 25, gestionnaire); // ?
+		SalleEntity imagF117 = newSalle("IMAG TD F117", "IMAG", "Auvergne-Rhône-Alpes", 13, 17, 50, gestionnaire); // ?
+		SalleEntity pg011 = newSalle("PG salle 011", "Polytech", "Auvergne-Rhône-Alpes", 10, 5, 30, gestionnaire); // 45
+		SalleEntity imagF101 = newSalle("IMAG TP F101", "IMAG", "Auvergne-Rhône-Alpes", 11, 18, 27, gestionnaire); // ?
+		SalleEntity imagF102 = newSalle("IMAG TP F102", "IMAG", "Auvergne-Rhône-Alpes", 14, 10, 29, gestionnaire); // ?
+		SalleEntity imagF319 = newSalle("IMAG TD F319", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 20, gestionnaire); // ?
+		SalleEntity pgAnglais = newSalle("PG salle anglais", "Polytech", "Auvergne-Rhône-Alpes", 4, 5, 27, gestionnaire); // 36
+		SalleEntity imagF321 = newSalle("IMAG TD F321", "IMAG", "Auvergne-Rhône-Alpes", 9, 9, 23, gestionnaire); // ?
+		SalleEntity pg035 = newSalle("PG salle 035", "Polytech", "Auvergne-Rhône-Alpes", 3, 5, 23, gestionnaire); // 32
+		SalleEntity pg052 = newSalle("PG salle 052", "Polytech", "Auvergne-Rhône-Alpes", 8, 12, 30, gestionnaire); // 60
 
 		salleService.save(pg257);
 		salleService.save(pg144);
