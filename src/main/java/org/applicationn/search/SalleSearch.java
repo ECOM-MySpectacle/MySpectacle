@@ -38,6 +38,11 @@ public class SalleSearch extends Search<SalleEntity>
 				return CityFilter.parse(value);
 			}
 
+			case RegionFilter.ID:
+			{
+				return RegionFilter.parse(value);
+			}
+
 			case NameFilter.ID:
 			{
 				return NameFilter.parse(value);

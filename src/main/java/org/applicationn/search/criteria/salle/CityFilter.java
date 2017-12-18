@@ -5,6 +5,7 @@ import javax.json.JsonValue;
 
 import org.applicationn.search.exception.InvalidFilterException;
 
+@Deprecated
 public class CityFilter extends SalleFilter
 {
 	public static final String ID = "city";
@@ -22,6 +23,7 @@ public class CityFilter extends SalleFilter
 		return lower("ville") + " = " + variable("city");
 	}
 
+	@Deprecated
 	public static CityFilter parse(JsonValue json) throws InvalidFilterException
 	{
 		String value = ((JsonString) json).getString();

@@ -9,6 +9,7 @@ import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
 import org.applicationn.search.criteria.representation.*;
 import org.applicationn.search.criteria.salle.CityFilter;
+import org.applicationn.search.criteria.salle.RegionFilter;
 import org.applicationn.search.criteria.spectacle.GenreFilter;
 import org.applicationn.search.criteria.spectacle.NameFilter;
 import org.applicationn.search.criteria.spectacle.PublicFilter;
@@ -56,6 +57,11 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 			case CityFilter.ID:
 			{
 				return CityFilter.parse(value);
+			}
+
+			case RegionFilter.ID:
+			{
+				return RegionFilter.parse(value);
 			}
 
 			case PublicFilter.ID:

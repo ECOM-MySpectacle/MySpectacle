@@ -13,7 +13,7 @@ public class AddressFilter extends SalleFilter
 	{
 		super(ID);
 
-		setVar("address", "%" + address.toLowerCase() + "%");
+		setVar("address", address.toLowerCase());
 	}
 
 	@Override

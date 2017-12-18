@@ -77,9 +77,12 @@ Chaque filtre prend un certain type de données, voici la liste des différents 
   *Le nom est sensible à la casse (pour le moment), et correspondront tous les spectacles dont le nom contient cette chaîne de caractères*
 * **date** : date de représentation  
   *type : object contenant deux champs date au format YYYY-MM-dd*
-* **city** : la ville où a lieu la représentation  
+* **(déprécié) city** : la ville où a lieu la représentation  
   *type : chaîne de caractères*
-  *La ville est sensible à la casse et sera évaluée à l'égalité*
+  *C'est un alias de region maintenant*
+* **region** : la région où a lieu la représentation  
+  *type : chaîne de caractères*
+  *La région sera évaluée à l'égalité sans casse*
 * **genre** : le genre du spectacle  
   *type : liste de genres (chaînes de caractères)*  
   *valeurs : parmi {CONCERT, THEATRE, HUMOUR, SPECTACLE, EXPOSITION, SALON, OPERA, LOISIR, FESTIVAL, CIRQUE, SPORT, CABARET, MUSEE, MONUMENT, PARC, CINEMA, SPECTACLEENFANT}*
@@ -123,19 +126,19 @@ Les exemples suivants illustrent le format du paquet JSON à envoyer à l'API :
 }
 ```
 
-2. On souhaite trouver des représentations du spectacle "XYZ" dans la ville de Grenoble :
+2. On souhaite trouver des représentations du spectacle "XYZ" dans la région Rhône-Alpes :
 ```json
 {
 	"page": 1,
 	"per_page": 7,
 	"filters": {
 		"name": "XYZ",
-		"city": "Grenoble"
+		"region": "Auvergne-Rhône-Alpes"
 	}
 }
 ```
 
-3. On souhaite trouver les spectacles pour enfant et/ou pour la famille à Grenoble la semaine du 18 au 23 décembre 2017 ayant au moins 5 places de libre dans la partie fosse :
+3. On souhaite trouver les spectacles pour enfant et/ou pour la famille dans la région Rhône-Alpes la semaine du 18 au 23 décembre 2017 ayant au moins 5 places de libre dans la partie fosse :
 ```json
 {
 	"page": 1,
@@ -145,7 +148,7 @@ Les exemples suivants illustrent le format du paquet JSON à envoyer à l'API :
 			"ENFANT",
 			"FAMILLE"
 		],
-		"city": "Grenoble",
+		"region": "Auvergne-Rhône-Alpes",
 		"date": {
 			"from": "2017-12-18",
 			"to": "2017-12-23"
