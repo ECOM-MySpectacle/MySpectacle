@@ -61,6 +61,7 @@ public class RegistrationMailSender implements Serializable
 		Properties properties = System.getProperties();
 
 		// Setup mail server
+		String password = "hugedindoon";
 		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 		properties.setProperty("mail.smtp.port", "587");
 		properties.setProperty("mail.smtp.starttls.enable", "true");
@@ -70,7 +71,7 @@ public class RegistrationMailSender implements Serializable
 		properties.setProperty("mail.from", from);
 		properties.setProperty("mail.username", from);
 		properties.setProperty("mail.user", from);
-		properties.setProperty("mail.password", "hugedindoon");
+		properties.setProperty("mail.password", password);
 
 		Session session = Session.getDefaultInstance(properties);
 
@@ -110,7 +111,7 @@ public class RegistrationMailSender implements Serializable
 			logger.log(Level.INFO, "Sending QRCode to {0}", to);
 
 			Transport transport = session.getTransport();
-			transport.connect();
+			transport.connect(from, password);
 			transport.sendMessage(message, recipients);
 
 			logger.log(Level.INFO, "Mail sent succesfully!");
