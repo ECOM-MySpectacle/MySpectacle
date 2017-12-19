@@ -36,7 +36,7 @@ public class DataSet
 		return entity;
 	}
 
-	private SalleEntity newSalle(String nom, String adresse, String ville, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
+	private SalleEntity newSalle(String nom, String adresse, Region region, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
 	{
 		SalleEntity entity = new SalleEntity();
 		entity.setNom(nom);
