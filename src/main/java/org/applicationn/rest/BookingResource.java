@@ -149,7 +149,7 @@ public class BookingResource implements Serializable
 		}
 		catch(InvalidBookingException e)
 		{
-			return error("Invalid booking");
+			return error("Invalid booking: " + e.getMessage());
 		}
 		catch(Exception e)
 		{

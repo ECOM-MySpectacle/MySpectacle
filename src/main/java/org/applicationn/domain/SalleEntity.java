@@ -37,17 +37,17 @@ public class SalleEntity extends BaseEntity implements Serializable {
     private String ville;
 
     @Column(name="\"nbPlacesFosse\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesFosse;
 
     @Column(name="\"nbPlacesBalcon\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesBalcon;
 
     @Column(name="\"nbPlacesOrchestre\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesOrchestre;
 

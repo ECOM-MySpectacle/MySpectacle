@@ -1,9 +1,7 @@
 package org.applicationn.search;
 
-import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonValue;
-import java.util.stream.IntStream;
 
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.search.criteria.Filter;
@@ -43,10 +41,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 
 			case GenreFilter.ID:
 			{
-				JsonArray a = (JsonArray) value;
-				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-				return new GenreFilter(genres);
+				return GenreFilter.parse(value);
 			}
 
 			case DateFilter.ID:
@@ -66,10 +61,7 @@ public class RepresentationSearch extends Search<RepresentationEntity>
 
 			case PublicFilter.ID:
 			{
-				JsonArray a = ((JsonArray) value);
-				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-				return new PublicFilter(publc);
+				return PublicFilter.parse(value);
 			}
 
 			case AvailSeatsFilter.ID:

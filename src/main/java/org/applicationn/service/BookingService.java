@@ -38,9 +38,15 @@ public class BookingService implements Serializable
 	}
 
 	@Transactional
-	public void commit()
+	private void commit()
 	{
 		entityManager.flush();
+	}
+
+	@Transactional
+	private void rollback()
+	{
+		entityManager.clear();
 	}
 
 	/**
@@ -79,12 +85,13 @@ public class BookingService implements Serializable
 			for(Booking.Entry entry : booking.entries)
 			{
 				// retrieve the corresponding representation
-				RepresentationEntity rp = getRepresentationBySpectacle(entry.id);
+				// RepresentationEntity rp = getRepresentationBySpectacle(entry.id);
+				RepresentationEntity rp = entityManager.find(RepresentationEntity.class, entry.id);
 
 				// if it doesn't exist
 				if(rp == null)
 				{
-					throw new InvalidBookingException(entry);
+					throw new InvalidBookingException("there is no representation for spectacle " + entry.id, entry);
 				}
 
 				// save the name for later use
@@ -96,7 +103,7 @@ public class BookingService implements Serializable
 				// if any value is negative (we can't have a negative number of seats left)
 				if(balconLeft < 0 || fosseLeft < 0 || orchestreLeft < 0)
 				{
-					throw new InvalidBookingException(entry);
+					throw new InvalidBookingException("there is not enough seats left for representation " + entry.id, entry);
 				}
 
 				// update the representation
@@ -120,10 +127,14 @@ public class BookingService implements Serializable
 		}
 		catch(BookingException e)
 		{
+			rollback();
+
 			throw e;
 		}
 		catch(Exception e)
 		{
+			rollback();
+
 			throw new BookingException(e);
 		}
 
@@ -136,6 +147,8 @@ public class BookingService implements Serializable
 		}
 		catch(Exception e)
 		{
+			System.err.println("Could not send confirmation mail");
+
 			e.printStackTrace();
 		}
 	}

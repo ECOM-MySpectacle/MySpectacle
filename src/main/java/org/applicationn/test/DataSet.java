@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.applicationn.domain.*;
 import org.applicationn.domain.security.UserEntity;
+import org.applicationn.search.criteria.salle.Region;
 import org.applicationn.service.ArtisteService;
 import org.applicationn.service.RepresentationService;
 import org.applicationn.service.SalleService;
@@ -35,12 +36,12 @@ public class DataSet
 		return entity;
 	}
 
-	private SalleEntity newSalle(String nom, String adresse, String ville, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
+	private SalleEntity newSalle(String nom, String adresse, Region region, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
 	{
 		SalleEntity entity = new SalleEntity();
 		entity.setNom(nom);
 		entity.setAdresse(adresse);
-		entity.setVille(ville);
+		entity.setVille(region.getRegion());
 		entity.setNbPlacesFosse(nbPlacesFosse);
 		entity.setNbPlacesBalcon(nbPlacesBalcon);
 		entity.setNbPlacesOrchestre(nbPlacesOrchestre);
@@ -85,116 +86,95 @@ public class DataSet
 	{
 		UserEntity gestionnaire = userService.findUserByUsername("gerant");
 
-		ArtisteEntity lydieDuBousquet = newArtiste("Lydie DU BOUSQUET", null);
-		ArtisteEntity yvesLedru = newArtiste("Yves LEDRU", null);
-		ArtisteEntity bernardTourancheau = newArtiste("Bernard TOURANCHEAU", null);
-		ArtisteEntity sybilleCaffiau = newArtiste("Sybille CAFFIAU", null);
-		ArtisteEntity didierDonsez = newArtiste("Didier DONSEZ", null);
-		ArtisteEntity massihRezaAmini = newArtiste("Massih-Reza AMINI", null);
-		ArtisteEntity laurenceNigay = newArtiste("Laurence NIGAY", null);
-		ArtisteEntity ahlameDouzal = newArtiste("Ahlame DOUZAL", null);
-		ArtisteEntity patriciaLadret = newArtiste("Patricia LADRET", null);
-		ArtisteEntity timothyClaeys = newArtiste("Timothy CLAEYS", null);
-		ArtisteEntity englishTeacher = newArtiste("English Teacher", null);
-		ArtisteEntity jeanLucRichier = newArtiste("Jean-Luc RICHIER", null);
-		ArtisteEntity aliJabari = newArtiste("Ali JABARI", null);
-		ArtisteEntity jeremyWambecke = newArtiste("Jérémy WAMBECKE", null);
-		ArtisteEntity dominiqueBarthel = newArtiste("Dominique BARTHEL", null);
+		//Creation des artistes
 
-		artisteService.save(lydieDuBousquet);
-		artisteService.save(yvesLedru);
-		artisteService.save(bernardTourancheau);
-		artisteService.save(sybilleCaffiau);
-		artisteService.save(didierDonsez);
-		artisteService.save(massihRezaAmini);
-		artisteService.save(laurenceNigay);
-		artisteService.save(ahlameDouzal);
-		artisteService.save(patriciaLadret);
-		artisteService.save(timothyClaeys);
-		artisteService.save(englishTeacher);
-		artisteService.save(jeanLucRichier);
-		artisteService.save(aliJabari);
-		artisteService.save(jeremyWambecke);
-		artisteService.save(dominiqueBarthel);
+		ArtisteEntity michaelJackson = newArtiste("Michael Jackson", null);
+		artisteService.save(michaelJackson);
 
-		SalleEntity pg257 = newSalle("PG salle 257", "Polytech", "Auvergne-Rhône-Alpes", 5, 8, 39, gestionnaire); // 52
-		SalleEntity pg144 = newSalle("PG salle 144", "Polytech", "Auvergne-Rhône-Alpes", 7, 10, 49, gestionnaire); // 66
-		SalleEntity pg007 = newSalle("PG amphi 007", "Polytech", "Auvergne-Rhône-Alpes", 6, 9, 46, gestionnaire); // 61
-		SalleEntity imagF216 = newSalle("IMAG TP F216", "IMAG", "Auvergne-Rhône-Alpes", 5, 10, 20, gestionnaire); // ?
-		SalleEntity imagF217 = newSalle("IMAG TP F217", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 18, gestionnaire); // ?
-		SalleEntity imagF202 = newSalle("IMAG TP F202", "IMAG", "Auvergne-Rhône-Alpes", 12, 10, 30, gestionnaire); // ?
-		SalleEntity imagF204 = newSalle("IMAG TP F204", "IMAG", "Auvergne-Rhône-Alpes", 8, 11, 25, gestionnaire); // ?
-		SalleEntity imagF117 = newSalle("IMAG TD F117", "IMAG", "Auvergne-Rhône-Alpes", 13, 17, 50, gestionnaire); // ?
-		SalleEntity pg011 = newSalle("PG salle 011", "Polytech", "Auvergne-Rhône-Alpes", 10, 5, 30, gestionnaire); // 45
-		SalleEntity imagF101 = newSalle("IMAG TP F101", "IMAG", "Auvergne-Rhône-Alpes", 11, 18, 27, gestionnaire); // ?
-		SalleEntity imagF102 = newSalle("IMAG TP F102", "IMAG", "Auvergne-Rhône-Alpes", 14, 10, 29, gestionnaire); // ?
-		SalleEntity imagF319 = newSalle("IMAG TD F319", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 20, gestionnaire); // ?
-		SalleEntity pgAnglais = newSalle("PG salle anglais", "Polytech", "Auvergne-Rhône-Alpes", 4, 5, 27, gestionnaire); // 36
-		SalleEntity imagF321 = newSalle("IMAG TD F321", "IMAG", "Auvergne-Rhône-Alpes", 9, 9, 23, gestionnaire); // ?
-		SalleEntity pg035 = newSalle("PG salle 035", "Polytech", "Auvergne-Rhône-Alpes", 3, 5, 23, gestionnaire); // 32
-		SalleEntity pg052 = newSalle("PG salle 052", "Polytech", "Auvergne-Rhône-Alpes", 8, 12, 30, gestionnaire); // 60
+		ArtisteEntity michaelJones = newArtiste("Michael Jones", null);
+		artisteService.save(michaelJones);
 
-		salleService.save(pg257);
-		salleService.save(pg144);
-		salleService.save(pg007);
-		salleService.save(imagF216);
-		salleService.save(imagF217);
-		salleService.save(imagF117);
-		salleService.save(pg011);
-		salleService.save(imagF101);
-		salleService.save(imagF102);
-		salleService.save(imagF319);
-		salleService.save(pgAnglais);
-		salleService.save(imagF321);
-		salleService.save(imagF204);
-		salleService.save(pg035);
-		salleService.save(pg052);
+		ArtisteEntity ledZeppelin = newArtiste("Led Zeppelin", null);
+		artisteService.save(ledZeppelin);
 
-		SpectacleEntity gl = newSpectacle("Génie logiciel", SpectacleGenre.CABARET, EnumSet.of(SpectaclePublicc.AMIS, SpectaclePublicc.FAMILLE), "Architecture et tests logiciels", "Techniques de conception d'architecture et types de tests", Arrays.asList(lydieDuBousquet, yvesLedru));
-		SpectacleEntity glTD = newSpectacle("TD Génie logiciel", SpectacleGenre.THEATRE, EnumSet.of(SpectaclePublicc.FAMILLE), "TD Architecture et tests logiciels", "La version TD", Arrays.asList(lydieDuBousquet, yvesLedru));
-		SpectacleEntity vt = newSpectacle("Veille technologique", SpectacleGenre.SPECTACLE, EnumSet.of(SpectaclePublicc.AMIS, SpectaclePublicc.FAMILLE, SpectaclePublicc.ENFANT), "Présentation d'entreprise", "Parcours, entreprise, technologies", Collections.singletonList(bernardTourancheau));
-		SpectacleEntity ecom = newSpectacle("Projet ECOM", SpectacleGenre.LOISIR, EnumSet.of(SpectaclePublicc.AMIS), "Conception d'un logiciel e-commerce", "Voir la page wiki AIR", Arrays.asList(didierDonsez, sybilleCaffiau));
-		SpectacleEntity sd = newSpectacle("Science des données", SpectacleGenre.THEATRE, EnumSet.of(SpectaclePublicc.ADULTE, SpectaclePublicc.COUPLE), "Classification, kmeans, hcluster, PAM", "Avec plusieurs arbres on fait une forêt", Arrays.asList(ahlameDouzal, massihRezaAmini));
-		SpectacleEntity ihma = newSpectacle("Interaction homme-machine avancée", SpectacleGenre.SPECTACLEENFANT, EnumSet.of(SpectaclePublicc.ENFANT), "Techniques de menus", "Y en a plein mais ils servent pas...", Collections.singletonList(laurenceNigay));
-		SpectacleEntity sdTP = newSpectacle("TP Science des données", SpectacleGenre.FESTIVAL, EnumSet.of(SpectaclePublicc.FAMILLE), "TP Classification, kmeans, hcluster, PAM", "La version TP", Arrays.asList(ahlameDouzal, massihRezaAmini));
-		SpectacleEntity secuTP = newSpectacle("TP Sécurité", SpectacleGenre.SPECTACLE, EnumSet.of(SpectaclePublicc.AMIS), "La sécurité de suppose", "Je ne suis pas en réseau", Collections.singletonList(timothyClaeys));
-		SpectacleEntity tma = newSpectacle("Traitements multimédia avancés", SpectacleGenre.THEATRE, EnumSet.of(SpectaclePublicc.AMIS), "Méthodes de compression", "JPEG, MPEG, etc.", Collections.singletonList(patriciaLadret));
-		SpectacleEntity anglais = newSpectacle("Anglais", SpectacleGenre.FESTIVAL, EnumSet.of(SpectaclePublicc.ADOLESCENT, SpectaclePublicc.ADULTE), "Cours d'anglais", "Les speeches et débâts en anglais c'est cool", Collections.singletonList(englishTeacher));
-		SpectacleEntity ari = newSpectacle("Administration réseaux infrastructure", SpectacleGenre.CINEMA, EnumSet.of(SpectaclePublicc.ADULTE), "Des trucs sur l'administration des réseaux ?", "Je ne suis pas en réseau", Collections.singletonList(jeanLucRichier));
-		SpectacleEntity ihmaTP = newSpectacle("TP Interaction homme-machine avancée", SpectacleGenre.HUMOUR, EnumSet.of(SpectaclePublicc.ENFANT, SpectaclePublicc.FAMILLE), "Programmation d'un bubbling menu", "C'est hyper long et dur", Collections.singletonList(aliJabari));
-		SpectacleEntity wsn = newSpectacle("WSN", SpectacleGenre.CONCERT, EnumSet.of(SpectaclePublicc.FAMILLE), "Aucune idée", "Je ne suis pas en réseau", Collections.singletonList(dominiqueBarthel));
-		SpectacleEntity vdTP = newSpectacle("TP Visualisation de données", SpectacleGenre.CABARET, EnumSet.of(SpectaclePublicc.COUPLE, SpectaclePublicc.AMIS), "Visualisation de données météo dans Google Earth", "C'est stylé, mais configurer Linux avec ParaView et tout...", Collections.singletonList(jeremyWambecke));
+		ArtisteEntity patrickSebastien = newArtiste("Patrick Sebastien", null);
+		artisteService.save(patrickSebastien);
 
-		spectacleService.save(gl);
-		spectacleService.save(glTD);
-		spectacleService.save(vt);
-		spectacleService.save(ecom);
-		spectacleService.save(sd);
-		spectacleService.save(ihma);
-		spectacleService.save(sdTP);
-		spectacleService.save(secuTP);
-		spectacleService.save(tma);
-		spectacleService.save(anglais);
-		spectacleService.save(ari);
-		spectacleService.save(ihmaTP);
-		spectacleService.save(wsn);
-		spectacleService.save(vdTP);
+		ArtisteEntity kevAdams = newArtiste("Kev Adams", null);
+		artisteService.save(kevAdams);
 
-		RepresentationEntity rp1 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 3, 10, pg257, gl);
-		RepresentationEntity rp2 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 0, 0, pg144, glTD);
-		RepresentationEntity rp3 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 1, 0, 0, pg007, vt);
-		RepresentationEntity rp4 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 2, 1, 4, imagF216, ecom);
-		RepresentationEntity rp5 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 2, 1, 0, imagF117, sd);
-		RepresentationEntity rp6 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 0, 0, 0, imagF204, ecom);
-		RepresentationEntity rp7 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 7, 4, 12, pg011, ihma);
-		RepresentationEntity rp8 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 2, 2, 2, pg011, sdTP);
-		RepresentationEntity rp9 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 5, 3, 7, imagF101, secuTP);
-		RepresentationEntity rp10 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 1, 0, 5, imagF319, tma);
-		RepresentationEntity rp11 = newRepresentation(getDate(2017, Calendar.DECEMBER, 7), 0, 0, 7, pgAnglais, anglais);
-		RepresentationEntity rp12 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 1, 2, 2, imagF321, ari);
-		RepresentationEntity rp13 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 4, 5, 14, imagF204, ihmaTP);
-		RepresentationEntity rp14 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 2, 6, 10, pg052, wsn);
-		RepresentationEntity rp15 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 0, 0, 1, pg035, vdTP);
+		ArtisteEntity psg = newArtiste("PSG", null);
+		artisteService.save(psg);
+
+		ArtisteEntity asse = newArtiste("ASSE", null);
+		artisteService.save(asse);
+
+		ArtisteEntity cirquePinder = newArtiste("Cirque Pinder", null);
+		artisteService.save(cirquePinder);
+
+		ArtisteEntity irinaKolesnikova = newArtiste("Irina Kolesnikova", null);
+		artisteService.save(irinaKolesnikova);
+
+		//Creation des salles
+
+		SalleEntity stadeDeFrance = newSalle("Stade de France", "ZAC du Cornillon, Saint-Denis",  Region.ILE_DE_FRANCE, 50000, 20000, 500, gestionnaire);
+		salleService.save(stadeDeFrance);
+
+		SalleEntity mc2 = newSalle("MC2", "4 Rue Paul Claudel, Grenoble",  Region.AUVERGNE_RHONE_ALPES, 895, 230, 50, gestionnaire);
+		salleService.save(mc2);
+
+		SalleEntity halleTonyGarnier = newSalle("Halle Tony Garnier", "20 Place docteur Charles, Lyon",  Region.AUVERGNE_RHONE_ALPES, 15000, 3000, 50, gestionnaire);
+		salleService.save(halleTonyGarnier);
+
+		SalleEntity amphiWeil =newSalle("Amphi Weil", "701 Avenue Centrale, Saint-Martin-d'Heres",  Region.AUVERGNE_RHONE_ALPES, 1000, 0, 0, gestionnaire);
+		salleService.save(amphiWeil);
+
+		//Creation des spectacles
+
+		SpectacleEntity badWorldTour = newSpectacle("Bad World Tour", SpectacleGenre.CONCERT, EnumSet.of(SpectaclePublicc.FAMILLE), "Musique pop", "Première tournée mondiale solo de Michael Jackson, donnée suite à la sortie de l'album Bad. Un spectacle à ne manquer sous AUCUN prétexte!", Collections.singletonList(michaelJackson));
+		spectacleService.save(badWorldTour);
+
+		SpectacleEntity masterClass = newSpectacle("Au Tour De 2017/2018", SpectacleGenre.CONCERT, EnumSet.of(SpectaclePublicc.FAMILLE), "Musique rock", "Pour la sortie de son dernier album Au Tour De, l'ancien guitariste de Jean-Jacques Goldman retourne sur les routes de France afin de renouer avec son public. Venez vous laisser bercer par les mélodies blues et rock du guitariste soliste dans un concert riche en émotions.", Collections.singletonList(michaelJones));
+		spectacleService.save(masterClass);
+
+		SpectacleEntity autumnTour = newSpectacle("Autumn 1969 European Tour", SpectacleGenre.CONCERT, EnumSet.of(SpectaclePublicc.ADULTE), "Hard rock", "Le groupe Led Zeppelin revient sur les devants de la scène Européenne pour promouvoir son prochain album Led Zeppelin II. Après l'immense succes de leur album éponyme Led Zeppelin (Good Times Bad Times, Babe I'm Gonna Leave You), cette tournée s'annonce historique. A réserver rapidement!", Collections.singletonList(ledZeppelin));
+		spectacleService.save(autumnTour);
+
+		SpectacleEntity caVaBouger = newSpectacle("Ca va bouger!", SpectacleGenre.HUMOUR, EnumSet.of(SpectaclePublicc.FAMILLE), "Imitations", "Après avoir abandonné pendant quinze ans le show uniquement consacré à la parodie pour se consacrer à sa carrière de chanteur festif, Patrick retourne a ses origines avec ce spectacle poilant.", Collections.singletonList(patrickSebastien));
+		spectacleService.save(caVaBouger);
+
+		SpectacleEntity kev = newSpectacle("Kev & Gad, tout est possible !", SpectacleGenre.HUMOUR, EnumSet.of(SpectaclePublicc.FAMILLE), "Two-men show", "Kev Adams, revient dans son nouveau spectacle avec sa vingtaine, sa famille, ses cheveux, son époque, ses cheveux, ses potes, sa mère, ses cheveux, son énergie, son talent, ses cheveux.... Et même ses cheveux.", Collections.singletonList(kevAdams));
+		spectacleService.save(kev);
+
+		SpectacleEntity ligueDesChampions = newSpectacle("Matchs de Ligue des Champions du PSG", SpectacleGenre.SPORT, EnumSet.of(SpectaclePublicc.AMIS), "Football", "Suivez le parcours du Paris Saint Germain dans la plus grande compétition de football en club du monde! Retrouvez Neymar, Cavani et le jeune Mbappé dans des matchs d'anthologie.", Collections.singletonList(psg));
+		spectacleService.save(ligueDesChampions);
+
+		SpectacleEntity pls = newSpectacle("Matchs en Ligue 1 de l'AS Saint-Etienne", SpectacleGenre.SPORT, EnumSet.of(SpectaclePublicc.AMIS), "Football", "Après le départ de leur entraineur Christophe Galtier à la fin de la saison 2017, le club Stéphanois est en difficulté en championnat. Venez suivre leurs matchs pour voir le jeu flamboyant de ce grand club Français!", Collections.singletonList(asse));
+		spectacleService.save(pls);
+
+		SpectacleEntity cirque = newSpectacle("tournée 2017/2018", SpectacleGenre.CIRQUE, EnumSet.of(SpectaclePublicc.FAMILLE), "Cirque", "Venez en famille découvrir le nouveau spectacle du cirque Pinder! Au programme, clowns, tigres, éléphants et acrobrates pour la joie des petits commes des grands!", Collections.singletonList(cirquePinder));
+		spectacleService.save(cirque);
+		
+		SpectacleEntity leLacDesCygnes = newSpectacle("Le Lac Des Cygnes", SpectacleGenre.SPECTACLE, EnumSet.of(SpectaclePublicc.ADULTE), "Ballet", "Le célèbre et intemporel Lac des Cygnes, dansé par Irina Kolesnikova sur la musique de Piotr Ilitch Tchaïkovski, vous transportera dans un monde de grâce, de puissance et d'élégance", Collections.singletonList(irinaKolesnikova));
+		spectacleService.save(leLacDesCygnes);
+
+		//Création des représentations
+
+		RepresentationEntity rp1 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 0, 0, amphiWeil, caVaBouger);
+		RepresentationEntity rp2 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 0, 50, 45, mc2, kev);
+		RepresentationEntity rp3 = newRepresentation(getDate(2017, Calendar.DECEMBER, 4), 5000, 1000, 50, halleTonyGarnier, leLacDesCygnes);
+		RepresentationEntity rp4 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 20000, 10000, 0, stadeDeFrance, badWorldTour);
+		RepresentationEntity rp5 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 500, 0, 0, amphiWeil, masterClass);
+		RepresentationEntity rp6 = newRepresentation(getDate(2017, Calendar.DECEMBER, 5), 700, 20, 5, mc2, cirque);
+		RepresentationEntity rp7 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 200, 100, 12, halleTonyGarnier, autumnTour);
+		RepresentationEntity rp8 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 30000, 15000, 300, stadeDeFrance, ligueDesChampions);
+		RepresentationEntity rp9 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 5, 3, 7, amphiWeil, caVaBouger);
+		RepresentationEntity rp10 = newRepresentation(getDate(2017, Calendar.DECEMBER, 6), 600, 0, 0, mc2, masterClass);
+		RepresentationEntity rp11 = newRepresentation(getDate(2017, Calendar.DECEMBER, 7), 14000, 205, 7, halleTonyGarnier, leLacDesCygnes);
+		RepresentationEntity rp12 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 50000, 20000, 500, stadeDeFrance, pls);
+		RepresentationEntity rp13 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 10000, 14000, 14, stadeDeFrance, autumnTour);
+		RepresentationEntity rp14 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 200, 100, 10, halleTonyGarnier, badWorldTour);
+		RepresentationEntity rp15 = newRepresentation(getDate(2017, Calendar.DECEMBER, 8), 1000, 500, 1, stadeDeFrance, ligueDesChampions);
 
 		representationService.save(rp1);
 		representationService.save(rp2);
