@@ -2,7 +2,7 @@ package org.applicationn.search.criteria.salle;
 
 import javax.json.JsonArray;
 import javax.json.JsonValue;
-import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -12,7 +12,7 @@ public class RegionFilter extends SalleFilter
 {
 	public static final String ID = "region";
 
-	private RegionFilter(Set<Region> regions)
+	private RegionFilter(Set<String> regions)
 	{
 		super(ID);
 
@@ -40,7 +40,7 @@ public class RegionFilter extends SalleFilter
 			return null;
 		}
 
-		Set<Region> e = EnumSet.noneOf(Region.class);
+		Set<String> e = new HashSet<>();
 
 		for(String region : regions)
 		{
@@ -51,7 +51,7 @@ public class RegionFilter extends SalleFilter
 				throw new InvalidFilterException(ID);
 			}
 
-			e.add(rg);
+			e.add(rg.getRegion());
 		}
 
 		return new RegionFilter(e);
