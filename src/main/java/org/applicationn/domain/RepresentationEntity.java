@@ -27,17 +27,17 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
     private Date date;
 
     @Column(name="\"nbPlacesFosseLibres\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesFosseLibres;
 
     @Column(name="\"nbPlacesBalconLibres\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesBalconLibres;
 
     @Column(name="\"nbPlacesOrchestreLibres\"")
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     private Integer nbPlacesOrchestreLibres;
 

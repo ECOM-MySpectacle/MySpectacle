@@ -15,17 +15,17 @@ public class ReservationEntity extends BaseEntity implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "\"nbPlaceFosse\"")
-	@Digits(integer = 4, fraction = 0)
+	@Digits(integer = 8, fraction = 0)
 	@NotNull
 	private Integer nbPlaceFosse;
 
 	@Column(name = "\"nbPlaceBalcon\"")
-	@Digits(integer = 4, fraction = 0)
+	@Digits(integer = 8, fraction = 0)
 	@NotNull
 	private Integer nbPlaceBalcon;
 
 	@Column(name = "\"nbPlaceOrchestre\"")
-	@Digits(integer = 4, fraction = 0)
+	@Digits(integer = 8, fraction = 0)
 	@NotNull
 	private Integer nbPlaceOrchestre;
 

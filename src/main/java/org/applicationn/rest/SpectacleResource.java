@@ -10,6 +10,7 @@ import java.util.List;
 import org.applicationn.domain.ArtisteEntity;
 import org.applicationn.domain.RepresentationEntity;
 import org.applicationn.domain.SpectacleEntity;
+import org.applicationn.domain.SpectacleImage;
 import org.applicationn.service.ArtisteService;
 import org.applicationn.service.RepresentationService;
 import org.applicationn.service.SpectacleService;
@@ -195,5 +196,15 @@ public class SpectacleResource implements Serializable
 		SpectacleEntity spectacle = spectacleService.find(spectacleId);
 
 		return representationService.findRepresentationsBySpectacle(spectacle);
+	}
+
+	@GET
+	@Path("{id}/image")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SpectacleImage getImage(@PathParam("id") Long spectacleId)
+	{
+		SpectacleEntity spectacle = spectacleService.find(spectacleId);
+
+		return spectacleService.lazilyLoadImageToSpectacle(spectacle).getImage();
 	}
 }
