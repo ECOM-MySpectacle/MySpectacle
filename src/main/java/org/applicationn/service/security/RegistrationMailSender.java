@@ -109,7 +109,9 @@ public class RegistrationMailSender implements Serializable
 
 			logger.log(Level.INFO, "Sending QRCode to {0}", to);
 
-			session.getTransport("smtps").sendMessage(message, recipients);
+			Transport transport = session.getTransport();
+			transport.connect();
+			transport.sendMessage(message, recipients);
 
 			logger.log(Level.INFO, "Mail sent succesfully!");
 
