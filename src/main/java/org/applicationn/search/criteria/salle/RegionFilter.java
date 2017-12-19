@@ -1,7 +1,10 @@
 package org.applicationn.search.criteria.salle;
 
-import javax.json.JsonString;
+import javax.json.JsonArray;
 import javax.json.JsonValue;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.applicationn.search.exception.InvalidFilterException;
 
@@ -9,35 +12,48 @@ public class RegionFilter extends SalleFilter
 {
 	public static final String ID = "region";
 
-	private RegionFilter(Region region)
+	private RegionFilter(Set<Region> regions)
 	{
 		super(ID);
 
-		setVar("region", region.getRegion());
+		setVar("regions", regions);
 	}
 
 	@Override
 	public String condition()
 	{
-		return attribute("ville") + " = " + variable("region");
+		return attribute("ville") + " IN " + variable("regions");
 	}
 
 	public static RegionFilter parse(JsonValue json) throws InvalidFilterException
 	{
-		String value = ((JsonString) json).getString();
+		JsonArray a = (JsonArray) json;
+		String[] regions = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
-		if(value == null)
+		if(regions == null)
 		{
 			throw new InvalidFilterException(ID);
 		}
 
-		Region region = Region.get(value);
-
-		if(region == null)
+		if(regions.length == 0)
 		{
-			throw new InvalidFilterException(ID);
+			return null;
 		}
 
-		return new RegionFilter(region);
+		Set<Region> e = EnumSet.noneOf(Region.class);
+
+		for(String region : regions)
+		{
+			Region rg = Region.get(region);
+
+			if(rg == null)
+			{
+				throw new InvalidFilterException(ID);
+			}
+
+			e.add(rg);
+		}
+
+		return new RegionFilter(e);
 	}
 }

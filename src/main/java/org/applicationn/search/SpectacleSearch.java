@@ -1,11 +1,10 @@
 package org.applicationn.search;
 
-import javax.json.JsonArray;
 import javax.json.JsonValue;
-import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.salle.CityFilter;
 import org.applicationn.search.criteria.salle.RegionFilter;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.search.exception.InvalidFilterException;
@@ -30,6 +29,11 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 	{
 		switch(key)
 		{
+			case CityFilter.ID:
+			{
+				return CityFilter.parse(value);
+			}
+
 			case DescFilter.ID:
 			{
 				return DescFilter.parse(value);
@@ -37,10 +41,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case GenreFilter.ID:
 			{
-				JsonArray a = (JsonArray) value;
-				String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-				return new GenreFilter(genres);
+				return GenreFilter.parse(value);
 			}
 
 			case NameFilter.ID:
@@ -50,10 +51,7 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 
 			case PublicFilter.ID:
 			{
-				JsonArray a = (JsonArray) value;
-				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
-
-				return new PublicFilter(publc);
+				return PublicFilter.parse(value);
 			}
 
 			case RegionFilter.ID:

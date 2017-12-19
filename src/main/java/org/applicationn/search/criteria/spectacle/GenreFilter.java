@@ -1,7 +1,11 @@
 package org.applicationn.search.criteria.spectacle;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleGenre;
 import org.applicationn.search.exception.InvalidFilterException;
@@ -10,39 +14,11 @@ public class GenreFilter extends SpectacleFilter
 {
 	public static final String ID = "genre";
 
-	public GenreFilter(String[] genres) throws InvalidFilterException
+	private GenreFilter(Set<SpectacleGenre> genres)
 	{
 		super(ID);
 
-		if(genres == null || genres.length == 0)
-		{
-			throw new InvalidFilterException(ID);
-		}
-
-		EnumSet<SpectacleGenre> e = EnumSet.noneOf(SpectacleGenre.class);
-
-		for(String genre : genres)
-		{
-			EnumSet<SpectacleGenre> f = get(genre);
-
-			if(f == null)
-			{
-				SpectacleGenre sg = Arrays.stream(SpectacleGenre.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
-
-				if(sg == null)
-				{
-					throw new InvalidFilterException(ID);
-				}
-
-				e.add(sg);
-			}
-			else
-			{
-				e.addAll(f);
-			}
-		}
-
-		setVar("genres", e);
+		setVar("genres", genres);
 	}
 
 	private static EnumSet<SpectacleGenre> get(String multigenres)
@@ -110,5 +86,46 @@ public class GenreFilter extends SpectacleFilter
 	public String condition()
 	{
 		return attribute("genre") + " IN " + variable("genres");
+	}
+
+	public static GenreFilter parse(JsonValue value) throws InvalidFilterException
+	{
+		JsonArray a = (JsonArray) value;
+		String[] genres = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
+
+		if(genres == null)
+		{
+			throw new InvalidFilterException(ID);
+		}
+
+		if(genres.length == 0)
+		{
+			return null;
+		}
+
+		Set<SpectacleGenre> e = EnumSet.noneOf(SpectacleGenre.class);
+
+		for(String genre : genres)
+		{
+			Set<SpectacleGenre> f = get(genre);
+
+			if(f == null)
+			{
+				SpectacleGenre sg = Arrays.stream(SpectacleGenre.values()).filter(s -> s.toString().equalsIgnoreCase(genre)).findFirst().orElse(null);
+
+				if(sg == null)
+				{
+					throw new InvalidFilterException(ID);
+				}
+
+				e.add(sg);
+			}
+			else
+			{
+				e.addAll(f);
+			}
+		}
+
+		return new GenreFilter(e);
 	}
 }
