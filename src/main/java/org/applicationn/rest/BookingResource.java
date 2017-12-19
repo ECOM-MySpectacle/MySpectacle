@@ -138,9 +138,9 @@ public class BookingResource implements Serializable
 
 		try
 		{
-			Logger.getLogger(BookingResource.class.getName()).log(Level.INFO, "[tirandule]Pre booking");
+			System.err.println("Pre booking");
 			bookingService.book(booking);
-			Logger.getLogger(BookingResource.class.getName()).log(Level.INFO, "[tirandule]Post booking");
+			System.err.println("Post booking");
 			
 		}
 		catch(InvalidTokenException e)
