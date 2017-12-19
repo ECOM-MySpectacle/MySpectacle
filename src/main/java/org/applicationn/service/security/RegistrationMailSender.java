@@ -57,24 +57,24 @@ public class RegistrationMailSender implements Serializable
 		String subject = "Billeterie MySpetacle";
 		String corps = "Bonjour, \nNous vous confirmons l'achat de " + nbPlaces + " du spectacle " + nomSpectacle + ".\n Veuillez trouver en pièce jointe votre e-billet sous la forme d'un QRCode. \n \n L'équipe MySpectacle";
 
+		// Get system properties
+		Properties properties = System.getProperties();
+
+		// Setup mail server
+		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+		properties.setProperty("mail.smtp.port", "587");
+		properties.setProperty("mail.from", from);
+		properties.setProperty("mail.username", from);
+		properties.setProperty("mail.user", from);
+		properties.setProperty("mail.password", "hugedindoon");
+
+		Session session = Session.getDefaultInstance(properties);
 
 		try
 		{
-
-			// Get system properties
-			Properties properties = System.getProperties();
-
-			// Setup mail server
-			properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-			properties.setProperty("mail.smtp.port", "587");
-			properties.setProperty("mail.from", from);
-			properties.setProperty("mail.username", from);
-			properties.setProperty("mail.password", "hugedindoon");
-
-			Message message = new MimeMessage(Session.getDefaultInstance(properties));
+			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(to));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			message.setSubject(subject);
 
 			// Create the message part
