@@ -12,6 +12,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.applicationn.booking.Booking;
 import org.applicationn.booking.exception.BookingException;
@@ -130,12 +132,16 @@ public class BookingResource implements Serializable
 		}
 		catch(Exception e)
 		{
+			System.out.println(e);
 			return badRequest();
 		}
 
 		try
 		{
+			Logger.getLogger(BookingResource.class.getName()).log(Level.INFO, "[tirandule]Pre booking");
 			bookingService.book(booking);
+			Logger.getLogger(BookingResource.class.getName()).log(Level.INFO, "[tirandule]Post booking");
+			
 		}
 		catch(InvalidTokenException e)
 		{

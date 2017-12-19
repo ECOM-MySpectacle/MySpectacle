@@ -58,11 +58,13 @@ public class RegistrationMailSender implements Serializable {
    
     public static void sendQRCode(String to, String name, String idSpectacle, int nbPlaces, String nomSpectacle) {
     	
-    	String subject = "Billeterie MySpetacle";
-    	String corps = "Bonjour, \nNous vous confirmons l'achat de " + nbPlaces + " du spectacle " + nomSpectacle + ".\n Veuillez trouver en pièce jointe votre e-billet sous la forme d'un QRCode. \n \n L'équipe MySpectacle";
     	
     	ServletContext context = Faces.getServletContext();
     	String from = context.getInitParameter("mail.from");
+    	
+    	String subject = "Billeterie MySpetacle";
+    	String corps = "Bonjour, \nNous vous confirmons l'achat de " + nbPlaces + " du spectacle " + nomSpectacle + ".\n Veuillez trouver en pièce jointe votre e-billet sous la forme d'un QRCode. \n \n L'équipe MySpectacle";
+    	
     	
     	 try {
 
