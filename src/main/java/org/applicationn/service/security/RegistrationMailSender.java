@@ -63,6 +63,7 @@ public class RegistrationMailSender implements Serializable
 		// Setup mail server
 		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 		properties.setProperty("mail.smtp.port", "587");
+		properties.put("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.from", from);
 		properties.setProperty("mail.username", from);
 		properties.setProperty("mail.user", from);
