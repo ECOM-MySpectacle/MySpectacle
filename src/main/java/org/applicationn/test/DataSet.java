@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.applicationn.domain.*;
 import org.applicationn.domain.security.UserEntity;
+import org.applicationn.search.criteria.salle.Region;
 import org.applicationn.service.ArtisteService;
 import org.applicationn.service.RepresentationService;
 import org.applicationn.service.SalleService;
@@ -35,12 +36,12 @@ public class DataSet
 		return entity;
 	}
 
-	private SalleEntity newSalle(String nom, String adresse, String ville, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
+	private SalleEntity newSalle(String nom, String adresse, Region region, Integer nbPlacesFosse, Integer nbPlacesBalcon, Integer nbPlacesOrchestre, UserEntity gestionnaire)
 	{
 		SalleEntity entity = new SalleEntity();
 		entity.setNom(nom);
 		entity.setAdresse(adresse);
-		entity.setVille(ville);
+		entity.setVille(region.getRegion());
 		entity.setNbPlacesFosse(nbPlacesFosse);
 		entity.setNbPlacesBalcon(nbPlacesBalcon);
 		entity.setNbPlacesOrchestre(nbPlacesOrchestre);
@@ -117,22 +118,22 @@ public class DataSet
 		artisteService.save(jeremyWambecke);
 		artisteService.save(dominiqueBarthel);
 
-		SalleEntity pg257 = newSalle("PG salle 257", "Polytech", "Auvergne-Rhône-Alpes", 5, 8, 39, gestionnaire); // 52
-		SalleEntity pg144 = newSalle("PG salle 144", "Polytech", "Auvergne-Rhône-Alpes", 7, 10, 49, gestionnaire); // 66
-		SalleEntity pg007 = newSalle("PG amphi 007", "Polytech", "Auvergne-Rhône-Alpes", 6, 9, 46, gestionnaire); // 61
-		SalleEntity imagF216 = newSalle("IMAG TP F216", "IMAG", "Auvergne-Rhône-Alpes", 5, 10, 20, gestionnaire); // ?
-		SalleEntity imagF217 = newSalle("IMAG TP F217", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 18, gestionnaire); // ?
-		SalleEntity imagF202 = newSalle("IMAG TP F202", "IMAG", "Auvergne-Rhône-Alpes", 12, 10, 30, gestionnaire); // ?
-		SalleEntity imagF204 = newSalle("IMAG TP F204", "IMAG", "Auvergne-Rhône-Alpes", 8, 11, 25, gestionnaire); // ?
-		SalleEntity imagF117 = newSalle("IMAG TD F117", "IMAG", "Auvergne-Rhône-Alpes", 13, 17, 50, gestionnaire); // ?
-		SalleEntity pg011 = newSalle("PG salle 011", "Polytech", "Auvergne-Rhône-Alpes", 10, 5, 30, gestionnaire); // 45
-		SalleEntity imagF101 = newSalle("IMAG TP F101", "IMAG", "Auvergne-Rhône-Alpes", 11, 18, 27, gestionnaire); // ?
-		SalleEntity imagF102 = newSalle("IMAG TP F102", "IMAG", "Auvergne-Rhône-Alpes", 14, 10, 29, gestionnaire); // ?
-		SalleEntity imagF319 = newSalle("IMAG TD F319", "IMAG", "Auvergne-Rhône-Alpes", 6, 6, 20, gestionnaire); // ?
-		SalleEntity pgAnglais = newSalle("PG salle anglais", "Polytech", "Auvergne-Rhône-Alpes", 4, 5, 27, gestionnaire); // 36
-		SalleEntity imagF321 = newSalle("IMAG TD F321", "IMAG", "Auvergne-Rhône-Alpes", 9, 9, 23, gestionnaire); // ?
-		SalleEntity pg035 = newSalle("PG salle 035", "Polytech", "Auvergne-Rhône-Alpes", 3, 5, 23, gestionnaire); // 32
-		SalleEntity pg052 = newSalle("PG salle 052", "Polytech", "Auvergne-Rhône-Alpes", 8, 12, 30, gestionnaire); // 60
+		SalleEntity pg257 = newSalle("PG salle 257", "Polytech", Region.AUVERGNE_RHONE_ALPES, 5, 8, 39, gestionnaire); // 52
+		SalleEntity pg144 = newSalle("PG salle 144", "Polytech", Region.GRAND_EST, 7, 10, 49, gestionnaire); // 66
+		SalleEntity pg007 = newSalle("PG amphi 007", "Polytech", Region.BRETAGNE, 6, 9, 46, gestionnaire); // 61
+		SalleEntity imagF216 = newSalle("IMAG TP F216", "IMAG", Region.AUVERGNE_RHONE_ALPES, 5, 10, 20, gestionnaire); // ?
+		SalleEntity imagF217 = newSalle("IMAG TP F217", "IMAG", Region.AUVERGNE_RHONE_ALPES, 6, 6, 18, gestionnaire); // ?
+		SalleEntity imagF202 = newSalle("IMAG TP F202", "IMAG", Region.NORMANDIE, 12, 10, 30, gestionnaire); // ?
+		SalleEntity imagF204 = newSalle("IMAG TP F204", "IMAG", Region.ILE_DE_FRANCE, 8, 11, 25, gestionnaire); // ?
+		SalleEntity imagF117 = newSalle("IMAG TD F117", "IMAG", Region.ILE_DE_FRANCE, 13, 17, 50, gestionnaire); // ?
+		SalleEntity pg011 = newSalle("PG salle 011", "Polytech", Region.OCCITANIE, 10, 5, 30, gestionnaire); // 45
+		SalleEntity imagF101 = newSalle("IMAG TP F101", "IMAG", Region.PROVENCE_ALPES_COTE_D_AZUR, 11, 18, 27, gestionnaire); // ?
+		SalleEntity imagF102 = newSalle("IMAG TP F102", "IMAG", Region.GRAND_EST, 14, 10, 29, gestionnaire); // ?
+		SalleEntity imagF319 = newSalle("IMAG TD F319", "IMAG", Region.GRAND_EST, 6, 6, 20, gestionnaire); // ?
+		SalleEntity pgAnglais = newSalle("PG salle anglais", "Polytech", Region.AUVERGNE_RHONE_ALPES, 4, 5, 27, gestionnaire); // 36
+		SalleEntity imagF321 = newSalle("IMAG TD F321", "IMAG", Region.AUVERGNE_RHONE_ALPES, 9, 9, 23, gestionnaire); // ?
+		SalleEntity pg035 = newSalle("PG salle 035", "Polytech", Region.GRAND_EST, 3, 5, 23, gestionnaire); // 32
+		SalleEntity pg052 = newSalle("PG salle 052", "Polytech", Region.ILE_DE_FRANCE, 8, 12, 30, gestionnaire); // 60
 
 		salleService.save(pg257);
 		salleService.save(pg144);
