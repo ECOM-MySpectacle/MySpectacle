@@ -74,6 +74,10 @@ public class BookingService implements Serializable
 	@Transactional
 	public void book(Booking booking) throws BookingException
 	{
+		// everything is done in transaction mode
+		// entityManager is actually a transactional manager
+		// see commit() and rollback() methods
+
 		// token validation
 		validateToken(booking.token);
 
@@ -94,19 +98,19 @@ public class BookingService implements Serializable
 					throw new InvalidBookingException("there is no representation for spectacle " + entry.id, entry);
 				}
 
-				// save the name for later use
+				// save the name of the spectacle for later use
 				spectacles.put(entry.id, rp.getSpectacle().getNom());
 
-				// calculate left seats
+				// calculate remaining seats
 				int balconLeft = rp.getNbPlacesBalconLibres() - entry.balcon, fosseLeft = rp.getNbPlacesFosseLibres() - entry.fosse, orchestreLeft = rp.getNbPlacesOrchestreLibres() - entry.orchestre;
 
-				// if any value is negative (we can't have a negative number of seats left)
+				// if any value is negative
 				if(balconLeft < 0 || fosseLeft < 0 || orchestreLeft < 0)
 				{
-					throw new InvalidBookingException("there is not enough seats left for representation " + entry.id, entry);
+					throw new InvalidBookingException("there are not enough seats available for representation " + entry.id, entry);
 				}
 
-				// update the representation
+				// update the representation with new available seats
 				rp.setNbPlacesBalconLibres(balconLeft);
 				rp.setNbPlacesFosseLibres(fosseLeft);
 				rp.setNbPlacesOrchestreLibres(orchestreLeft);
@@ -120,7 +124,7 @@ public class BookingService implements Serializable
 				rs.setModePaiement(booking.modePaiement);
 				rs.setRepresentation(rp);
 
-				// store changes
+				// store changes in transaction
 				update(rp);
 				save(rs);
 			}
@@ -139,6 +143,7 @@ public class BookingService implements Serializable
 		}
 
 		// success!
+		// commit changes to database
 		commit();
 
 		try
