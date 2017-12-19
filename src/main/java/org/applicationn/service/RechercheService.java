@@ -37,7 +37,7 @@ public class RechercheService implements Serializable
 
 	public SearchResult<SpectacleEntity> findSpectacleEntities(SearchQuery query)
 	{
-		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Spectacle sp");
+		return findAllEntities(SpectacleEntity.class, query, "SELECT sp FROM Representation r LEFT JOIN r.spectacle sp LEFT JOIN r.salle sa");
 	}
 
 	public SearchResult<SalleEntity> findSalleEntities(SearchQuery query)

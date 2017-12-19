@@ -41,11 +41,11 @@ public class RepresentationEntity extends BaseEntity implements Serializable {
     @NotNull
     private Integer nbPlacesOrchestreLibres;
 
-    @ManyToOne(optional=true)
+    @ManyToOne(optional=false)
     @JoinColumn(name = "SALLE_ID", referencedColumnName = "ID")
     private SalleEntity salle;
     
-    @ManyToOne(optional=true)
+    @ManyToOne(optional=false)
     @JoinColumn(name = "SPECTACLE_ID", referencedColumnName = "ID")
     private SpectacleEntity spectacle;
 

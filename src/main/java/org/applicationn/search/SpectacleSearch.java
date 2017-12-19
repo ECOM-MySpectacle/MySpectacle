@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import org.applicationn.domain.SpectacleEntity;
 import org.applicationn.search.criteria.Filter;
+import org.applicationn.search.criteria.salle.RegionFilter;
 import org.applicationn.search.criteria.spectacle.*;
 import org.applicationn.search.exception.InvalidFilterException;
 import org.applicationn.search.exception.UnknownFilterException;
@@ -53,6 +54,11 @@ public class SpectacleSearch extends Search<SpectacleEntity>
 				String[] publc = IntStream.range(0, a.size()).mapToObj(a::getString).toArray(String[]::new);
 
 				return new PublicFilter(publc);
+			}
+
+			case RegionFilter.ID:
+			{
+				return RegionFilter.parse(value);
 			}
 
 			case ThemeFilter.ID:

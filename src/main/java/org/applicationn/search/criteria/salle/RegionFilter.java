@@ -19,7 +19,7 @@ public class RegionFilter extends SalleFilter
 	@Override
 	public String condition()
 	{
-		return lower("ville") + " = " + variable("region");
+		return attribute("ville") + " = " + variable("region");
 	}
 
 	public static RegionFilter parse(JsonValue json) throws InvalidFilterException
